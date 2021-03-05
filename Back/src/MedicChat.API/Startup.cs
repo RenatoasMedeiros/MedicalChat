@@ -13,6 +13,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MedicChat.Persistence.Contextos;
+using MedicChat.Application.Contratos;
+using MedicChat.Application;
+using MedicChat.Persistence.Contratos;
+using MedicChat.Persistence;
 
 namespace MedicChat.API
 {
@@ -32,6 +36,10 @@ namespace MedicChat.API
                 context => context.UseSqlServer(Configuration.GetConnectionString("Default"))
             );
             services.AddControllers();
+
+            services.AddScoped<IMedicoService, MedicoService>();
+            services.AddScoped<IGeralPersist, GeralPersist>();
+            services.AddScoped<IMedicoPersist, MedicoPersist>();
 
             services.AddCors();
             services.AddSwaggerGen(c =>

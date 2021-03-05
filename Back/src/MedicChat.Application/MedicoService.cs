@@ -71,24 +71,60 @@ namespace MedicChat.Application
             }
         }
 
-        public Task<Medico[]> GetAllMedicosAsync()
+        public async Task<Medico[]> GetAllMedicosAsync()
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                var medicos = await _medicoPersist.GetAllMedicosAsync();
+                if(medicos == null) return null;
+                return medicos;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public Task<Medico[]> GetAllMedicosByEspecialidadeAsync(string especialidade)
+        public async Task<Medico[]> GetAllMedicosByEspecialidadeAsync(string especialidade)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                var medicos = await _medicoPersist.GetAllMedicosByEspecialidadeAsync(especialidade);
+                if(medicos == null) return null;
+                return medicos;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public Task<Medico[]> GetAllMedicosByNomeAsync(string nome)
+        public async Task<Medico[]> GetAllMedicosByNomeAsync(string nome)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                var medicos = await _medicoPersist.GetAllMedicosByNomeAsync(nome);
+                if(medicos == null) return null;
+                return medicos;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public Task<Medico> GetMedicosByIdAsync(int medicoId)
+        public async Task<Medico> GetMedicosByIdAsync(int medicoId)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                var medicos = await _medicoPersist.GetMedicosByIdAsync(medicoId);
+                if(medicos == null) return null;
+                return medicos;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
     }
