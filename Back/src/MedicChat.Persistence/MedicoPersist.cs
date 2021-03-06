@@ -13,13 +13,12 @@ namespace MedicChat.Persistence
         public MedicoPersist(MedicChatContext context)
         {
             _context = context;
-
         }
         public async Task<Medico[]> GetAllMedicosAsync()
         {
             IQueryable<Medico> query = _context.Medicos;
 
-            query = query.OrderBy(m => m.Id);
+            query = query.AsNoTracking().OrderBy(m => m.Id);
 
             return await query.ToArrayAsync();
         }
@@ -28,7 +27,7 @@ namespace MedicChat.Persistence
         {
             IQueryable<Medico> query = _context.Medicos;
 
-            query = query.OrderBy(m => m.Id).Where(m => m.Especialidade.ToLower().Contains(especialidade.ToLower()));
+            query = query.AsNoTracking().OrderBy(m => m.Id).Where(m => m.Especialidade.ToLower().Contains(especialidade.ToLower()));
 
             return await query.ToArrayAsync();
         }
@@ -37,7 +36,7 @@ namespace MedicChat.Persistence
         {
             IQueryable<Medico> query = _context.Medicos;
 
-            query = query.OrderBy(m => m.Id).Where(m => m.Nome.ToLower().Contains(nome.ToLower()));
+            query = query.AsNoTracking().OrderBy(m => m.Id).Where(m => m.Nome.ToLower().Contains(nome.ToLower()));
 
             return await query.ToArrayAsync();
         }
@@ -45,7 +44,7 @@ namespace MedicChat.Persistence
         {
             IQueryable<Medico> query = _context.Medicos;
 
-            query = query.OrderBy(m => m.Id).Where(m => m.Id == medicoId);
+            query = query.AsNoTracking().OrderBy(m => m.Id).Where(m => m.Id == medicoId);
 
             return await query.FirstOrDefaultAsync();
         }

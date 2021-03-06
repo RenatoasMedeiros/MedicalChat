@@ -35,9 +35,12 @@ namespace MedicChat.API
             services.AddDbContext<MedicChatContext>( 
                 context => context.UseSqlServer(Configuration.GetConnectionString("Default"))
             );
-            services.AddControllers();
+            services.AddControllers()
+                    .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddScoped<IMedicoService, MedicoService>();
+            services.AddScoped<IPacienteService, PacienteService>();
+            services.AddScoped<IPacientePersist, PacientePersist>();
             services.AddScoped<IGeralPersist, GeralPersist>();
             services.AddScoped<IMedicoPersist, MedicoPersist>();
 

@@ -19,7 +19,7 @@ namespace MedicChat.Persistence
         {
             IQueryable<Paciente> query = _context.Pacientes;
 
-            query = query.OrderBy(p => p.Id);
+            query = query.AsNoTracking().OrderBy(p => p.Id);
 
             return await query.ToArrayAsync();
         }
@@ -28,29 +28,28 @@ namespace MedicChat.Persistence
         {
             IQueryable<Paciente> query = _context.Pacientes;
 
-            query = query.OrderBy(p => p.Id).Where(p => p.Nome.ToLower().Contains(nome.ToLower()));
+            query = query.AsNoTracking().OrderBy(p => p.Id).Where(p => p.Nome.ToLower().Contains(nome.ToLower()));
 
             return await query.ToArrayAsync();
         }
 
 
-        public async Task<Paciente> GetPacientesByIdAsync(int pacienteId)
+        public async Task<Paciente> GetPacienteByIdAsync(int pacienteId)
         {
             IQueryable<Paciente> query = _context.Pacientes;
 
-            query = query.OrderBy(p => p.Id).Where(p => p.Id == pacienteId);
+            query = query.AsNoTracking().OrderBy(p => p.Id).Where(p => p.Id == pacienteId);
 
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<Paciente> GetPacientesByTelemovelAsync(int telemovel)
+        public async Task<Paciente> GetPacienteByTelemovelAsync(int telemovel)
         {
             IQueryable<Paciente> query = _context.Pacientes;
 
-            query = query.OrderBy(p => p.Id).Where(p => p.Telemovel == telemovel);
+            query = query.AsNoTracking().OrderBy(p => p.Id).Where(p => p.Telemovel == telemovel);
 
             return await query.FirstOrDefaultAsync();
         }
-
     }
 }

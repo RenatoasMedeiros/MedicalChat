@@ -8,7 +8,7 @@ namespace MedicChat.Persistence.Contratos
         // PACIENTES
         Task<Paciente[]> GetAllPacientesAsync();
         Task<Paciente[]> GetAllPacientesByNomeAsync(string nome);
-        Task<Paciente> GetPacientesByIdAsync(int pacienteId);
-        Task<Paciente> GetPacientesByTelemovelAsync(int telemovel);
+        Task<Paciente> GetPacienteByIdAsync(int pacienteId);
+        Task<Paciente> GetPacienteByTelemovelAsync(int telemovel);
     }
 }
