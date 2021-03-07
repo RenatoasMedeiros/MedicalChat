@@ -12,10 +12,10 @@ namespace MedicChat.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PacienteController : ControllerBase
+    public class PacientesController : ControllerBase
     {
         private readonly IPacienteService _pacienteService;
-        public PacienteController(IPacienteService pacienteService)
+        public PacientesController(IPacienteService pacienteService)
         {
             _pacienteService = pacienteService;
         }
