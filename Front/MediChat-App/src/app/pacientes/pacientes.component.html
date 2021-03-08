@@ -1,1 +1,55 @@
 <h1>Pacientes</h1>
+<hr>
+<div class="form-inline">
+  <div class="form-group mb-2">
+    <label class="mr-2">Filtro:</label>
+    <input type="text"
+      class="form-control mr-2"
+      placeholder="Pesquisar"
+      [(ngModel)]="filtroLista" >
+  </div>
+</div>
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th>
+        <button type="button" class="btn btn-outline-light btn-sm"
+         (click)="alterarEstadoFoto()">
+          {{!exibirFoto ? 'Exibir' : 'Ocultar'}}
+        </button>
+      </th>
+      <th>#</th>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Telemovel</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="pacientes && pacientes.length">
+    <tr *ngFor="let paciente of pacientesFiltrados">
+      <td>
+        <img [collapse]="!exibirFoto"
+          [isAnimated]="true"
+          src="/assets/{{paciente.foto}}" class="rounded-circle"
+          [style.width.px]="widthFoto"
+          [style.margin.px]="marginFoto" >
+      </td>
+      <td>{{paciente.id}}</td>
+      <td>{{paciente.nome}}</td>
+      <td>{{paciente.email}}</td>
+      <td>{{paciente.telemovel}}</td>
+      <td>
+        <button type="button" class="btn btn-primary btn-sm mr-2">Editar</button>
+        <button type="button" class="btn btn-danger btn-sm">Excluir</button>
+
+      </td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="!pacientes.length">
+    <tr>
+      <td colspan="6" class="text-center">
+        <h4>Nenhum Paciente Encontrado!</h4>
+      </td>
+    </tr>
+  </tfoot>
+</table>
