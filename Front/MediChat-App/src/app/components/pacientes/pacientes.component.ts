@@ -4,8 +4,8 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 
-import { PacienteService } from './../services/paciente.service';
-import { Paciente } from '../models/Paciente';
+import { PacienteService } from '../../services/paciente.service';
+import { Paciente } from '../../models/Paciente';
 
 
 @Component({

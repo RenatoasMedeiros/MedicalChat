@@ -14,9 +14,13 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MedicosComponent } from './medicos/medicos.component';
-import { PacientesComponent } from './pacientes/pacientes.component';
-import { NavComponent } from './nav/nav.component';
+import { MedicosComponent } from './components/medicos/medicos.component';
+import { PacientesComponent } from './components/pacientes/pacientes.component';
+import { NavComponent } from './shared/nav/nav.component';
+import { TituloComponent } from './shared/titulo/titulo.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AgendaComponent } from './components/agenda/agenda.component';
 
 import { PacienteService } from './services/paciente.service';
 
@@ -28,7 +32,12 @@ import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
     AppComponent,
     MedicosComponent,
     PacientesComponent,
+    AgendaComponent,
+    DashboardComponent,
+    PerfilComponent,
     NavComponent,
+    TituloComponent,
+
     DateTimeFormatPipe
    ],
   imports: [
