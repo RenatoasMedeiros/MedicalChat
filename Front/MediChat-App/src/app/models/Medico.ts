@@ -1,4 +1,4 @@
-export interface Paciente {
+export interface Medico {
   id: number;
   nome: string;
   email: string;
@@ -6,6 +6,7 @@ export interface Paciente {
   foto: string;
   dataNascimento: Date;
   genero: string;
+  especialidade: string;
   endereco: string;
   codPostal: string;
 }
