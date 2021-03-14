@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -18,9 +19,14 @@ import { MedicosComponent } from './components/medicos/medicos.component';
 import { PacientesComponent } from './components/pacientes/pacientes.component';
 import { NavComponent } from './shared/nav/nav.component';
 import { TituloComponent } from './shared/titulo/titulo.component';
-import { PerfilComponent } from './components/perfil/perfil.component';
+import { PerfilComponent } from './components/user/perfil/perfil.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AgendaComponent } from './components/agenda/agenda.component';
+import { PacienteListaComponent } from './components/pacientes/paciente-lista/paciente-lista.component';
+import { PacienteInformacaoComponent } from './components/pacientes/paciente-informacao/paciente-informacao.component';
+import { UserComponent } from './components/user/user.component';
+import { LoginComponent } from './components/user/login/login.component';
+import { RegistarUserComponent } from './components/user/registar-user/registar-user.component';
 
 import { PacienteService } from './services/paciente.service';
 
@@ -37,8 +43,12 @@ import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
     PerfilComponent,
     NavComponent,
     TituloComponent,
-
-    DateTimeFormatPipe
+    DateTimeFormatPipe,
+    PacienteListaComponent,
+    PacienteInformacaoComponent,
+    UserComponent,
+    LoginComponent,
+    RegistarUserComponent
    ],
   imports: [
     BrowserModule,
@@ -56,7 +66,8 @@ import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
       preventDuplicates: true,
       progressBar: true
     }),
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    ClipboardModule
   ],
   providers: [PacienteService],
   bootstrap: [AppComponent],

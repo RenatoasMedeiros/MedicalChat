@@ -1,0 +1,97 @@
+<div class="card shadow-sm p-3">
+  <div class="d-flex">
+    <div class="flex-fill pr-3">
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Filtro:</div>
+        </div>
+        <input type="text"
+        class="form-control"
+        placeholder="Pesquisar por Nome"
+        [(ngModel)]="filtroLista" >
+      </div>
+    </div>
+    <div>
+      <a class="d-flex btn btn-outline-primary" routerLink="/pacientes/informacao">
+        <i class="fa fa-plus-circle mt-1 mb-1"></i>
+        <b class="ml-1 d-none d-sm-block">Novo</b>
+      </a>
+    </div>
+  </div>
+  <!-- TABELA PACIENTES -->
+  <table class="table table-striped table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th class="d-none d-md-table-cell">
+          <button type="button" class="btn btn-outline-light btn-sm"
+          (click)="alterarEstadoFoto()">
+          <i class=" {{!exibirFoto ? 'fa fa-eye' : 'fa fa-eye-slash'}}"></i>
+          {{!exibirFoto ? 'Exibir' : 'Ocultar'}}
+        </button>
+      </th>
+      <th class="d-none d-md-table-cell">#</th>
+      <th>Nome</th>
+      <th>Email</th>
+      <th class="d-none d-md-table-cell">Data de Nascimento</th>
+      <th class="d-none d-md-table-cell">Telemóvel</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="pacientes && pacientes.length">
+    <tr *ngFor="let paciente of pacientesFiltrados">
+      <td class="d-none d-md-table-cell">
+        <img [collapse]="!exibirFoto"
+        [isAnimated]="true"
+        src="/assets/{{paciente.foto}}" class="rounded-circle"
+        [style.width.px]="widthFoto"
+        [style.margin.px]="marginFoto" >
+      </td>
+      <td class="d-none d-md-table-cell">{{paciente.id}}</td>
+      <td>
+          <!--Primeiro e Ultimo nome do Paciente-->
+          <!-- {{Primeiro_UltimoNome(paciente)}} -->
+          <!-- {{paciente.nome.split(' ').slice(0, -1).join(' ')}}
+          {{paciente.nome.split("^\w+").slice(0)}}
+          {{paciente.nome.split("(?<=^\w+\s).+").slice(0)}} -->
+          {{paciente.nome}}
+      </td>
+      <td>
+        <button class="btn btn-link" tooltip="Email copiado." cdkCopyToClipboard="{{paciente.email}}" triggers="focus"
+          *ngIf="mobile; else notMobile"> <!-- 375px width -->
+          {{paciente.email| slice :0:10}}...
+        </button>
+        <ng-template #notMobile>
+          {{paciente.email}}
+        </ng-template>
+
+      </td>
+      <td class="d-none d-md-table-cell">{{paciente.dataNascimento | DateFormatPipe}}</td>
+      <td class="d-none d-md-table-cell">{{paciente.telemovel}}</td>
+      <td>
+        <button type="button" class="btn btn-primary btn-sm mr-2" (click)="infoPaciente(paciente.id)" tooltip="Editar">
+          <i class="fa fa-edit"></i>
+        </button>
+
+        <button type="button" class="btn btn-danger btn-sm" tooltip="Excluir" (click)="openModal(template)">
+          <i class="fa fa-trash"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="!pacientes.length">
+    <tr>
+      <td colspan="7" class="text-center">
+        <h4>Nenhum Paciente Encontrado!</h4>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Tem certeza que deseja apagar o Paciente?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+  </div>
+</ng-template>
