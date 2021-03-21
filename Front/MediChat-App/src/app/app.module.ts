@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 
@@ -19,14 +19,14 @@ import { MedicosComponent } from './components/medicos/medicos.component';
 import { PacientesComponent } from './components/pacientes/pacientes.component';
 import { NavComponent } from './shared/nav/nav.component';
 import { TituloComponent } from './shared/titulo/titulo.component';
-import { PerfilComponent } from './components/user/perfil/perfil.component';
+import { PerfilMedicoComponent } from './components/user/perfil-medico/perfil-medico.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AgendaComponent } from './components/agenda/agenda.component';
 import { PacienteListaComponent } from './components/pacientes/paciente-lista/paciente-lista.component';
 import { PacienteInformacaoComponent } from './components/pacientes/paciente-informacao/paciente-informacao.component';
 import { UserComponent } from './components/user/user.component';
 import { LoginComponent } from './components/user/login/login.component';
-import { RegistarUserComponent } from './components/user/registar-user/registar-user.component';
+import { RegistarMedicoComponent } from './components/user/registar-medico/registar-medico.component';
 
 import { PacienteService } from './services/paciente.service';
 
@@ -40,7 +40,7 @@ import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
     PacientesComponent,
     AgendaComponent,
     DashboardComponent,
-    PerfilComponent,
+    PerfilMedicoComponent,
     NavComponent,
     TituloComponent,
     DateTimeFormatPipe,
@@ -48,11 +48,12 @@ import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
     PacienteInformacaoComponent,
     UserComponent,
     LoginComponent,
-    RegistarUserComponent
+    RegistarMedicoComponent
    ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,

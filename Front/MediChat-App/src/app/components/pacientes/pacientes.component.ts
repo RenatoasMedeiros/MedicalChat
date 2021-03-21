@@ -1,12 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { ToastrService } from 'ngx-toastr';
-import { NgxSpinnerService } from 'ngx-spinner';
-
-import { PacienteService } from '../../services/paciente.service';
-import { Paciente } from '../../models/Paciente';
-
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-pacientes',

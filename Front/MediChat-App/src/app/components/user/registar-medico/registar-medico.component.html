@@ -1,0 +1,132 @@
+<div class="row mt-4">
+
+	<div class="col-md-6 d-none d-md-block" style="height: 450px;">
+		<div class="text-center col-md-12 my-auto side-heder">
+			<h1>Registo de Médico</h1>
+			<img src="../../../../assets/registerImage.png" class="my-4" alt="" width="400px">
+		</div>
+	</div>
+
+	<div class="col-md-6">
+
+		<!--FORM -->
+    <form [formGroup]="form" class="p-1">
+      <div class="pb-2 d-block d-md-none">
+        <h3 class="border-bottom">Cadastro de Usuário</h3>
+      </div>
+      <div class="form-group">
+        <label>Nome Completo</label>
+        <input type="text" class="form-control" placeholder="Insira o Nome Completo"
+        [ngClass]="{'is-invalid': f.nome.errors && f.nome.touched}"
+        formControlName="nome">
+        <div *ngIf="f.nome.errors?.required" class="invalid-feedback">
+          Nome é obrigatório.
+        </div>
+        <div *ngIf="f.nome.errors?.minlength"  class="invalid-feedback">
+          Nome deve ter no minimo 4 caracteres.
+        </div>
+        <div *ngIf="f.nome.errors?.maxlength"  class="invalid-feedback">
+          Nome deve ter no máximo 100 caracteres.
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-sm-8">
+          <label for="">E-mail:</label>
+          <input class="form-control" type="text" placeholder="Insira o E-mail"
+          [ngClass]="{'is-invalid': f.email.errors && f.email.touched}"
+          formControlName="email" >
+          <div *ngIf="f.email.errors?.required" class="invalid-feedback">
+            E-mail é obrigatório.
+          </div>
+          <div *ngIf="f.email.errors?.email"  class="invalid-feedback">
+            E-mail inválido.
+          </div>
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="">Nº Telemóvel:</label>
+          <input class="form-control" type="text" placeholder="Insira o Nº Telemóvel"
+          [ngClass]="{'is-invalid': f.telemovel.errors && f.telemovel.touched}"
+          formControlName="telemovel" >
+          <div *ngIf="f.telemovel.errors?.required" class="invalid-feedback">
+            Telemóvel é obrigatório.
+          </div>
+          <div *ngIf="f.telemovel.errors?.minlength"  class="invalid-feedback">
+            Telemóvel deve ter no minimo 6 caracteres.
+          </div>
+          <div *ngIf="f.telemovel.errors?.maxlength"  class="invalid-feedback">
+            Telemóvel deve ter no máximo 15 caracteres.
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="">Especialização:</label>
+        <input class="form-control" type="text" placeholder="Insira a sua Especialização "
+        [ngClass]="{'is-invalid': f.especializacao.errors && f.especializacao.touched}"
+          formControlName="especializacao" >
+          <div *ngIf="f.especializacao.errors?.required" class="invalid-feedback">
+            Especialização é obrigatório.
+          </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-sm-9">
+          <label for="">Endereço:</label>
+          <input class="form-control" type="text" placeholder="Insira o seu Endereço"
+          [ngClass]="{'is-invalid': f.endereco.errors && f.endereco.touched}"
+          formControlName="endereco">
+          <div *ngIf="f.endereco.errors?.required" class="invalid-feedback">
+            Endereço é obrigatório.
+          </div>
+          <div *ngIf="f.endereco.errors?.minlength"  class="invalid-feedback">
+            Endereço deve ter no minimo 4 caracteres.
+          </div>
+          <div *ngIf="f.endereco.errors?.maxlength"  class="invalid-feedback">
+            Endereço deve ter no máximo 100 caracteres.
+          </div>
+        </div>
+        <div class="form-group col-sm-3">
+          <label for="">Código Postal:</label>
+          <input class="form-control" type="text" placeholder="0000-000"
+          [ngClass]="{'is-invalid': f.codPostal.errors && f.codPostal.touched}"
+          formControlName="codPostal">
+          <div *ngIf="f.codPostal.errors?.required" class="invalid-feedback">
+            Código Postal é obrigatório.
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-sm-6">
+          <label for="">Password:</label>
+          <input class="form-control" type="password" placeholder="Digite uma Password"
+          [ngClass]="{'is-invalid': f.password.errors && f.password.touched}"
+          formControlName="password">
+          <div *ngIf="f.password.errors?.required" class="invalid-feedback">
+            Uma Password é obrigatória.
+          </div>
+          <div *ngIf="f.password.errors?.minlength"  class="invalid-feedback">
+            Password deve ter no minimo 6 caracteres.
+          </div>
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="">Confirmar Password:</label>
+          <input class="form-control" type="password" placeholder="Confirme a Password"
+          [ngClass]="{'is-invalid': f.confirmarPassword.errors && f.confirmarPassword.touched}"
+          formControlName="confirmarPassword">
+          <div *ngIf="f.confirmarPassword.errors?.required" class="invalid-feedback">
+            Confirmar a Password é obrigatório.
+          </div>
+          <div *ngIf="f.confirmarPassword.errors?.mustMatch" class="invalid-feedback">
+            As Password's não correspondem
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-12">
+          <button class="btn btn-lg btn-success btn-block px-5">
+            Registar Médico
+          </button>
+        </div>
+      </div>
+    </form>
+
+	</div>
+</div>

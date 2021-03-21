@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent } from './components/user/login/login.component';
 import { UserComponent } from './components/user/user.component';
-import { RegistarUserComponent } from './components/user/registar-user/registar-user.component';
-import { PerfilComponent } from './components/user/perfil/perfil.component';
+import { RegistarMedicoComponent } from './components/user/registar-medico/registar-medico.component';
+import { PerfilMedicoComponent } from './components/user/perfil-medico/perfil-medico.component';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
@@ -21,11 +21,11 @@ const routes: Routes = [
     path: 'user', component: UserComponent,
     children: [
       { path: 'login', component: LoginComponent },
-      { path: 'registar', component: RegistarUserComponent },
+      { path: 'registar-medico', component: RegistarMedicoComponent },
     ]
   },
   {
-    path: 'user/perfil', component: PerfilComponent
+    path: 'user/perfil-medico', component: PerfilMedicoComponent
   },
   { path: 'pacientes', redirectTo: 'pacientes/lista' },
   {

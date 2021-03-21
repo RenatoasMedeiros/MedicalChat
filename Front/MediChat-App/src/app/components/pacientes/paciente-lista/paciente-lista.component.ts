@@ -3,8 +3,8 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { Paciente } from 'src/app/models/Paciente';
-import { PacienteService } from 'src/app/services/paciente.service';
+import { Paciente } from '@app/models/Paciente';
+import { PacienteService } from '@app/services/paciente.service';
 
 @Component({
   selector: 'app-paciente-lista',
