@@ -1,3 +1,5 @@
+import { MedicoInformacaoComponent } from './components/medicos/medico-informacao/medico-informacao.component';
+import { MedicoListaComponent } from './components/medicos/medico-lista/medico-lista.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
@@ -29,9 +31,9 @@ import { LoginComponent } from './components/user/login/login.component';
 import { RegistarMedicoComponent } from './components/user/registar-medico/registar-medico.component';
 
 import { PacienteService } from './services/paciente.service';
+import { MedicoService } from './services/medico.service';
 
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
-
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
     DateTimeFormatPipe,
     PacienteListaComponent,
     PacienteInformacaoComponent,
+    MedicoListaComponent,
+    MedicoInformacaoComponent,
     UserComponent,
     LoginComponent,
     RegistarMedicoComponent
@@ -70,7 +74,7 @@ import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
     NgxSpinnerModule,
     ClipboardModule
   ],
-  providers: [PacienteService],
+  providers: [PacienteService, MedicoService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

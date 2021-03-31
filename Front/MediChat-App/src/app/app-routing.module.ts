@@ -1,3 +1,4 @@
+import { MedicoInformacaoComponent } from './components/medicos/medico-informacao/medico-informacao.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -11,6 +12,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AgendaComponent } from './components/agenda/agenda.component';
 
 import { MedicosComponent } from './components/medicos/medicos.component';
+import { MedicoListaComponent } from './components/medicos/medico-lista/medico-lista.component';
 
 import { PacientesComponent } from './components/pacientes/pacientes.component';
 import { PacienteInformacaoComponent } from './components/pacientes/paciente-informacao/paciente-informacao.component';
@@ -37,9 +39,17 @@ const routes: Routes = [
     ]
 
   },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'medicos', component: MedicosComponent },
+  { path: 'medicos', redirectTo: 'medicos/lista' },
+  {
+    path: 'medicos', component: MedicosComponent,
+    children: [
+      { path: 'informacao/:id', component: MedicoInformacaoComponent },
+      { path: 'informacao', component: MedicoInformacaoComponent },
+      { path: 'lista', component: MedicoListaComponent },
+    ]
+  },
   { path: 'agenda', component: AgendaComponent },
+  { path: 'dashboard', component: DashboardComponent },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },
 ];

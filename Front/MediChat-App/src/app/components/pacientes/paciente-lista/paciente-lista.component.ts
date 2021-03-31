@@ -82,12 +82,6 @@ export class PacienteListaComponent implements OnInit {
     });
   }
 
-  // public Primeiro_UltimoNome(primeiro_ultimoNome: string): string {
-  //   paciente => primeiro_ultimoNome = paciente.nome.split(' ');
-  //   console.log(primeiro_ultimoNome)
-  //   return primeiro_ultimoNome;
-  // }
-
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }

@@ -1,0 +1,36 @@
+<div class="card shadow-sm p-3">
+  <div class="d-flex">
+    <div class="flex-fill pr-3">
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Filtro:</div>
+        </div>
+        <input type="text"
+        class="form-control"
+        placeholder="Pesquisar Médico por Nome ou Especialidade"
+        [(ngModel)]="filtroLista" >
+      </div>
+    </div>
+  </div>
+
+  <!-- MEDICOS -->
+  <div class="card-deck ml-1">
+    <div *ngFor="let medico of medicosFiltrados">
+      <div class="card shadow-sm mt-3">
+        <img class="card-img-top" src="../../../../assets/{{medico.foto}}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{medico.nome}}</h5>
+          <p class="card-text">{{medico.especialidade}}</p>
+          <p class="card-text">{{medico.descricao}}</p>
+        </div>
+        <div class="card-footer text-center">
+          <small class="text-muted ">
+            <button type="button" class="btn btn-primary btn-lg text-center" tooltip="Abrir Conversa">
+              <i class="fa fa-comments"></i>
+            </button>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
