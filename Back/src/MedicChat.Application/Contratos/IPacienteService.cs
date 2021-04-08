@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using MedicChat.Domain;
+using MedicChat.Domain.model;
 
 namespace MedicChat.Application.Contratos
 {

@@ -20,6 +20,7 @@ namespace MedicChat.Persistence.Migrations
                     DataNascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Genero = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Especialidade = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Endereco = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CodPostal = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -58,35 +59,36 @@ namespace MedicChat.Persistence.Migrations
                     Token = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DataInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataFim = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    MedicoId = table.Column<int>(type: "int", nullable: false),
-                    PacienteId = table.Column<int>(type: "int", nullable: false)
+                    EstadoVideoChat = table.Column<int>(type: "int", nullable: false),
+                    MedicoID = table.Column<int>(type: "int", nullable: false),
+                    PacienteID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VideoChats", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VideoChats_Medicos_MedicoId",
-                        column: x => x.MedicoId,
+                        name: "FK_VideoChats_Medicos_MedicoID",
+                        column: x => x.MedicoID,
                         principalTable: "Medicos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_VideoChats_Pacientes_PacienteId",
-                        column: x => x.PacienteId,
+                        name: "FK_VideoChats_Pacientes_PacienteID",
+                        column: x => x.PacienteID,
                         principalTable: "Pacientes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_VideoChats_MedicoId",
+                name: "IX_VideoChats_MedicoID",
                 table: "VideoChats",
-                column: "MedicoId");
+                column: "MedicoID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VideoChats_PacienteId",
+                name: "IX_VideoChats_PacienteID",
                 table: "VideoChats",
-                column: "PacienteId");
+                column: "PacienteID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

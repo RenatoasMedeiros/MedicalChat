@@ -1,7 +1,7 @@
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
+using MedicChat.Domain.model.Enums;
 
-namespace MedicChat.Domain
+namespace MedicChat.Domain.model
 {
     public class VideoChat
     {
@@ -10,13 +10,12 @@ namespace MedicChat.Domain
         public string Token { get; set; }
         public DateTime DataInicio { get; set; }
         public DateTime DataFim { get; set; }
+        public VideoChatStatus EstadoVideoChat { get; set; }
 
-        [ForeignKey("Medico")]
-        public int MedicoId { get; set; }
+        // Propriedade de Navegação!
+        public int MedicoID { get; set; }
         public Medico Medico { get; set; }
-
-        [ForeignKey("Paciente")]
-        public int PacienteId { get; set; }
+        public int PacienteID { get; set; }
         public Paciente Paciente { get; set; }
     }
 }

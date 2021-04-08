@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
-using MedicChat.Domain;
+using MedicChat.Domain.model;
 using MedicChat.Persistence.Contratos;
 using MedicChat.Persistence.Contextos;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +18,8 @@ namespace MedicChat.Persistence
         public async Task<Paciente[]> GetAllPacientesAsync()
         {
             IQueryable<Paciente> query = _context.Pacientes;
+                // .Include(m => m.VideoChats);
+
 
             query = query.AsNoTracking().OrderBy(p => p.Id);
 
@@ -27,6 +29,7 @@ namespace MedicChat.Persistence
         public async Task<Paciente[]> GetAllPacientesByNomeAsync(string nome)
         {
             IQueryable<Paciente> query = _context.Pacientes;
+                // .Include(m => m.VideoChats);
 
             query = query.AsNoTracking().OrderBy(p => p.Id).Where(p => p.Nome.ToLower().Contains(nome.ToLower()));
 
@@ -37,6 +40,7 @@ namespace MedicChat.Persistence
         public async Task<Paciente> GetPacienteByIdAsync(int pacienteId)
         {
             IQueryable<Paciente> query = _context.Pacientes;
+                // .Include(m => m.VideoChats);
 
             query = query.AsNoTracking().OrderBy(p => p.Id).Where(p => p.Id == pacienteId);
 
@@ -46,6 +50,7 @@ namespace MedicChat.Persistence
         public async Task<Paciente> GetPacienteByTelemovelAsync(int telemovel)
         {
             IQueryable<Paciente> query = _context.Pacientes;
+                // .Include(m => m.VideoChats);
 
             query = query.AsNoTracking().OrderBy(p => p.Id).Where(p => p.Telemovel == telemovel);
 

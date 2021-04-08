@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-paciente-informacao',
-  templateUrl: './paciente-informacao.component.html',
-  styleUrls: ['./paciente-informacao.component.scss']
+  selector: 'app-agenda-informacao',
+  templateUrl: './agenda-informacao.component.html',
+  styleUrls: ['./agenda-informacao.component.scss']
 })
-export class PacienteInformacaoComponent implements OnInit {
+export class AgendaInformacaoComponent implements OnInit {
 
   public form: FormGroup;
 
@@ -19,18 +19,14 @@ export class PacienteInformacaoComponent implements OnInit {
     private fb: FormBuilder
   ) { }
 
-
-  ngOnInit(): void {
+  ngOnInit() {
     this.validation();
   }
 
   public validation(): void {
     this.form = this.fb.group({
-      pacienteNome: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
-      MedicoNome: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
-      pacienteEmail: ['', [Validators.required, Validators.email]],
-      medicoEmail: ['', [Validators.required, Validators.email]],
-      relatorio: ['', [Validators.required]],
+      nome: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
+      email: ['', [Validators.required, Validators.email]],
       telemovel: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
       foto: [''],
       dataNascimento: ['', Validators.required],
@@ -43,4 +39,5 @@ export class PacienteInformacaoComponent implements OnInit {
   public resetForm(): void {
     this.form.reset();
   }
+
 }

@@ -1,3 +1,5 @@
+import { AgendaInformacaoComponent } from './components/agenda/agenda-informacao/agenda-informacao.component';
+import { AgendaListaComponent } from './components/agenda/agenda-lista/agenda-lista.component';
 import { MedicoInformacaoComponent } from './components/medicos/medico-informacao/medico-informacao.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -48,7 +50,15 @@ const routes: Routes = [
       { path: 'lista', component: MedicoListaComponent },
     ]
   },
-  { path: 'agenda', component: AgendaComponent },
+  { path: 'agenda', redirectTo: 'agenda/lista' },
+  {
+    path: 'agenda', component: AgendaComponent,
+    children: [
+      { path: 'informacao/:id', component: AgendaInformacaoComponent },
+      { path: 'informacao', component: AgendaInformacaoComponent },
+      { path: 'lista', component: AgendaListaComponent },
+    ]
+  },
   { path: 'dashboard', component: DashboardComponent },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },

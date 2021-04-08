@@ -1,3 +1,5 @@
+import { AgendaInformacaoComponent } from './components/agenda/agenda-informacao/agenda-informacao.component';
+import { AgendaListaComponent } from './components/agenda/agenda-lista/agenda-lista.component';
 import { MedicoInformacaoComponent } from './components/medicos/medico-informacao/medico-informacao.component';
 import { MedicoListaComponent } from './components/medicos/medico-lista/medico-lista.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
@@ -32,27 +34,33 @@ import { RegistarMedicoComponent } from './components/user/registar-medico/regis
 
 import { PacienteService } from './services/paciente.service';
 import { MedicoService } from './services/medico.service';
+import { VideoChatService } from './services/videoChat.service';
 
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
+import { DatePlusHourFormatPipe } from './helpers/DatePlusHourFormat.pipe';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
     MedicosComponent,
     PacientesComponent,
+    PacienteInformacaoComponent,
     AgendaComponent,
     DashboardComponent,
     PerfilMedicoComponent,
     NavComponent,
     TituloComponent,
     DateTimeFormatPipe,
+    DatePlusHourFormatPipe,
     PacienteListaComponent,
-    PacienteInformacaoComponent,
     MedicoListaComponent,
     MedicoInformacaoComponent,
     UserComponent,
     LoginComponent,
-    RegistarMedicoComponent
+    RegistarMedicoComponent,
+    AgendaListaComponent,
+    AgendaInformacaoComponent,
    ],
   imports: [
     BrowserModule,
@@ -74,7 +82,7 @@ import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
     NgxSpinnerModule,
     ClipboardModule
   ],
-  providers: [PacienteService, MedicoService],
+  providers: [PacienteService, MedicoService, VideoChatService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

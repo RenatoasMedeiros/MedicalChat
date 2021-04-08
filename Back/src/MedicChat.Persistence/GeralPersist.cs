@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
-using MedicChat.Domain;
+using MedicChat.Domain.model;
 using MedicChat.Persistence.Contratos;
 using MedicChat.Persistence.Contextos;
 using Microsoft.EntityFrameworkCore;

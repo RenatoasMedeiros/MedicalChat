@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using MedicChat.Domain;
+using MedicChat.Domain.model;
 
 namespace MedicChat.Persistence.Contextos
 {

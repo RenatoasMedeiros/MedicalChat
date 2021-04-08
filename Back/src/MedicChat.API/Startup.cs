@@ -38,11 +38,13 @@ namespace MedicChat.API
             services.AddControllers()
                     .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
+            services.AddScoped<IGeralPersist, GeralPersist>();
             services.AddScoped<IMedicoService, MedicoService>();
+            services.AddScoped<IMedicoPersist, MedicoPersist>();
             services.AddScoped<IPacienteService, PacienteService>();
             services.AddScoped<IPacientePersist, PacientePersist>();
-            services.AddScoped<IGeralPersist, GeralPersist>();
-            services.AddScoped<IMedicoPersist, MedicoPersist>();
+            services.AddScoped<IVideoChatService, VideoChatService>();
+            services.AddScoped<IVideoChatPersist, VideoChatPersist>();
 
             services.AddCors();
             services.AddSwaggerGen(c =>

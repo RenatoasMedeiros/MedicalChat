@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
-using MedicChat.Domain;
+using MedicChat.Domain.model;
 using MedicChat.Persistence.Contratos;
 using MedicChat.Persistence.Contextos;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +16,8 @@ namespace MedicChat.Persistence
         }
         public async Task<Medico[]> GetAllMedicosAsync()
         {
-            IQueryable<Medico> query = _context.Medicos;
+            IQueryable<Medico> query = _context.Medicos
+                .Include(m => m.VideoChats);
 
             query = query.AsNoTracking().OrderBy(m => m.Id);
 
@@ -25,7 +26,8 @@ namespace MedicChat.Persistence
 
         public async Task<Medico[]> GetAllMedicosByEspecialidadeAsync(string especialidade)
         {
-            IQueryable<Medico> query = _context.Medicos;
+            IQueryable<Medico> query = _context.Medicos
+                .Include(m => m.VideoChats);
 
             query = query.AsNoTracking().OrderBy(m => m.Id).Where(m => m.Especialidade.ToLower().Contains(especialidade.ToLower()));
 
@@ -34,7 +36,8 @@ namespace MedicChat.Persistence
 
         public async Task<Medico[]> GetAllMedicosByNomeAsync(string nome)
         {
-            IQueryable<Medico> query = _context.Medicos;
+            IQueryable<Medico> query = _context.Medicos
+                .Include(m => m.VideoChats);
 
             query = query.AsNoTracking().OrderBy(m => m.Id).Where(m => m.Nome.ToLower().Contains(nome.ToLower()));
 
@@ -42,7 +45,8 @@ namespace MedicChat.Persistence
         }
         public async Task<Medico> GetMedicosByIdAsync(int medicoId)
         {
-            IQueryable<Medico> query = _context.Medicos;
+            IQueryable<Medico> query = _context.Medicos
+                .Include(m => m.VideoChats);
 
             query = query.AsNoTracking().OrderBy(m => m.Id).Where(m => m.Id == medicoId);
 

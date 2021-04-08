@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using MedicChat.Application.Contratos;
-using MedicChat.Domain;
+using MedicChat.Domain.model;
 using MedicChat.Persistence.Contratos;
 
 namespace MedicChat.Application

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MedicChat.Application.Contratos;
-using MedicChat.Domain;
+using MedicChat.Domain.model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -61,7 +61,7 @@ namespace MedicChat.API.Controllers
             try
             {
                 var medico = await _medicoService.GetAllMedicosByEspecialidadeAsync(especialidade);
-                if (medico == null) return NotFound("A Espespecialidade indicada não corresponde a nenhum Médico.");
+                if (medico == null) return NotFound("A Especialidade indicada não corresponde a nenhum Médico.");
                 
                 return Ok(medico);
             }
