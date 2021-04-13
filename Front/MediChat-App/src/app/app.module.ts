@@ -1,4 +1,5 @@
-import { AgendaInformacaoComponent } from './components/agenda/agenda-informacao/agenda-informacao.component';
+import { AgendaInformacaoVisualizarComponent } from './components/agenda/agenda-informacao-visualizar/agenda-informacao-visualizar.component';
+import { AgendaInformacaoEditarComponent } from './components/agenda/agenda-informacao-editar/agenda-informacao-editar.component';
 import { AgendaListaComponent } from './components/agenda/agenda-lista/agenda-lista.component';
 import { MedicoInformacaoComponent } from './components/medicos/medico-informacao/medico-informacao.component';
 import { MedicoListaComponent } from './components/medicos/medico-lista/medico-lista.component';
@@ -60,7 +61,8 @@ import { CommonModule } from '@angular/common';
     LoginComponent,
     RegistarMedicoComponent,
     AgendaListaComponent,
-    AgendaInformacaoComponent,
+    AgendaInformacaoVisualizarComponent,
+    AgendaInformacaoEditarComponent
    ],
   imports: [
     BrowserModule,

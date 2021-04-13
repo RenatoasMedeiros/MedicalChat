@@ -17,6 +17,8 @@ using MedicChat.Application.Contratos;
 using MedicChat.Application;
 using MedicChat.Persistence.Contratos;
 using MedicChat.Persistence;
+using System.Net.Mail;
+using System.Net;
 
 namespace MedicChat.API
 {
@@ -45,6 +47,19 @@ namespace MedicChat.API
             services.AddScoped<IPacientePersist, PacientePersist>();
             services.AddScoped<IVideoChatService, VideoChatService>();
             services.AddScoped<IVideoChatPersist, VideoChatPersist>();
+
+            var from = Configuration.GetSection("Mail")["From"];
+            var gmailSender = Configuration.GetSection("Gmail")["Sender"];
+            var gmailPassword = Configuration.GetSection("Gmail")["Password"];
+
+            services.AddFluentEmail(gmailSender, from).AddSmtpSender(new SmtpClient("smtp.gmail.com") {
+                UseDefaultCredentials = false,
+                //Porta para o Gmail
+                Port = 587,
+                //Credenciais do Email de Envio
+                Credentials = new NetworkCredential(gmailSender,gmailPassword),
+                EnableSsl = true,
+            });
 
             services.AddCors();
             services.AddSwaggerGen(c =>

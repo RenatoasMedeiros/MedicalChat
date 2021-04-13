@@ -6,7 +6,11 @@ using MedicChat.Application.Contratos;
 using MedicChat.Domain.model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Mail;
 using Microsoft.Extensions.Logging;
+using FluentEmail.Smtp;
+using System.Net;
+using FluentEmail.Core;
 
 namespace MedicChat.API.Controllers
 {
@@ -89,13 +93,23 @@ namespace MedicChat.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(VideoChat model)
+        public async Task<IActionResult> Post(VideoChat model, [FromServices] IFluentEmail mailer)
         {
             try
             {
                 var videoChat = await _videoChatService.AddVideoChat(model);
                 if (videoChat == null) return BadRequest("Erro ao tentar adicionar a Video Chamada.");
-                
+
+                var email = mailer
+                    .To(videoChat.Paciente.Email, videoChat.Paciente.Nome)
+                    .Subject("MediChat " + videoChat.Paciente.Nome + " - Consulta Agendada")
+                    .Body("A sua consulta foi agendada no dia " + videoChat.DataInicio.Day + "/" 
+                                                                + videoChat.DataInicio.Month + "/" 
+                                                                + videoChat.DataInicio.Year + " às " 
+                                                                + videoChat.DataInicio.Hour + ":" 
+                                                                + videoChat.DataInicio.Minute + ".");
+                    
+                await email.SendAsync();
                 return Ok(videoChat);
             }
             catch (Exception ex)
@@ -103,6 +117,7 @@ namespace MedicChat.API.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
                     $"Erro ao tentar adicionar a Video Chamada. Erro: {ex.Message}");
             }
+            
         }
 
         [HttpPut("{id}")]

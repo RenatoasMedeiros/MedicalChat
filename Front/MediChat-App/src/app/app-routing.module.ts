@@ -1,6 +1,3 @@
-import { AgendaInformacaoComponent } from './components/agenda/agenda-informacao/agenda-informacao.component';
-import { AgendaListaComponent } from './components/agenda/agenda-lista/agenda-lista.component';
-import { MedicoInformacaoComponent } from './components/medicos/medico-informacao/medico-informacao.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -12,13 +9,17 @@ import { PerfilMedicoComponent } from './components/user/perfil-medico/perfil-me
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 import { AgendaComponent } from './components/agenda/agenda.component';
+import { AgendaInformacaoVisualizarComponent } from './components/agenda/agenda-informacao-visualizar/agenda-informacao-visualizar.component';
+import { AgendaListaComponent } from './components/agenda/agenda-lista/agenda-lista.component';
 
 import { MedicosComponent } from './components/medicos/medicos.component';
 import { MedicoListaComponent } from './components/medicos/medico-lista/medico-lista.component';
+import { MedicoInformacaoComponent } from './components/medicos/medico-informacao/medico-informacao.component';
 
 import { PacientesComponent } from './components/pacientes/pacientes.component';
 import { PacienteInformacaoComponent } from './components/pacientes/paciente-informacao/paciente-informacao.component';
 import { PacienteListaComponent } from './components/pacientes/paciente-lista/paciente-lista.component';
+import { AgendaInformacaoEditarComponent } from './components/agenda/agenda-informacao-editar/agenda-informacao-editar.component';
 
 const routes: Routes = [
   {
@@ -54,8 +55,9 @@ const routes: Routes = [
   {
     path: 'agenda', component: AgendaComponent,
     children: [
-      { path: 'informacao/:id', component: AgendaInformacaoComponent },
-      { path: 'informacao', component: AgendaInformacaoComponent },
+      { path: 'informacao-visualizar/:id', component: AgendaInformacaoVisualizarComponent },
+      { path: 'informacao-editar/:id', component: AgendaInformacaoEditarComponent },
+      { path: 'informacao', component: AgendaInformacaoVisualizarComponent },
       { path: 'lista', component: AgendaListaComponent },
     ]
   },
