@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using FluentEmail.Smtp;
 using System.Net;
 using FluentEmail.Core;
+using System.Globalization;
 
 namespace MedicChat.API.Controllers
 {
@@ -19,9 +20,11 @@ namespace MedicChat.API.Controllers
     public class VideoChatController : ControllerBase
     {
         private readonly IVideoChatService _videoChatService;
-        public VideoChatController(IVideoChatService videoChatService)
+        private readonly IMailSenderService _mailSenderService;
+        public VideoChatController(IVideoChatService videoChatService, IMailSenderService mailSenderService)
         {
             _videoChatService = videoChatService;
+            _mailSenderService = mailSenderService;
         }
         
         [HttpGet]
@@ -99,17 +102,10 @@ namespace MedicChat.API.Controllers
             {
                 var videoChat = await _videoChatService.AddVideoChat(model);
                 if (videoChat == null) return BadRequest("Erro ao tentar adicionar a Video Chamada.");
+                
+                //Serviço de enviar email
+                _mailSenderService.SendPlaintextGmail(videoChat.Paciente.Email,videoChat.Paciente.Nome,videoChat.DataInicio);
 
-                var email = mailer
-                    .To(videoChat.Paciente.Email, videoChat.Paciente.Nome)
-                    .Subject("MediChat " + videoChat.Paciente.Nome + " - Consulta Agendada")
-                    .Body("A sua consulta foi agendada no dia " + videoChat.DataInicio.Day + "/" 
-                                                                + videoChat.DataInicio.Month + "/" 
-                                                                + videoChat.DataInicio.Year + " às " 
-                                                                + videoChat.DataInicio.Hour + ":" 
-                                                                + videoChat.DataInicio.Minute + ".");
-                    
-                await email.SendAsync();
                 return Ok(videoChat);
             }
             catch (Exception ex)

@@ -9,4 +9,8 @@
     <ProjectReference Include="..\MedicChat.Persistence\MedicChat.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FluentEmail.Smtp" Version="3.0.0" />
+  </ItemGroup>
+
 </Project>

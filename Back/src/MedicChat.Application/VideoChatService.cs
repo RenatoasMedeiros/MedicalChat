@@ -22,9 +22,8 @@ namespace MedicChat.Application
             {
                 _geralPersist.Add<VideoChat>(model);
                 if (await _geralPersist.SaveChangesAsync())
-                {
                     return await _videoChatPersist.GetVideoChatByIdAsync(model.Id);
-                }
+                    
                 return null;
             }
             catch (Exception ex)

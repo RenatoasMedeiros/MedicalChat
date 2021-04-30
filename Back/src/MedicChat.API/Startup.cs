@@ -61,6 +61,8 @@ namespace MedicChat.API
                 EnableSsl = true,
             });
 
+            services.AddScoped<IMailSenderService, MailSenderService>();
+
             services.AddCors();
             services.AddSwaggerGen(c =>
             {
