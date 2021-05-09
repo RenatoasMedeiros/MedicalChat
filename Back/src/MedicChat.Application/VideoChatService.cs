@@ -1,6 +1,8 @@
 using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using MedicChat.Application.Contratos;
+using MedicChat.Application.Dtos;
 using MedicChat.Domain.model;
 using MedicChat.Persistence.Contratos;
 
@@ -10,20 +12,28 @@ namespace MedicChat.Application
     {
         private readonly IGeralPersist _geralPersist;
         private readonly IVideoChatPersist _videoChatPersist;
-        public VideoChatService(IGeralPersist geralPersist, IVideoChatPersist videoChatPersist)
+        private readonly IMapper _mapper;
+        public VideoChatService(IGeralPersist geralPersist, IVideoChatPersist videoChatPersist, IMapper mapper)
         {
+            _mapper = mapper;
             _videoChatPersist = videoChatPersist;
             _geralPersist = geralPersist;
 
         }
-        public async Task<VideoChat> AddVideoChat(VideoChat model)
+        public async Task<VideoChatDto> AddVideoChat(VideoChatDto model)
         {
             try
             {
-                _geralPersist.Add<VideoChat>(model);
+                // Map do videoChat(Dto) para videoChat(model)
+                var videoChat = _mapper.Map<VideoChat>(model);
+
+                _geralPersist.Add<VideoChat>(videoChat);
                 if (await _geralPersist.SaveChangesAsync())
-                    return await _videoChatPersist.GetVideoChatByIdAsync(model.Id);
-                    
+                {
+                    // Map do videoChat(model) para videoChat(dto)
+                    var videoChatRetorno = await _videoChatPersist.GetVideoChatByIdAsync(videoChat.Id);
+                    return _mapper.Map<VideoChatDto>(videoChatRetorno);
+                }
                 return null;
             }
             catch (Exception ex)
@@ -31,19 +41,23 @@ namespace MedicChat.Application
                 throw new Exception(ex.Message);
             }
         }
-        public async Task<VideoChat> UpdateVideoChat(int videoChatId, VideoChat model)
+        public async Task<VideoChatDto> UpdateVideoChat(int videoChatId, VideoChatDto model)
         {
             try
             {
-                var VideoChat = await _videoChatPersist.GetVideoChatByIdAsync(videoChatId);
-                if (VideoChat == null) return null;
+                var videoChat = await _videoChatPersist.GetVideoChatByIdAsync(videoChatId);
+                if (videoChat == null) return null;
 
-                model.Id = VideoChat.Id;
+                model.Id = videoChat.Id;
 
-                _geralPersist.Update(model);
+                _mapper.Map(model, videoChat);
+
+                _geralPersist.Update(videoChat);
                 if (await _geralPersist.SaveChangesAsync())
                 {
-                    return await _videoChatPersist.GetVideoChatByIdAsync(model.Id);
+                    // Map do videoChat(model) para videoChat(dto)
+                    var videoChatRetorno = await _videoChatPersist.GetVideoChatByIdAsync(videoChat.Id);
+                    return _mapper.Map<VideoChatDto>(videoChatRetorno);
                 }
                 return null;
             }
@@ -68,27 +82,36 @@ namespace MedicChat.Application
             }
         }
 
-        public async Task<VideoChat[]> GetAllVideoChatAsync()
+        public async Task<VideoChatDto[]> GetAllVideoChatAsync()
         {
             try
             {
                 var videoChat = await _videoChatPersist.GetAllVideoChatAsync();
-                if(videoChat == null) return null;
-                return videoChat;
+                if (videoChat == null) 
+                    return null;
+
+                // Dado o Objeto medicoDto é mapeado os medicos
+                var resultado = _mapper.Map<VideoChatDto[]>(videoChat);
+
+                return resultado;
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
-            } 
+            }
         }
 
-        public async Task<VideoChat[]> GetAllVideoChatByNomeMedicoAsync(string nomeMedico)
+        public async Task<VideoChatDto[]> GetAllVideoChatByNomeMedicoAsync(string nomeMedico)
         {
             try
             {
                 var videoChat = await _videoChatPersist.GetAllVideoChatByNomeMedicoAsync(nomeMedico);
-                if(videoChat == null) return null;
-                return videoChat;
+                if (videoChat == null) return null;
+
+                // Dado o Objeto medicoDto é mapeado os medicos
+                var resultado = _mapper.Map<VideoChatDto[]>(videoChat);
+
+                return resultado;
             }
             catch (Exception ex)
             {
@@ -96,13 +119,17 @@ namespace MedicChat.Application
             }
         }
 
-        public async Task<VideoChat[]> GetAllVideoChatByNomePacienteAsync(string nomePaciente)
+        public async Task<VideoChatDto[]> GetAllVideoChatByNomePacienteAsync(string nomePaciente)
         {
             try
             {
                 var videoChat = await _videoChatPersist.GetAllVideoChatByNomePacienteAsync(nomePaciente);
-                if(videoChat == null) return null;
-                return videoChat;
+                if (videoChat == null) return null;
+
+                // Dado o Objeto medicoDto é mapeado os medicos
+                var resultado = _mapper.Map<VideoChatDto[]>(videoChat);
+
+                return resultado;
             }
             catch (Exception ex)
             {
@@ -110,13 +137,17 @@ namespace MedicChat.Application
             }
         }
 
-        public async Task<VideoChat> GetVideoChatByIdAsync(int videoChatId)
+        public async Task<VideoChatDto> GetVideoChatByIdAsync(int videoChatId)
         {
             try
             {
                 var videoChat = await _videoChatPersist.GetVideoChatByIdAsync(videoChatId);
-                if(videoChat == null) return null;
-                return videoChat;
+                if (videoChat == null) return null;
+                
+                // Dado o Objeto medicoDto é mapeado os medicos
+                var resultado = _mapper.Map<VideoChatDto>(videoChat);
+
+                return resultado;
             }
             catch (Exception ex)
             {

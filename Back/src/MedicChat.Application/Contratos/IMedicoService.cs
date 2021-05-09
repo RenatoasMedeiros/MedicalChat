@@ -1,17 +1,18 @@
 using System.Threading.Tasks;
+using MedicChat.Application.Dtos;
 using MedicChat.Domain.model;
 
 namespace MedicChat.Application.Contratos
 {
     public interface IMedicoService
     {
-        Task<Medico> AddMedico(Medico model);
-        Task<Medico> UpdateMedico(int medicoId, Medico model);
+        Task<MedicoDto> AddMedico(MedicoDto model);
+        Task<MedicoDto> UpdateMedico(int medicoId, MedicoDto model);
         Task<bool> DeleteMedico(int medicoId);
 
-        Task<Medico[]> GetAllMedicosAsync();
-        Task<Medico[]> GetAllMedicosByNomeAsync(string nome);
-        Task<Medico[]> GetAllMedicosByEspecialidadeAsync(string especialidade);
-        Task<Medico> GetMedicosByIdAsync(int medicoId);
+        Task<MedicoDto[]> GetAllMedicosAsync();
+        Task<MedicoDto[]> GetAllMedicosByNomeAsync(string nome);
+        Task<MedicoDto[]> GetAllMedicosByEspecialidadeAsync(string especialidade);
+        Task<MedicoDto> GetMedicosByIdAsync(int medicoId);
     }
 }

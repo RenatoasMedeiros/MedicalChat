@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using MedicChat.Application.Contratos;
+using MedicChat.Application.Dtos;
 using MedicChat.Domain.model;
 using MedicChat.Persistence.Contratos;
 
@@ -10,20 +13,27 @@ namespace MedicChat.Application
     {
         private readonly IGeralPersist _geralPersist;
         private readonly IPacientePersist _pacientePersist;
-        public PacienteService(IGeralPersist geralPersist, IPacientePersist pacientePersist)
+        private readonly IMapper _mapper;
+        public PacienteService(IGeralPersist geralPersist, IPacientePersist pacientePersist, IMapper mapper)
         {
             _pacientePersist = pacientePersist;
             _geralPersist = geralPersist;
+            _mapper = mapper;
         }
 
-        public async Task<Paciente> AddPaciente(Paciente model)
+        public async Task<PacienteDto> AddPaciente(PacienteDto model)
         {
             try
             {
-                _geralPersist.Add<Paciente>(model);
+                // Map do paciente(Dto) para paciente(model)
+                var paciente = _mapper.Map<Paciente>(model);
+
+                _geralPersist.Add<Paciente>(paciente);
                 if (await _geralPersist.SaveChangesAsync())
                 {
-                    return await _pacientePersist.GetPacienteByIdAsync(model.Id);
+                    // Map do paciente(model) para paciente(dto)
+                    var pacienteRetorno = await _pacientePersist.GetPacienteByIdAsync(paciente.Id);
+                    return _mapper.Map<PacienteDto>(pacienteRetorno);
                 }
                 return null;
             }
@@ -32,7 +42,7 @@ namespace MedicChat.Application
                 throw new Exception(ex.Message);
             }
         }
-        public async Task<Paciente> UpdatePaciente(int pacienteId, Paciente model)
+        public async Task<PacienteDto> UpdatePaciente(int pacienteId, PacienteDto model)
         {
             try
             {
@@ -41,10 +51,14 @@ namespace MedicChat.Application
 
                 model.Id = paciente.Id;
 
-                _geralPersist.Update(model);
+                _mapper.Map(model, paciente);
+
+                _geralPersist.Update<Paciente>(paciente);
                 if (await _geralPersist.SaveChangesAsync())
                 {
-                    return await _pacientePersist.GetPacienteByIdAsync(model.Id);
+                    // Map do paciente(model) para paciente(dto)
+                    var pacienteRetorno = await _pacientePersist.GetPacienteByIdAsync(paciente.Id);
+                    return _mapper.Map<PacienteDto>(pacienteRetorno);
                 }
                 return null;
             }
@@ -70,13 +84,17 @@ namespace MedicChat.Application
             }
         }
 
-        public async Task<Paciente[]> GetAllPacientesAsync()
+        public async Task<PacienteDto[]> GetAllPacientesAsync()
         {
             try
             {
                 var pacientes = await _pacientePersist.GetAllPacientesAsync();
-                if(pacientes == null) return null;
-                return pacientes;
+                if (pacientes == null) return null;
+
+                // Dado o Objeto array PacienteDto é mapeado os pacientes
+                var resultado = _mapper.Map<PacienteDto[]>(pacientes);
+
+                return resultado;
             }
             catch (Exception ex)
             {
@@ -84,13 +102,17 @@ namespace MedicChat.Application
             }
         }
 
-        public async Task<Paciente> GetPacienteByTelemovelAsync(int telemovel)
+        public async Task<PacienteDto> GetPacienteByTelemovelAsync(int telemovel)
         {
             try
             {
                 var pacientes = await _pacientePersist.GetPacienteByTelemovelAsync(telemovel);
-                if(pacientes == null) return null;
-                return pacientes;
+                if (pacientes == null) return null;
+
+                // Dado o Objeto PacienteDto é mapeado os paceintes
+                var resultado = _mapper.Map<PacienteDto>(pacientes);
+
+                return resultado;
             }
             catch (Exception ex)
             {
@@ -98,13 +120,17 @@ namespace MedicChat.Application
             }
         }
 
-        public async Task<Paciente[]> GetAllPacientesByNomeAsync(string nome)
+        public async Task<PacienteDto[]> GetAllPacientesByNomeAsync(string nome)
         {
             try
             {
                 var pacientes = await _pacientePersist.GetAllPacientesByNomeAsync(nome);
-                if(pacientes == null) return null;
-                return pacientes;
+                if (pacientes == null) return null;
+
+                // Dado o Objeto PacienteDto é mapeado os paceintes
+                var resultado = _mapper.Map<PacienteDto[]>(pacientes);
+
+                return resultado;
             }
             catch (Exception ex)
             {
@@ -112,13 +138,17 @@ namespace MedicChat.Application
             }
         }
 
-        public async Task<Paciente> GetPacienteByIdAsync(int PacienteId)
+        public async Task<PacienteDto> GetPacienteByIdAsync(int PacienteId)
         {
             try
             {
                 var pacientes = await _pacientePersist.GetPacienteByIdAsync(PacienteId);
-                if(pacientes == null) return null;
-                return pacientes;
+                if (pacientes == null) return null;
+
+                // Dado o Objeto PacienteDto é mapeado os paceintes
+                var resultado = _mapper.Map<PacienteDto>(pacientes);
+
+                return resultado;
             }
             catch (Exception ex)
             {

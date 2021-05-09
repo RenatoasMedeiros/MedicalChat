@@ -19,6 +19,7 @@ using MedicChat.Persistence.Contratos;
 using MedicChat.Persistence;
 using System.Net.Mail;
 using System.Net;
+using AutoMapper;
 
 namespace MedicChat.API
 {
@@ -35,11 +36,15 @@ namespace MedicChat.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MedicChatContext>( 
-                context => context.UseSqlServer(Configuration.GetConnectionString("Default"))
+                context => context.UseSqlServer(Configuration.GetConnectionString("DefaultPortatil"))
             );
             services.AddControllers()
                     .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
+            // Declaração do automapper (Dentro do domino da aplicação procurra os Assemblies que referenciem o AutoMapper)
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());            
+
+            // Declaração de todos os Escopos da aplicação 
             services.AddScoped<IGeralPersist, GeralPersist>();
             services.AddScoped<IMedicoService, MedicoService>();
             services.AddScoped<IMedicoPersist, MedicoPersist>();

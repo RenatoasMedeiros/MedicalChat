@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MedicChat.Application.Contratos;
+using MedicChat.Application.Dtos;
 using MedicChat.Domain.model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -90,7 +91,7 @@ namespace MedicChat.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Medico model)
+        public async Task<IActionResult> Post(MedicoDto model)
         {
             try
             {
@@ -107,7 +108,7 @@ namespace MedicChat.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Medico model)
+        public async Task<IActionResult> Put(int id, MedicoDto model)
         {
             try
             {

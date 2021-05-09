@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MedicChat.Application.Contratos;
+using MedicChat.Application.Dtos;
 using MedicChat.Domain.model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,10 @@ namespace MedicChat.API.Controllers
         {
             try
             {
+                // Atribui a variavel pacientes todos os Pacientes
                 var pacientes = await _pacienteService.GetAllPacientesAsync();
+                
+                // Caso não existam pacientes retorna NotFound
                 if (pacientes == null) return NotFound("Nenhum Paciente encontrado.");
                 
                 return Ok(pacientes);
@@ -89,7 +93,7 @@ namespace MedicChat.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Paciente model)
+        public async Task<IActionResult> Post(PacienteDto model)
         {
             try
             {
@@ -106,7 +110,7 @@ namespace MedicChat.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Paciente model)
+        public async Task<IActionResult> Put(int id, PacienteDto model)
         {
             try
             {
