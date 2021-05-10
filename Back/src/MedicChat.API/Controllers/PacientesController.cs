@@ -30,7 +30,7 @@ namespace MedicChat.API.Controllers
                 var pacientes = await _pacienteService.GetAllPacientesAsync();
                 
                 // Caso não existam pacientes retorna NotFound
-                if (pacientes == null) return NotFound("Nenhum Paciente encontrado.");
+                if (pacientes == null) return NoContent(); // Retorna StatusCode 204 - NoContent
                 
                 return Ok(pacientes);
             }
@@ -47,7 +47,7 @@ namespace MedicChat.API.Controllers
             try
             {
                 var paciente = await _pacienteService.GetPacienteByIdAsync(id);
-                if (paciente == null) return NotFound("O Identificador indicado, não corresponde a nenhum Paciente.");
+                if (paciente == null) return NoContent(); // Retorna StatusCode 204 - NoContent
                 
                 return Ok(paciente);
             }
@@ -64,7 +64,7 @@ namespace MedicChat.API.Controllers
             try
             {
                 var paciente = await _pacienteService.GetAllPacientesByNomeAsync(nome);
-                if (paciente == null) return NotFound("O Nome indicado não corresponde a nenhum Paciente.");
+                if (paciente == null) return NoContent(); // Retorna StatusCode 204 - NoContent
                 
                 return Ok(paciente);
             }
@@ -81,7 +81,7 @@ namespace MedicChat.API.Controllers
             try
             {
                 var paciente = await _pacienteService.GetPacienteByTelemovelAsync(telemovel);
-                if (paciente == null) return NotFound("O Telemovel indicado não corresponde a nenhum Paciente.");
+                if (paciente == null) return NoContent(); // Retorna StatusCode 204 - NoContent
                 
                 return Ok(paciente);
             }
@@ -98,7 +98,7 @@ namespace MedicChat.API.Controllers
             try
             {
                 var paciente = await _pacienteService.AddPaciente(model);
-                if (paciente == null) return BadRequest("Erro ao tentar adicionar Paciente.");
+                if (paciente == null) return NoContent(); // Retorna StatusCode 204 - NoContent
                 
                 return Ok(paciente);
             }
@@ -115,7 +115,7 @@ namespace MedicChat.API.Controllers
             try
             {
                 var paciente = await _pacienteService.UpdatePaciente(id, model);
-                if (paciente == null) return BadRequest("Erro ao tentar atualizar Paciente.");
+                if (paciente == null) return NoContent(); // Retorna StatusCode 204 - NoContent
                 
                 return Ok(paciente);
             }
@@ -131,9 +131,13 @@ namespace MedicChat.API.Controllers
         {
             try
             {
+                // Verifica se o Paciente existe
+                var paciente = await _pacienteService.GetPacienteByIdAsync(id);
+                if (paciente == null) return NoContent(); // Retorna StatusCode 204 - NoContent
+                
                 return await _pacienteService.DeletePaciente(id) ? 
                         Ok("Apagado com sucesso.") : 
-                        BadRequest("Paciente não apagado!");
+                        throw new Exception("Ocorreu algum problema ao tentar apagar o paciente!");
             }
             catch (Exception ex)
             {

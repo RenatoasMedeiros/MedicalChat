@@ -35,7 +35,7 @@ namespace MedicChat.API.Controllers
             try
             {
                 var videoChat = await _videoChatService.GetAllVideoChatAsync();
-                if (videoChat == null) return NotFound("Nenhuma Video Chamada encontrado.");
+                if (videoChat == null) return NoContent(); // Retorna StatusCode 204 - NoContent
 
                 return Ok(videoChat);
             }
@@ -52,7 +52,7 @@ namespace MedicChat.API.Controllers
             try
             {
                 var videoChat = await _videoChatService.GetVideoChatByIdAsync(id);
-                if (videoChat == null) return NotFound("O Identificador indicado, não corresponde a nenhuma Video Chamada.");
+                if (videoChat == null) return NoContent(); // Retorna StatusCode 204 - NoContent
 
                 return Ok(videoChat);
             }
@@ -69,7 +69,7 @@ namespace MedicChat.API.Controllers
             try
             {
                 var videoChat = await _videoChatService.GetAllVideoChatByNomeMedicoAsync(nomeMedico);
-                if (videoChat == null) return NotFound("O Médico indicado não corresponde a nenhuma Video Chamada.");
+                if (videoChat == null) return NoContent(); // Retorna StatusCode 204 - NoContent
 
                 return Ok(videoChat);
             }
@@ -86,7 +86,7 @@ namespace MedicChat.API.Controllers
             try
             {
                 var videoChat = await _videoChatService.GetAllVideoChatByNomePacienteAsync(nomePaciente);
-                if (videoChat == null) return NotFound("O Paciente indicado não corresponde a nenhuma Video Chamada.");
+                if (videoChat == null) return NoContent(); // Retorna StatusCode 204 - NoContent
 
                 return Ok(videoChat);
             }
@@ -103,7 +103,7 @@ namespace MedicChat.API.Controllers
             try
             {
                 var videoChat = await _videoChatService.AddVideoChat(model);
-                if (videoChat == null) return BadRequest("Erro ao tentar adicionar a Video Chamada.");
+                if (videoChat == null) return NoContent(); // Retorna StatusCode 204 - NoContent
 
                 //Serviço de enviar email
                 _mailSenderService.SendPlaintextGmail(videoChat.Paciente.Email, videoChat.Paciente.Nome, videoChat.DataInicio);
@@ -124,7 +124,7 @@ namespace MedicChat.API.Controllers
             try
             {
                 var videoChat = await _videoChatService.UpdateVideoChat(id, model);
-                if (videoChat == null) return BadRequest("Erro ao tentar atualizar a Video Chamada.");
+                if (videoChat == null) return NoContent(); // Retorna StatusCode 204 - NoContent
 
                 return Ok(videoChat);
             }
@@ -140,9 +140,13 @@ namespace MedicChat.API.Controllers
         {
             try
             {
+                // Verifica se a Consulta existe
+                var videoChat = await _videoChatService.GetVideoChatByIdAsync(id);
+                if (videoChat == null) return NoContent(); // Retorna StatusCode 204 - NoContent
+
                 return await _videoChatService.DeleteVideoChat(id) ?
                         Ok("Apagado com sucesso.") :
-                        BadRequest("Video Chamada não apagada!");
+                        throw new Exception("Ocorreu algum problema ao tentar apagar a consulta!");
             }
             catch (Exception ex)
             {
