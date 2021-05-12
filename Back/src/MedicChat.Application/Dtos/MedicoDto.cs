@@ -12,11 +12,12 @@ namespace MedicChat.Application.Dtos
         [Required(ErrorMessage ="O campo {0} é obrigatorio")]
         [EmailAddress(ErrorMessage = "O campo {0} precisa ser um e-mail válido")]
         public string Email { get; set; }
-        [Required(ErrorMessage ="O campo {0} é obrigatorio")]
-        public int Telemovel { get; set; }
+        [Required(ErrorMessage ="O campo {0} é obrigatorio.")]
+        [Phone(ErrorMessage="O campo {0} está com um numero inválido.")]
+        public string Telemovel { get; set; }
+        [RegularExpression(@".*\.(gif|jpe?g|bmp|png)$", ErrorMessage = "Não é uma imagem válida. Imagens válidas: (gif, jpg, png ou bmp).")]
         public string Foto { get; set; }
         [Required(ErrorMessage ="O campo {0} é obrigatorio")]
-
         public string DataNascimento { get; set; }
         public string Genero { get; set; }
         [Required(ErrorMessage ="O campo {0} é obrigatorio")]

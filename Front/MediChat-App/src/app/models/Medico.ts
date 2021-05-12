@@ -2,7 +2,7 @@ export interface Medico {
   id: number;
   nome: string;
   email: string;
-  telemovel: number;
+  telemovel: string;
   foto: string;
   dataNascimento: Date;
   genero: string;

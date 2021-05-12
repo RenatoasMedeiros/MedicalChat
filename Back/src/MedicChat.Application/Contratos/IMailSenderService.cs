@@ -7,11 +7,5 @@ namespace MedicChat.Application.Contratos
     {
         void SendPlaintextGmail(string recipientEmail, string recipientName, DateTime videochatDateInicio);
         void SendHtmlGmail(string recipientEmail, string recipientName);
-        void SendHtmlWithAttachmenttextGmail(string recipientEmail, string recipientName);
-
-        void SendPlaintextSendgrid(string recipientEmail, string recipientName);
-        void SendHtmlSendgrid(string recipientEmail, string recipientName);
-        void SendHtmlWithAttachmentSendgrid(string recipientEmail, string recipientName);
-        void SendSendgridBulk(IEnumerable<string> recipientEmails);
     }
 }

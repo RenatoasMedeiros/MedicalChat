@@ -27,7 +27,7 @@ export class AgendaInformacaoEditarComponent implements OnInit {
     this.form = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
       email: ['', [Validators.required, Validators.email]],
-      telemovel: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
+      telemovel: ['', [Validators.required]],
       foto: [''],
       dataNascimento: ['', Validators.required],
       genero: [''],

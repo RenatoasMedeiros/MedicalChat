@@ -21,21 +21,6 @@ namespace MedicChat.Application
             throw new System.NotImplementedException();
         }
 
-        public void SendHtmlSendgrid(string recipientEmail, string recipientName)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void SendHtmlWithAttachmentSendgrid(string recipientEmail, string recipientName)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void SendHtmlWithAttachmenttextGmail(string recipientEmail, string recipientName)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public async void SendPlaintextGmail(string recipientEmail, string recipientName, DateTime videochatDate)
         {
             using (var scope = _serviceProvider.CreateScope()) {
@@ -53,15 +38,5 @@ namespace MedicChat.Application
             }
             throw new System.NotImplementedException();
         }
-
-        public void SendPlaintextSendgrid(string recipientEmail, string recipientName)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void SendSendgridBulk(IEnumerable<string> recipientEmails)
-        {
-            throw new System.NotImplementedException();
-        }
-    }
+   }
 }

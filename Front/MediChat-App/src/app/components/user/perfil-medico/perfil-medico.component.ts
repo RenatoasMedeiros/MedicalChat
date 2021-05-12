@@ -33,7 +33,7 @@ export class PerfilMedicoComponent implements OnInit {
       titulo: ['', Validators.required],
       nome: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
       email: ['', [Validators.required, Validators.email]],
-      telemovel: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
+      telemovel: ['', [Validators.required]],
       genero: [''],
       descricao: ['', Validators.maxLength(200)],
       password: ['', [Validators.required, Validators.minLength(6)]],

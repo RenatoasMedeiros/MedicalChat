@@ -31,7 +31,7 @@ export class PacienteInformacaoComponent implements OnInit {
       pacienteEmail: ['', [Validators.required, Validators.email]],
       medicoEmail: ['', [Validators.required, Validators.email]],
       relatorio: ['', [Validators.required]],
-      telemovel: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
+      telemovel: ['', [Validators.required]],
       foto: [''],
       dataNascimento: ['', Validators.required],
       genero: [''],
