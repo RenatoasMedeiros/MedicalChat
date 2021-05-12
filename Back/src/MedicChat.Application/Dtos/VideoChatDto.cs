@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using MedicChat.Domain.model;
+using MedicChat.Domain.model.Enums;
 
 namespace MedicChat.Application.Dtos
 {
@@ -15,13 +16,13 @@ namespace MedicChat.Application.Dtos
         public DateTime DataFim { get; set; }
         [Required(ErrorMessage ="O campo {0} é obrigatorio")]
 
-        public string EstadoVideoChat { get; set; }
+        public VideoChatStatus EstadoVideoChat { get; set; }
 
         // Propriedade de Navegação!
         [Required(ErrorMessage ="O campo {0} é obrigatorio")]
 
         public int MedicoID { get; set; }
-        // public Medico Medico { get; set; }
+        public Medico Medico { get; set; }
         [Required(ErrorMessage ="O campo {0} é obrigatorio")]
 
         public int PacienteID { get; set; }
