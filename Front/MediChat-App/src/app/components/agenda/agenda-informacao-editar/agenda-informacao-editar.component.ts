@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-agenda-informacao-editar',
@@ -26,7 +26,9 @@ export class AgendaInformacaoEditarComponent implements OnInit {
   public validation(): void {
     this.form = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
+      medicoNome: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
       email: ['', [Validators.required, Validators.email]],
+      medicoEmail: ['', [Validators.required, Validators.email]],
       telemovel: ['', [Validators.required]],
       foto: [''],
       dataNascimento: ['', Validators.required],
@@ -40,4 +42,7 @@ export class AgendaInformacaoEditarComponent implements OnInit {
     this.form.reset();
   }
 
+  public cssValidator(campoForm: FormControl): any {
+    return { 'is-invalid': campoForm.errors && campoForm.touched };
+  }
 }

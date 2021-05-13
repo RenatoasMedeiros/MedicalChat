@@ -7,15 +7,15 @@
         <div class="form-group col-md-8">
           <label>Nome Completo:</label>
           <input type="text" class="form-control"
-          [ngClass]="{'is-invalid': f.nome.errors && f.nome.touched}"
+          [ngClass]="cssValidator(f.nome)"
           formControlName="nome" placeholder="Insira o Nome">
-          <div *ngIf="f.nome.errors?.required" class="invalid-feedback">
+          <div *ngIf="f.nome.errors?.required  && f.nome.touched" class="invalid-feedback">
             Nome é obrigatório.
           </div>
-          <div *ngIf="f.nome.errors?.minlength"  class="invalid-feedback">
+          <div *ngIf="f.nome.errors?.minlength  && f.nome.touched"  class="invalid-feedback">
             Nome deve ter no minimo 4 caracteres.
           </div>
-          <div *ngIf="f.nome.errors?.maxlength"  class="invalid-feedback">
+          <div *ngIf="f.nome.errors?.maxlength  && f.nome.touched"  class="invalid-feedback">
             Nome deve ter no máximo 100 caracteres.
           </div>
         </div>
@@ -28,33 +28,33 @@
         <div class="form-group col-md-6">
           <label>Endereço:</label>
           <input type="text" class="form-control"
-          [ngClass]="{'is-invalid': f.endereco.errors && f.endereco.touched}"
+          [ngClass]="cssValidator(f.endereco)"
           formControlName="endereco" placeholder="Rua das Ruas, Nº1">
-          <div *ngIf="f.endereco.errors?.required" class="invalid-feedback">
+          <div *ngIf="f.endereco.errors?.required && f.endereco.touched" class="invalid-feedback">
             Endereço é obrigatório.
           </div>
-          <div *ngIf="f.endereco.errors?.minlength"  class="invalid-feedback">
+          <div *ngIf="f.endereco.errors?.minlength && f.endereco.touched"  class="invalid-feedback">
             Endereço deve ter no minimo 4 caracteres.
           </div>
-          <div *ngIf="f.endereco.errors?.maxlength"  class="invalid-feedback">
+          <div *ngIf="f.endereco.errors?.maxlength && f.endereco.touched"  class="invalid-feedback">
             Endereço deve ter no máximo 100 caracteres.
           </div>
         </div>
         <div class="form-group col-md-2">
           <label>Código Postal:</label>
           <input type="text" class="form-control"
-          [ngClass]="{'is-invalid': f.codPostal.errors && f.codPostal.touched}"
+          [ngClass]="cssValidator(f.codPostal)"
           formControlName="codPostal" placeholder="0000-000">
-          <div *ngIf="f.codPostal.errors?.required" class="invalid-feedback">
+          <div *ngIf="f.codPostal.errors?.required && f.codPostal.touched" class="invalid-feedback">
             Código Postal é obrigatório.
           </div>
         </div>
         <div class="form-group col-md-4">
           <label>Data de Nascimento:</label>
           <input type="datetime" class="form-control"
-          [ngClass]="{'is-invalid': f.dataNascimento.errors && f.dataNascimento.touched}"
+          [ngClass]="cssValidator(f.dataNascimento)"
           formControlName="dataNascimento" placeholder="01/01/1991">
-          <div *ngIf="f.dataNascimento.errors?.required" class="invalid-feedback">
+          <div *ngIf="f.dataNascimento.errors?.required && f.dataNascimento.touched" class="invalid-feedback">
             Data de Nascimento é obrigatória.
           </div>
         </div>
@@ -62,30 +62,35 @@
       <div class="form-row">
         <div class="form-group col-md-2">
           <label>Gênero:</label>
-          <select class="form-control">
+          <select class="form-control"
+          [ngClass]="cssValidator(f.genero)"
+          formControlName="genero">
+          <div *ngIf="f.genero.errors?.required && f.genero.touched" class="invalid-feedback">
+            Genero é obrigatório.
+          </div>
             <option value=""></option>
-            <option value="Participante">Masculino</option>
-            <option value="Palestrante">Feminino</option>
+            <option value="male">Masculino</option>
+            <option value="female">Feminino</option>
           </select>
         </div>
         <div class="form-group col-md-4">
           <label>Contacto:</label>
           <input type="text" class="form-control"
-          [ngClass]="{'is-invalid': f.telemovel.errors && f.telemovel.touched}"
+          [ngClass]="cssValidator(f.telemovel)"
           formControlName="telemovel" placeholder="912345678">
-          <div *ngIf="f.telemovel.errors?.required" class="invalid-feedback">
+          <div *ngIf="f.telemovel.errors?.required && f.telemovel.touched" class="invalid-feedback">
             Telemóvel é obrigatório.
           </div>
         </div>
         <div class="form-group col-md-6">
           <label>E-mail:</label>
           <input type="text" class="form-control"
-          [ngClass]="{'is-invalid': f.email.errors && f.email.touched}"
+          [ngClass]="cssValidator(f.email)"
           formControlName="email" placeholder="Email">
-          <div *ngIf="f.email.errors?.required" class="invalid-feedback">
+          <div *ngIf="f.email.errors?.required && f.email.touched" class="invalid-feedback">
             E-mail é obrigatório.
           </div>
-          <div *ngIf="f.email.errors?.email" class="invalid-feedback">
+          <div *ngIf="f.email.errors?.email && f.email.touched" class="invalid-feedback">
             Endereço de E-mail Inválido.
           </div>
         </div>

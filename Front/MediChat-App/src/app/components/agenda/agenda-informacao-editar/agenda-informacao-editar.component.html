@@ -41,21 +41,21 @@
           </div>
         <div class="form-group col-sm-6">
           <label>Medico:</label>
-          <input type="text" class="form-control" disabled= disable
-          [ngClass]="{'is-invalid': f.MedicoNome.errors && f.MedicoNome.touched}"
-          formControlName="MedicoNome">
+          <input type="text" class="form-control" [disabled]
+          [ngClass]="cssValidator(f.medicoNome)"
+          formControlName="medicoNome">
         </div>
         <div class="form-group col-sm-6">
           <label>E-mail:</label>
-          <input type="text" class="form-control" disabled= disable
-          [ngClass]="{'is-invalid': f.medicoEmail.errors && f.medicoEmail.touched}"
+          <input type="text" class="form-control" [disabled]
+          [ngClass]="cssValidator(f.medicoEmail)"
           formControlName="medicoEmail" >
         </div>
       </div>
       <div class="form-row">
         <form-group class="col-12">
           <label>Relatório:</label>
-          <textarea class="form-control" rows="12" formControlName="relatorio" disabled= disable>Leve arranhao na perna direita, recomendado joalheiras no futebol</textarea>
+          <textarea class="form-control" rows="12" formControlName="relatorio">Leve arranhao na perna direita, recomendado joalheiras no futebol</textarea>
         </form-group>
       </div>
     </div>

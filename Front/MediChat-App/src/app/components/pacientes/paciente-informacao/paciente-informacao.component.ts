@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-paciente-informacao',
@@ -19,22 +19,18 @@ export class PacienteInformacaoComponent implements OnInit {
     private fb: FormBuilder
   ) { }
 
-
   ngOnInit(): void {
     this.validation();
   }
 
   public validation(): void {
     this.form = this.fb.group({
-      pacienteNome: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
-      MedicoNome: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
-      pacienteEmail: ['', [Validators.required, Validators.email]],
-      medicoEmail: ['', [Validators.required, Validators.email]],
-      relatorio: ['', [Validators.required]],
+      nome: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
+      email: ['', [Validators.required, Validators.email]],
       telemovel: ['', [Validators.required]],
       foto: [''],
       dataNascimento: ['', Validators.required],
-      genero: [''],
+      genero: ['', Validators.required],
       endereco: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(70)]],
       codPostal: ['', Validators.required],
     });
@@ -42,5 +38,9 @@ export class PacienteInformacaoComponent implements OnInit {
 
   public resetForm(): void {
     this.form.reset();
+  }
+
+  public cssValidator(campoForm: FormControl): any {
+    return {'is-invalid': campoForm.errors && campoForm.touched};
   }
 }

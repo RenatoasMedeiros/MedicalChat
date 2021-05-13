@@ -17,7 +17,7 @@
       <div class="form-group">
         <label>Nome Completo</label>
         <input type="text" class="form-control" placeholder="Insira o Nome Completo"
-        [ngClass]="{'is-invalid': f.nome.errors && f.nome.touched}"
+        [ngClass]="cssValidator(f.nome)"
         formControlName="nome">
         <div *ngIf="f.nome.errors?.required" class="invalid-feedback">
           Nome é obrigatório.

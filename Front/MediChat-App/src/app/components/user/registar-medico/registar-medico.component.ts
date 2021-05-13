@@ -1,5 +1,5 @@
 import { ValidatorField } from './../../../helpers/ValidatorField';
-import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -13,7 +13,6 @@ export class RegistarMedicoComponent implements OnInit {
 
   get f(): any {
     return this.form.controls;
-
   }
 
   constructor(
@@ -40,5 +39,9 @@ export class RegistarMedicoComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmarPassword: ['',Validators.required]
     }, formOptions);
+  }
+
+  public cssValidator(campoForm: FormControl): any {
+    return {'is-invalid': campoForm.errors && campoForm.touched};
   }
 }
