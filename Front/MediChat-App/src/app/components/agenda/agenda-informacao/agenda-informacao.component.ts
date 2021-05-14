@@ -2,17 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-agenda-informacao-editar',
-  templateUrl: './agenda-informacao-editar.component.html',
-  styleUrls: ['./agenda-informacao-editar.component.scss']
+  selector: 'app-agenda-informacao',
+  templateUrl: './agenda-informacao.component.html',
+  styleUrls: ['./agenda-informacao.component.scss']
 })
-export class AgendaInformacaoEditarComponent implements OnInit {
+export class AgendaInformacaoComponent implements OnInit {
 
   public form: FormGroup;
 
   get f(): any {
     return this.form.controls;
-
   }
 
   constructor(
@@ -25,16 +24,9 @@ export class AgendaInformacaoEditarComponent implements OnInit {
 
   public validation(): void {
     this.form = this.fb.group({
-      nome: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
       medicoNome: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
-      email: ['', [Validators.required, Validators.email]],
       medicoEmail: ['', [Validators.required, Validators.email]],
-      telemovel: ['', [Validators.required]],
-      foto: [''],
-      dataNascimento: ['', Validators.required],
-      genero: [''],
-      endereco: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(70)]],
-      codPostal: ['', Validators.required],
+      relatorio: ['', [Validators.required, Validators.maxLength(3000)]],
     });
   }
 

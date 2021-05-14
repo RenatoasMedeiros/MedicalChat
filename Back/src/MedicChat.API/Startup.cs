@@ -52,6 +52,7 @@ namespace MedicChat.API
             services.AddScoped<IPacientePersist, PacientePersist>();
             services.AddScoped<IVideoChatService, VideoChatService>();
             services.AddScoped<IVideoChatPersist, VideoChatPersist>();
+            services.AddScoped<IMailSenderService, MailSenderService>();
 
             var from = Configuration.GetSection("Mail")["From"];
             var gmailSender = Configuration.GetSection("Gmail")["Sender"];
@@ -66,7 +67,6 @@ namespace MedicChat.API
                 EnableSsl = true,
             });
 
-            services.AddScoped<IMailSenderService, MailSenderService>();
 
             services.AddCors();
             services.AddSwaggerGen(c =>

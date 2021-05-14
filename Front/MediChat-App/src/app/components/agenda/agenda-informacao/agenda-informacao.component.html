@@ -44,18 +44,30 @@
           <input type="text" class="form-control" [disabled]
           [ngClass]="cssValidator(f.medicoNome)"
           formControlName="medicoNome">
+          <div *ngIf="f.medicoNome.errors?.required && f.medicoNome.touched" class="invalid-feedback">
+            O nome do Médico é obrigatório.
+          </div>
         </div>
         <div class="form-group col-sm-6">
           <label>E-mail:</label>
           <input type="text" class="form-control" [disabled]
           [ngClass]="cssValidator(f.medicoEmail)"
           formControlName="medicoEmail" >
+          <div *ngIf="f.medicoEmail.errors?.required && f.medicoEmail.touched" class="invalid-feedback">
+            O E-mail do Médico é obrigatório.
+          </div>
         </div>
       </div>
       <div class="form-row">
         <form-group class="col-12">
           <label>Relatório:</label>
-          <textarea class="form-control" rows="12" formControlName="relatorio">Leve arranhao na perna direita, recomendado joalheiras no futebol</textarea>
+          <textarea class="form-control" rows="12" [ngClass]="cssValidator(f.relatorio)" formControlName="relatorio"> </textarea>
+            <div *ngIf="f.relatorio.errors?.required && f.relatorio.touched" class="invalid-feedback">
+              O Relatorio é obrigatório.
+            </div>
+            <div *ngIf="f.relatorio.errors?.maxlength && f.relatorio.touched"  class="invalid-feedback">
+              Endereço deve ter no máximo 3000 caracteres.
+            </div>
         </form-group>
       </div>
     </div>

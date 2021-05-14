@@ -106,7 +106,14 @@ namespace MedicChat.API.Controllers
                 if (videoChat == null) return NoContent(); // Retorna StatusCode 204 - NoContent
 
                 //Serviço de enviar email
-                _mailSenderService.SendPlaintextGmail(videoChat.Paciente.Email, videoChat.Paciente.Nome, videoChat.DataInicio);
+                try 
+                {
+                    _mailSenderService.SendPlaintextGmail(videoChat.Paciente.Email, videoChat.Paciente.Nome, videoChat.DataInicio);
+                }
+                catch(Exception ex) {
+                    return this.StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Erro ao tentar adicionar a Video Chamada, email não enviado ao Paciente Erro: {ex.Message}");
+                }
 
                 return Ok(videoChat);
             }

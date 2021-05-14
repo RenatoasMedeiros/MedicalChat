@@ -21,6 +21,8 @@ export class AgendaListaComponent implements OnInit {
   public videoChat: VideoChat[] = [];
   public videoChatFiltrada: VideoChat[] = [];
 
+  public mobile: boolean = false;
+
   private _filtroLista: string = '';
 
   public get filtroLista() {
@@ -52,6 +54,9 @@ export class AgendaListaComponent implements OnInit {
   ngOnInit(): void {
     this.spinner.show();
     this.getVideoChats();
+    if (window.screen.width >= 375) {
+      this.mobile = true;
+    }
   }
 
   public getVideoChats(): void{
@@ -83,10 +88,6 @@ export class AgendaListaComponent implements OnInit {
   }
 
   infoVideoChat(id: number): void {
-    this.router.navigate([`agenda/informacao-visualizar/${id}`]);
-  }
-
-  editVideoChat(id: number): void {
     this.router.navigate([`agenda/informacao-editar/${id}`]);
   }
 }

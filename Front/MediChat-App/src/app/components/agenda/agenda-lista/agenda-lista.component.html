@@ -27,18 +27,18 @@
         <th>Paciente</th>
         <th>Data da Consulta</th>
         <th>Estado</th>
-        <th>Ações</th>
+        <th *ngIf="mobile">Ações</th>
       </tr>
     </thead>
     <tbody *ngIf="videoChat && videoChat.length">
       <tr *ngFor="let videoChat of videoChatFiltrada">
         <td (click)="infoVideoChat(videoChat.id)" *ngIf="videoChat.estadoVideoChat == '0'" class="d-none d-md-table-cell">{{videoChat.medico.nome}}</td>
         <td (click)="infoVideoChat(videoChat.id)" *ngIf="videoChat.estadoVideoChat == '0'">{{videoChat.paciente.nome}}</td>
-        <td (click)="infoVideoChat(videoChat.id)" *ngIf="videoChat.estadoVideoChat == '0'">{{videoChat.dataInicio | DateFormatPipe}} {{videoChat.dataInicio | DatePlusHourFormatPipe}} - {{videoChat.dataFim | DatePlusHourFormatPipe}}</td>
+        <td (click)="infoVideoChat(videoChat.id)" *ngIf="videoChat.estadoVideoChat == '0'">{{videoChat.dataInicio | DateFormatPipe}} {{videoChat.dataInicio | DatePlusHourFormatPipe}}</td>
         <td (click)="infoVideoChat(videoChat.id)" *ngIf="videoChat.estadoVideoChat == '0'">
           <span class="badge badge-pill badge-warning">Agendada</span>
         </td>
-        <td *ngIf="videoChat.estadoVideoChat == '0'">
+        <td *ngIf="videoChat.estadoVideoChat == '0' && mobile">
           <button type="button" class="btn btn-primary btn-sm mr-2" (click)="infoVideoChat(videoChat.id)" tooltip="Editar">
             <i class="fa fa-edit"></i>
           </button>
@@ -66,7 +66,7 @@
         <th>Paciente</th>
         <th>Data da Consulta</th>
         <th>Ações</th>
-        <th>Estado</th>
+        <th *ngIf="mobile">Ações</th>
       </tr>
     </thead>
     <tbody *ngIf="videoChat && videoChat.length">
@@ -83,7 +83,7 @@
         <td *ngIf="videoChat.estadoVideoChat == '1'">
           <span class="badge badge-pill badge-success">Concluida</span>
         </td>
-        <td *ngIf="videoChat.estadoVideoChat == '1'">
+        <td *ngIf="videoChat.estadoVideoChat == '1' && mobile">
           <button type="button" class="btn btn-primary btn-md mr-4" (click)="infoVideoChat(videoChat.id)" tooltip="Vizualizar">
             <i class="fas fa-eye"></i>
           </button>

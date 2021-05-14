@@ -1,5 +1,4 @@
-import { AgendaInformacaoVisualizarComponent } from './components/agenda/agenda-informacao-visualizar/agenda-informacao-visualizar.component';
-import { AgendaInformacaoEditarComponent } from './components/agenda/agenda-informacao-editar/agenda-informacao-editar.component';
+import { AgendaInformacaoComponent } from './components/agenda/agenda-informacao/agenda-informacao.component';
 import { AgendaListaComponent } from './components/agenda/agenda-lista/agenda-lista.component';
 import { MedicoInformacaoComponent } from './components/medicos/medico-informacao/medico-informacao.component';
 import { MedicoListaComponent } from './components/medicos/medico-lista/medico-lista.component';
@@ -14,6 +13,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -61,8 +61,7 @@ import { CommonModule } from '@angular/common';
     LoginComponent,
     RegistarMedicoComponent,
     AgendaListaComponent,
-    AgendaInformacaoVisualizarComponent,
-    AgendaInformacaoEditarComponent
+    AgendaInformacaoComponent
    ],
   imports: [
     BrowserModule,
@@ -74,6 +73,7 @@ import { CommonModule } from '@angular/common';
     CollapseModule.forRoot(),
     TooltipModule.forRoot(),
     BsDropdownModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     ModalModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 3000,
@@ -82,7 +82,7 @@ import { CommonModule } from '@angular/common';
       progressBar: true
     }),
     NgxSpinnerModule,
-    ClipboardModule
+    ClipboardModule,
   ],
   providers: [PacienteService, MedicoService, VideoChatService],
   bootstrap: [AppComponent],
