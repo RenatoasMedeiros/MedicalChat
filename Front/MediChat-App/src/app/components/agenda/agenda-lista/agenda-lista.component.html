@@ -32,14 +32,14 @@
     </thead>
     <tbody *ngIf="videoChat && videoChat.length">
       <tr *ngFor="let videoChat of videoChatFiltrada">
-        <td (click)="infoVideoChat(videoChat.id)" *ngIf="videoChat.estadoVideoChat == '0'" class="d-none d-md-table-cell">{{videoChat.medico.nome}}</td>
-        <td (click)="infoVideoChat(videoChat.id)" *ngIf="videoChat.estadoVideoChat == '0'">{{videoChat.paciente.nome}}</td>
-        <td (click)="infoVideoChat(videoChat.id)" *ngIf="videoChat.estadoVideoChat == '0'">{{videoChat.dataInicio | DateFormatPipe}} {{videoChat.dataInicio | DatePlusHourFormatPipe}}</td>
-        <td (click)="infoVideoChat(videoChat.id)" *ngIf="videoChat.estadoVideoChat == '0'">
+        <td *ngIf="videoChat.estadoVideoChat == '0'" class="d-none d-md-table-cell">{{videoChat.medico.nome}}</td>
+        <td *ngIf="videoChat.estadoVideoChat == '0'">{{videoChat.paciente.nome}}</td>
+        <td *ngIf="videoChat.estadoVideoChat == '0'">{{videoChat.dataInicio | DateFormatPipe}} {{videoChat.dataInicio | DatePlusHourFormatPipe}}</td>
+        <td *ngIf="videoChat.estadoVideoChat == '0'">
           <span class="badge badge-pill badge-warning">Agendada</span>
         </td>
         <td *ngIf="videoChat.estadoVideoChat == '0' && mobile">
-          <button type="button" class="btn btn-primary btn-sm mr-2" (click)="infoVideoChat(videoChat.id)" tooltip="Editar">
+          <button type="button" class="btn btn-primary btn-sm mr-2" (click)="editarVideoChat(videoChat.id)" tooltip="Editar">
             <i class="fa fa-edit"></i>
           </button>
 

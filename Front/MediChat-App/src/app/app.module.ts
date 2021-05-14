@@ -1,13 +1,10 @@
-import { AgendaInformacaoComponent } from './components/agenda/agenda-informacao/agenda-informacao.component';
-import { AgendaListaComponent } from './components/agenda/agenda-lista/agenda-lista.component';
-import { MedicoInformacaoComponent } from './components/medicos/medico-informacao/medico-informacao.component';
-import { MedicoListaComponent } from './components/medicos/medico-lista/medico-lista.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { CommonModule } from '@angular/common';
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -20,26 +17,41 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MedicosComponent } from './components/medicos/medicos.component';
-import { PacientesComponent } from './components/pacientes/pacientes.component';
-import { NavComponent } from './shared/nav/nav.component';
-import { TituloComponent } from './shared/titulo/titulo.component';
-import { PerfilMedicoComponent } from './components/user/perfil-medico/perfil-medico.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { AgendaComponent } from './components/agenda/agenda.component';
-import { PacienteListaComponent } from './components/pacientes/paciente-lista/paciente-lista.component';
-import { PacienteInformacaoComponent } from './components/pacientes/paciente-informacao/paciente-informacao.component';
-import { UserComponent } from './components/user/user.component';
-import { LoginComponent } from './components/user/login/login.component';
-import { RegistarMedicoComponent } from './components/user/registar-medico/registar-medico.component';
 
+
+// SERVICES
 import { PacienteService } from './services/paciente.service';
 import { MedicoService } from './services/medico.service';
 import { VideoChatService } from './services/videoChat.service';
 
+// HELPERS
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 import { DatePlusHourFormatPipe } from './helpers/DatePlusHourFormat.pipe';
-import { CommonModule } from '@angular/common';
+
+// COMPONENTS
+import { AgendaCriarComponent } from './components/agenda/agenda-criar/agenda-criar.component';
+import { AgendaInformacaoVisualizarComponent } from './components/agenda/agenda-informacao-visualizar/agenda-informacao-visualizar.component';
+import { AgendaListaComponent } from './components/agenda/agenda-lista/agenda-lista.component';
+import { AgendaComponent } from './components/agenda/agenda.component';
+
+import { MedicoInformacaoComponent } from './components/medicos/medico-informacao/medico-informacao.component';
+import { MedicoListaComponent } from './components/medicos/medico-lista/medico-lista.component';
+import { MedicosComponent } from './components/medicos/medicos.component';
+
+import { PacientesComponent } from './components/pacientes/pacientes.component';
+import { PacienteListaComponent } from './components/pacientes/paciente-lista/paciente-lista.component';
+import { PacienteInformacaoComponent } from './components/pacientes/paciente-informacao/paciente-informacao.component';
+
+import { PerfilMedicoComponent } from './components/user/perfil-medico/perfil-medico.component';
+import { UserComponent } from './components/user/user.component';
+import { LoginComponent } from './components/user/login/login.component';
+import { RegistarMedicoComponent } from './components/user/registar-medico/registar-medico.component';
+
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+
+// COMPONENTES PARTILHADOS
+import { NavComponent } from './shared/nav/nav.component';
+import { TituloComponent } from './shared/titulo/titulo.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +73,8 @@ import { CommonModule } from '@angular/common';
     LoginComponent,
     RegistarMedicoComponent,
     AgendaListaComponent,
-    AgendaInformacaoComponent
+    AgendaInformacaoVisualizarComponent,
+    AgendaCriarComponent
    ],
   imports: [
     BrowserModule,

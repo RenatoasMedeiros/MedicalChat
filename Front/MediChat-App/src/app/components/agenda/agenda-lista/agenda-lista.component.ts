@@ -88,6 +88,10 @@ export class AgendaListaComponent implements OnInit {
   }
 
   infoVideoChat(id: number): void {
-    this.router.navigate([`agenda/informacao-editar/${id}`]);
+    this.router.navigate([`agenda/informacao/${id}`]);
+  }
+
+  editarVideoChat(id: number): void {
+    this.router.navigate([`agenda/criar/${id}`]);
   }
 }

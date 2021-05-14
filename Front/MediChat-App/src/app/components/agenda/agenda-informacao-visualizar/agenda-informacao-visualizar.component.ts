@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-agenda-informacao',
-  templateUrl: './agenda-informacao.component.html',
-  styleUrls: ['./agenda-informacao.component.scss']
+  selector: 'app-agenda-informacao-visualizar',
+  templateUrl: './agenda-informacao-visualizar.component.html',
+  styleUrls: ['./agenda-informacao-visualizar.component.scss']
 })
-export class AgendaInformacaoComponent implements OnInit {
+export class AgendaInformacaoVisualizarComponent implements OnInit {
 
   public form: FormGroup;
 

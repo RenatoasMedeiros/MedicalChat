@@ -47,12 +47,12 @@
             <select class="form-control"
             [ngClass]="{'is-invalid': f.titulo.errors && f.titulo.touched}"
             formControlName="titulo">
-            <option value=""></option>
-            <option value="0">Não Quero</option>
-            <option value="Senhorita">Doutor</option>
-            <option value="Senhorita">Doutora</option>
-            <option value="Senhorita">Aprendiz</option>
-          </select>
+              <option value=""></option>
+              <option value="0">Não Quero</option>
+              <option value="doutor">Doutor</option>
+              <option value="doutora">Doutora</option>
+              <option value="aprendiz">Aprendiz</option>
+            </select>
           <div *ngIf="f.titulo.errors?.required" class="invalid-feedback">
             Titulo é obrigatório.
           </div>
