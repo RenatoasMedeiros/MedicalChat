@@ -1,3 +1,4 @@
+import { Paciente } from '@app/models/Paciente';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -25,14 +26,9 @@ export class AgendaCriarComponent implements OnInit {
 
   public validation(): void {
     this.form = this.fb.group({
-      nome: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
-      email: ['', [Validators.required, Validators.email]],
-      telemovel: ['', [Validators.required]],
-      foto: [''],
-      dataNascimento: ['', Validators.required],
-      genero: ['', Validators.required],
-      endereco: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(70)]],
-      codPostal: ['', Validators.required],
+      medico: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
+      paciente: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
+      dataInicio: ['', Validators.required],
     });
   }
 
