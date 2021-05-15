@@ -17,9 +17,7 @@ export class PacienteListaComponent implements OnInit {
 
   public pacientes: Paciente[] = [];
   public pacientesFiltrados: Paciente[] = [];
-  // pacientePrimeroNome = paciente => paciente.nome.split('^\w+').slice(0);
-  // pacienteUltimoNome = paciente => paciente.nome.split('(?<=^\w+\s).+').slice(0);
-
+  public pacienteId = 0;
 
   public widthFoto: number = 50;
   public marginFoto: number = 2;
@@ -82,7 +80,9 @@ export class PacienteListaComponent implements OnInit {
     });
   }
 
-  openModal(template: TemplateRef<any>) {
+  openModal(event: any, template: TemplateRef<any>, pacienteId: number): void {
+    event.stopPropagation(); // nao propaga o evento do click
+    this.pacienteId = pacienteId;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 

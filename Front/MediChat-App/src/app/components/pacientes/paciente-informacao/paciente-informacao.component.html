@@ -53,7 +53,8 @@
           <label>Data de Nascimento:</label>
           <input type="datetime" class="form-control"
           [ngClass]="cssValidator(f.dataNascimento)"
-          formControlName="dataNascimento" placeholder="01/01/1991">
+          formControlName="dataNascimento" placeholder="01/01/1991"
+          bsDatepicker [bsConfig]="bsConfig"> <!--Configurações do datepicker-->
           <div *ngIf="f.dataNascimento.errors?.required && f.dataNascimento.touched" class="invalid-feedback">
             Data de Nascimento é obrigatória.
           </div>

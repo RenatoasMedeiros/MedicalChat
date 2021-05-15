@@ -23,7 +23,7 @@ export class VideoChatService {
     return this.http.get<VideoChat[]>(`${this.baseURL}/${nomePaciente}/nome`);
   }
 
-  getPacienteById(id: number): Observable<VideoChat> {
+  getVideoChatById(id: number): Observable<VideoChat> {
     return this.http.get<VideoChat>(`${this.baseURL}/${id}`);
   }
 

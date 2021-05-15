@@ -25,12 +25,13 @@
       </div>
       <div class="form-row">
         <div class="form-group col-md-4">
-          <label>Data de Nascimento:</label>
+          <label>Data da Consulta:</label>
           <input type="datetime" class="form-control"
           [ngClass]="cssValidator(f.dataInicio)"
-          formControlName="dataInicio" placeholder="01/01/1991">
+          formControlName="dataInicio" placeholder="21/05/2003 18:05"
+          bsDatepicker [bsConfig]="bsConfig"> <!--Configurações do datepicker-->
           <div *ngIf="f.dataInicio.errors?.required && f.dataInicio.touched" class="invalid-feedback">
-            Data da Concsulta é obrigatória.
+            Data da Consulta é obrigatória.
           </div>
         </div>
       </div>

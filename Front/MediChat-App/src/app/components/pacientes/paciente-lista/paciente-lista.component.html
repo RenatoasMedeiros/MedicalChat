@@ -38,7 +38,7 @@
       </tr>
     </thead>
     <tbody *ngIf="pacientes && pacientes.length">
-      <tr *ngFor="let paciente of pacientesFiltrados">
+      <tr *ngFor="let paciente of pacientesFiltrados" (click)="infoPaciente(paciente.id)">
         <td class="d-none d-md-table-cell">
           <img [collapse]="!exibirFoto"
           [isAnimated]="true"
@@ -56,16 +56,11 @@
           <ng-template #notMobile>
             {{paciente.email}}
           </ng-template>
-
         </td>
         <td class="d-none d-md-table-cell">{{paciente.dataNascimento | DateFormatPipe}}</td>
         <td class="d-none d-md-table-cell">{{paciente.telemovel}}</td>
         <td>
-          <button type="button" class="btn btn-primary btn-sm mr-2" (click)="infoPaciente(paciente.id)" tooltip="Editar">
-            <i class="fa fa-edit"></i>
-          </button>
-
-          <button type="button" class="btn btn-danger btn-sm" tooltip="Excluir" (click)="openModal(template)">
+          <button type="button" class="btn btn-danger btn-md" tooltip="Excluir" (click)="openModal($event, template, paciente.id)">
             <i class="fa fa-trash"></i>
           </button>
         </td>
@@ -83,7 +78,7 @@
 
 <ng-template #template>
   <div class="modal-body text-center">
-    <p>Tem certeza que deseja apagar o Paciente?</p>
+    <p>Tem certeza que deseja apagar o Paciente de código {{this.pacienteId}}?</p>
     <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
     <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
   </div>

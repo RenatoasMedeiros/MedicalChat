@@ -20,6 +20,7 @@ export class AgendaListaComponent implements OnInit {
 
   public videoChat: VideoChat[] = [];
   public videoChatFiltrada: VideoChat[] = [];
+  public videoChatId = 0;
 
   public mobile: boolean = false;
 
@@ -74,7 +75,9 @@ export class AgendaListaComponent implements OnInit {
     });
   }
 
-  openModal(template: TemplateRef<any>) {
+  openModal(event: any, template: TemplateRef<any>, videoChatId: number): void {
+    event.stopPropagation(); // nao propaga o evento do click
+    this.videoChatId = videoChatId;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 

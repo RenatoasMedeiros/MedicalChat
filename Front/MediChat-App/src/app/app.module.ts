@@ -11,13 +11,15 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+// CONFIGURAÇÕES DO DATEPICKER
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { ptBrLocale } from 'ngx-bootstrap/locale';
 
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
 
 // SERVICES
 import { PacienteService } from './services/paciente.service';
@@ -52,6 +54,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 // COMPONENTES PARTILHADOS
 import { NavComponent } from './shared/nav/nav.component';
 import { TituloComponent } from './shared/titulo/titulo.component';
+
+defineLocale('pt', ptBrLocale);
 
 @NgModule({
   declarations: [
