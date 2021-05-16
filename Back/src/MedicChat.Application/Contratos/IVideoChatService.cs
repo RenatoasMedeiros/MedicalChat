@@ -11,8 +11,7 @@ namespace MedicChat.Application.Contratos
         Task<bool> DeleteVideoChat(int videoChatId);
 
         Task<VideoChatDto[]> GetAllVideoChatAsync();
-        Task<VideoChatDto[]> GetAllVideoChatByNomeMedicoAsync(string nomeMedico);
-        Task<VideoChatDto[]> GetAllVideoChatByNomePacienteAsync(string nomePaciente);
+        Task<VideoChatDto[]> GetAllVideoChatsByPacienteIdAsync(int pacienteId);
         Task<VideoChatDto> GetVideoChatByIdAsync(int videoChatId);
     }
 }

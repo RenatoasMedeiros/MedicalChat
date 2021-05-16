@@ -6,8 +6,7 @@ namespace MedicChat.Persistence.Contratos
     public interface IVideoChatPersist
     {
         Task<VideoChat[]> GetAllVideoChatAsync();
-        Task<VideoChat[]> GetAllVideoChatByNomeMedicoAsync(string nomeMedico);
-        Task<VideoChat[]> GetAllVideoChatByNomePacienteAsync(string nomePaciente);
+        Task<VideoChat[]> GetAllVideoChatsByPacienteIdAsync(int pacienteId);
         Task<VideoChat> GetVideoChatByIdAsync(int videoChatId);
     }
 }

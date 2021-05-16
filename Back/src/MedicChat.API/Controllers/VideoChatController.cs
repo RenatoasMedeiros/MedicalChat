@@ -63,29 +63,12 @@ namespace MedicChat.API.Controllers
             }
         }
 
-        [HttpGet("{nomeMedico}/nomeMedico")]
-        public async Task<IActionResult> GetAllVideoChatByNomeMedicoAsync(string nomeMedico)
+        [HttpGet("paciente/{pacienteId}")]
+        public async Task<IActionResult> GetAllVideoChatsByPacienteIdAsync(int pacienteId)
         {
             try
             {
-                var videoChat = await _videoChatService.GetAllVideoChatByNomeMedicoAsync(nomeMedico);
-                if (videoChat == null) return NoContent(); // Retorna StatusCode 204 - NoContent
-
-                return Ok(videoChat);
-            }
-            catch (Exception ex)
-            {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar recuperar a Video Chamada. Erro: {ex.Message}");
-            }
-        }
-
-        [HttpGet("{nomePaciente}/nomePaciente")]
-        public async Task<IActionResult> GetAllVideoChatByNomePacienteAsync(string nomePaciente)
-        {
-            try
-            {
-                var videoChat = await _videoChatService.GetAllVideoChatByNomePacienteAsync(nomePaciente);
+                var videoChat = await _videoChatService.GetAllVideoChatsByPacienteIdAsync(pacienteId);
                 if (videoChat == null) return NoContent(); // Retorna StatusCode 204 - NoContent
 
                 return Ok(videoChat);

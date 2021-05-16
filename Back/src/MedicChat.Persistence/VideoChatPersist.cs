@@ -26,24 +26,12 @@ namespace MedicChat.Persistence
             return await query.ToArrayAsync();
         }
 
-        public async Task<VideoChat[]> GetAllVideoChatByNomeMedicoAsync(string nomeMedico)
+        public async Task<VideoChat[]> GetAllVideoChatsByPacienteIdAsync(int pacienteId)
         {
-            IQueryable<VideoChat> query = _context.VideoChats
-                .Include(m => m.Medico)
-                .Include(p => p.Paciente);
+            IQueryable<VideoChat> query = _context.VideoChats;
 
-            query = query.AsNoTracking().OrderBy(m => m.Id).Where(m => m.Medico.Nome.ToLower().Contains(nomeMedico.ToLower()));
-
-            return await query.ToArrayAsync();
-        }
-
-        public async Task<VideoChat[]> GetAllVideoChatByNomePacienteAsync(string nomePaciente)
-        {
-            IQueryable<VideoChat> query = _context.VideoChats
-                .Include(m => m.Medico)
-                .Include(p => p.Paciente);
-
-            query = query.AsNoTracking().OrderBy(m => m.Id).Where(m => m.Paciente.Nome.ToLower().Contains(nomePaciente.ToLower()));
+            query = query.AsNoTracking()
+                         .Where(videoChat => videoChat.PacienteID == pacienteId);
 
             return await query.ToArrayAsync();
         }

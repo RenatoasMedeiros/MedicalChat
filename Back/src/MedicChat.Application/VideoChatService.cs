@@ -101,33 +101,15 @@ namespace MedicChat.Application
             }
         }
 
-        public async Task<VideoChatDto[]> GetAllVideoChatByNomeMedicoAsync(string nomeMedico)
+        public async Task<VideoChatDto[]> GetAllVideoChatsByPacienteIdAsync(int pacienteId)
         {
             try
             {
-                var videoChat = await _videoChatPersist.GetAllVideoChatByNomeMedicoAsync(nomeMedico);
-                if (videoChat == null) return null;
+                var videoChats = await _videoChatPersist.GetAllVideoChatsByPacienteIdAsync(pacienteId);
+                if (videoChats == null) return null;
 
-                // Dado o Objeto medicoDto é mapeado os medicos
-                var resultado = _mapper.Map<VideoChatDto[]>(videoChat);
-
-                return resultado;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public async Task<VideoChatDto[]> GetAllVideoChatByNomePacienteAsync(string nomePaciente)
-        {
-            try
-            {
-                var videoChat = await _videoChatPersist.GetAllVideoChatByNomePacienteAsync(nomePaciente);
-                if (videoChat == null) return null;
-
-                // Dado o Objeto medicoDto é mapeado os medicos
-                var resultado = _mapper.Map<VideoChatDto[]>(videoChat);
+                // Dado o Objeto VideoChatDto é mapeado os videoChats
+                var resultado = _mapper.Map<VideoChatDto[]>(videoChats);
 
                 return resultado;
             }
