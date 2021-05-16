@@ -100,29 +100,19 @@ export class PacienteInformacaoComponent implements OnInit {
   public guardarAlteracoes(): void{
     this.spinner.show();
     if(this.form.valid) {
-      if(this.estadoGuardar === 'post') {
-        this.paciente = {...this.form.value} // atribui ao paciente o formulário (Se o mesmo for válido) (SPREAD OPERATOR)
-        this.pacienteService.postPaciente(this.paciente).subscribe(
-          () => this.toaster.success('Paciente guardado com Sucesso!', 'Sucesso'), // NEXT
-          (error: any) => {
-            console.error(error);
-            this.spinner.hide();
-            this.toaster.error('Erro ao guardar o Paciente', 'Erro');
-          }, // ERROR
-          () => this.spinner.hide() // COMPLETE
-        );
-      } else { // Caso seja PUT e não post
-        this.paciente = {id: this.paciente.id, ...this.form.value} // atribui ao paciente o formulário, MENOS o Id pois ele tem que se manter visto que é um PUT (Se o mesmo for válido) (SPREAD OPERATOR)
-        this.pacienteService.putPaciente(this.paciente.id, this.paciente).subscribe(
-          () => this.toaster.success('Paciente guardado com Sucesso!', 'Sucesso'), // NEXT
-          (error: any) => {
-            console.error(error);
-            this.spinner.hide();
-            this.toaster.error('Erro ao guardar o Paciente', 'Erro');
-          }, // ERROR
-          () => this.spinner.hide() // COMPLETE
-        );
-      }
+      this.paciente = (this.estadoGuardar === 'post')
+                    ? {...this.form.value} // atribui ao paciente o formulário (Se o mesmo for válido) (SPREAD OPERATOR)
+                    : { id: this.paciente.id, ...this.form.value} // atribui ao paciente o formulário, MENOS o Id pois ele tem que se manter visto que é um PUT (Se o mesmo for válido) (SPREAD OPERATOR)
+
+      this.pacienteService[this.estadoGuardar](this.paciente).subscribe(
+        () => this.toaster.success('Paciente guardado com Sucesso!', 'Sucesso'), // NEXT
+        (error: any) => {
+          console.error(error);
+          this.spinner.hide();
+          this.toaster.error('Erro ao guardar o Paciente', 'Erro');
+        }, // ERROR
+        () => this.spinner.hide() // COMPLETE
+      );
     }
   }
 }
