@@ -55,7 +55,7 @@ export class PacienteListaComponent implements OnInit {
 
   public ngOnInit(): void {
     this.spinner.show();
-    this.getPacientes();
+    this.carregarPacientes();
     if (window.screen.width <= 375) {
       this.mobile = true;
     }
@@ -65,7 +65,7 @@ export class PacienteListaComponent implements OnInit {
     this.exibirFoto = !this.exibirFoto;
   }
 
-  public getPacientes(): void{
+  public carregarPacientes(): void{
     this.pacienteService.getPacientes().subscribe({
       next: (_pacientes: Paciente[]) => {
         this.pacientes = _pacientes;
@@ -88,7 +88,23 @@ export class PacienteListaComponent implements OnInit {
 
   confirm(): void {
     this.modalRef.hide();
-    this.toastr.success('O Paciente foi apagado com sucesso!', 'Apagado!');
+    this.spinner.show();
+
+    this.pacienteService.deletePaciente(this.pacienteId).subscribe(
+      (resultado: any) => { // NEXT
+        if(resultado.mensagem == 'Apagado'){
+          this.toastr.success('O Paciente foi apagado com sucesso!', 'Apagado!');
+          this.spinner.hide();
+          this.carregarPacientes();
+        }
+      },
+      (error: any) => { // ERROR
+        console.error(error);
+        this.toastr.error(`Erro ao tentar Apagar o Paciente ${this.pacienteId}`, 'Erro');
+        this.spinner.hide();
+      },
+      () => this.spinner.hide(), // COMPLETE
+    );
   }
 
   decline(): void {

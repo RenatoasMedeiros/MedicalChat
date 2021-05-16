@@ -8,7 +8,7 @@
           <label>Médico:</label>
           <input type="text" class="form-control"
           [ngClass]="cssValidator(f.medico)"
-          formControlName="medico" placeholder="Insira o Nome do medico">
+          formControlName="medico" placeholder="Insira o nome do Médico">
           <div *ngIf="f.medico.errors?.required  && f.medico.touched" class="invalid-feedback">
             Um Medico é obrigatório.
           </div>
@@ -17,7 +17,7 @@
           <label>Paciente:</label>
           <input type="text" class="form-control"
           [ngClass]="cssValidator(f.paciente)"
-          formControlName="paciente" placeholder="Insira o Nome do Paciente">
+          formControlName="paciente" placeholder="Insira o nome do Paciente">
           <div *ngIf="f.paciente.errors?.required  && f.paciente.touched" class="invalid-feedback">
             Um Paciente é obrigatório.
           </div>

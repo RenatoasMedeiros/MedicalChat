@@ -23,4 +23,15 @@ constructor(private http: HttpClient) { }
     return this.http.get<Paciente>(`${this.baseURL}/${id}`);
   }
 
+  postPaciente(paciente: Paciente): Observable<Paciente> {
+    return this.http.post<Paciente>(this.baseURL, paciente);
+  }
+
+  putPaciente(id: number, paciente: Paciente): Observable<Paciente> {
+    return this.http.put<Paciente>(`${this.baseURL}/${id}`, paciente);
+  }
+
+  deletePaciente(id: number): Observable<any> { // vai receber um objeto
+    return this.http.delete<any>(`${this.baseURL}/${id}`);
+  }
 }

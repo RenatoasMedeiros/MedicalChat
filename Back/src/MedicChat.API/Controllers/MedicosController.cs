@@ -133,9 +133,9 @@ namespace MedicChat.API.Controllers
                 var medico = await _medicoService.GetMedicosByIdAsync(id);
                 if (medico == null) return NoContent(); // Retorna StatusCode 204 - NoContent
 
-                return await _medicoService.DeleteMedico(id) ? 
-                        Ok("Deletado") : 
-                        throw new Exception("Ocorreu algum problema ao tentar apagar o medico!");
+                return await _medicoService.DeleteMedico(id)
+                        ? Ok(new { mensagem = "Apagado"}) // retorna um objeto para o front end (boa prática)
+                        : throw new Exception("Ocorreu algum problema ao tentar apagar o Médico!");
             }
             catch (Exception ex)
             {

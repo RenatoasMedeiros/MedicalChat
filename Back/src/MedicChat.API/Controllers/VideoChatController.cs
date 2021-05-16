@@ -151,9 +151,9 @@ namespace MedicChat.API.Controllers
                 var videoChat = await _videoChatService.GetVideoChatByIdAsync(id);
                 if (videoChat == null) return NoContent(); // Retorna StatusCode 204 - NoContent
 
-                return await _videoChatService.DeleteVideoChat(id) ?
-                        Ok("Apagado com sucesso.") :
-                        throw new Exception("Ocorreu algum problema ao tentar apagar a consulta!");
+                return await _videoChatService.DeleteVideoChat(id)
+                        ? Ok(new { mensagem = "Apagado"}) // retorna um objeto para o front end (boa prática)
+                        : throw new Exception("Ocorreu algum problema ao tentar apagar a consulta!");
             }
             catch (Exception ex)
             {

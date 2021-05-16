@@ -16,11 +16,13 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class PacienteInformacaoComponent implements OnInit {
 
-  locale = 'pt'; // idioma português
-
-  public form: FormGroup;
-
   paciente = {} as Paciente // inicializar paciente do tipo Paciente
+  form: FormGroup;
+  estadoGuardar = 'post'; // Inicia em post para criar um novo paciente
+
+
+
+  locale = 'pt'; // idioma português
 
   get f(): any {
     return this.form.controls;
@@ -49,6 +51,9 @@ export class PacienteInformacaoComponent implements OnInit {
 
     if(pacienteIdParam !== null){ // verifico se o get é diferente de nulo
       this.spinner.show(); // ativa o spinner
+
+      this.estadoGuardar = 'put'; // PUT pois vai editar
+
       this.pacienteService.getPacienteById(+pacienteIdParam).subscribe( // + para converter para o tipo INT, pois o pacienteId é retornado como uma string
         { // subscrive recebe um observable com 3 propriedades
           next: (paciente: Paciente) => { // realiza uma copia do objeto do parametro e atribui para dentro do paciente
@@ -90,5 +95,34 @@ export class PacienteInformacaoComponent implements OnInit {
 
   public cssValidator(campoForm: FormControl): any {
     return {'is-invalid': campoForm.errors && campoForm.touched};
+  }
+
+  public guardarAlteracoes(): void{
+    this.spinner.show();
+    if(this.form.valid) {
+      if(this.estadoGuardar === 'post') {
+        this.paciente = {...this.form.value} // atribui ao paciente o formulário (Se o mesmo for válido) (SPREAD OPERATOR)
+        this.pacienteService.postPaciente(this.paciente).subscribe(
+          () => this.toaster.success('Paciente guardado com Sucesso!', 'Sucesso'), // NEXT
+          (error: any) => {
+            console.error(error);
+            this.spinner.hide();
+            this.toaster.error('Erro ao guardar o Paciente', 'Erro');
+          }, // ERROR
+          () => this.spinner.hide() // COMPLETE
+        );
+      } else { // Caso seja PUT e não post
+        this.paciente = {id: this.paciente.id, ...this.form.value} // atribui ao paciente o formulário, MENOS o Id pois ele tem que se manter visto que é um PUT (Se o mesmo for válido) (SPREAD OPERATOR)
+        this.pacienteService.putPaciente(this.paciente.id, this.paciente).subscribe(
+          () => this.toaster.success('Paciente guardado com Sucesso!', 'Sucesso'), // NEXT
+          (error: any) => {
+            console.error(error);
+            this.spinner.hide();
+            this.toaster.error('Erro ao guardar o Paciente', 'Erro');
+          }, // ERROR
+          () => this.spinner.hide() // COMPLETE
+        );
+      }
+    }
   }
 }
