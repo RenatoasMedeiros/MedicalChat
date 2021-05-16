@@ -94,17 +94,14 @@ export class PacienteListaComponent implements OnInit {
       (resultado: any) => { // NEXT
         if(resultado.mensagem == 'Apagado'){
           this.toastr.success('O Paciente foi apagado com sucesso!', 'Apagado!');
-          this.spinner.hide();
           this.carregarPacientes();
         }
       },
       (error: any) => { // ERROR
         console.error(error);
         this.toastr.error(`Erro ao tentar Apagar o Paciente ${this.pacienteId}`, 'Erro');
-        this.spinner.hide();
-      },
-      () => this.spinner.hide(), // COMPLETE
-    );
+      }
+    ).add(() => this.spinner.hide());
   }
 
   decline(): void {
