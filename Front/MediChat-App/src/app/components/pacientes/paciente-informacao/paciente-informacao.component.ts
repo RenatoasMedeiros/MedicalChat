@@ -20,8 +20,6 @@ export class PacienteInformacaoComponent implements OnInit {
   form: FormGroup;
   estadoGuardar = 'post'; // Inicia em post para criar um novo paciente
 
-
-
   locale = 'pt'; // idioma português
 
   get f(): any {
@@ -31,7 +29,7 @@ export class PacienteInformacaoComponent implements OnInit {
   get bsConfig(): any {
     return {
       adaptivePosition: true, // Escolhe uma posição favorável (cima ou baixo)
-      dateInputFormat: 'DD/MM/YYYY HH:mm', // formatação do input
+      dateInputFormat: 'DD/MM/YYYY', // formatação do input
 
       showWeekNumbers: false // não mostrar os dias da semana
     }

@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
-
 @Injectable(
   // providedIn: 'root'
 )
@@ -33,4 +32,18 @@ export class VideoChatService {
       .pipe(take(1)); // Só permite uma chamada - depois dá unsubscrive
   }
 
+  post(videoChat: VideoChat): Observable<VideoChat> {
+    return this.http.post<VideoChat>(this.baseURL, videoChat)
+      .pipe(take(1)); // Só permite uma chamada
+  }
+
+  put(videoChat: VideoChat): Observable<VideoChat> {
+    return this.http.put<VideoChat>(`${this.baseURL}/${videoChat.id}`, videoChat)
+      .pipe(take(1)); // Só permite uma chamada - depois dá unsubscrive
+  }
+
+  deletePaciente(id: number): Observable<any> { // vai receber um objeto
+    return this.http.delete<any>(`${this.baseURL}/${id}`)
+      .pipe(take(1)); // Só permite uma chamada - depois dá unsubscrive
+  }
 }
