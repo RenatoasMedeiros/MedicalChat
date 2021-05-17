@@ -42,7 +42,7 @@ export class VideoChatService {
       .pipe(take(1)); // Só permite uma chamada - depois dá unsubscrive
   }
 
-  deletePaciente(id: number): Observable<any> { // vai receber um objeto
+  deleteVideoChat(id: number): Observable<any> { // vai receber um objeto
     return this.http.delete<any>(`${this.baseURL}/${id}`)
       .pipe(take(1)); // Só permite uma chamada - depois dá unsubscrive
   }
