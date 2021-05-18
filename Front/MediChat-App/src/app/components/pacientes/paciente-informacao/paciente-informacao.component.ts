@@ -1,5 +1,6 @@
+import { VideoChat } from './../../../models/VideoChat';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { PacienteService } from '@app/services/paciente.service';
@@ -22,6 +23,14 @@ export class PacienteInformacaoComponent implements OnInit {
 
   locale = 'pt'; // idioma português
 
+  get modoEditar(): boolean {
+    return this.estadoGuardar === 'put';
+  }
+
+  get videoChats(): FormArray { // retorna as Video Chamadas
+    return this.form.get('videoChats') as FormArray;
+  }
+
   get f(): any {
     return this.form.controls;
   }
@@ -30,7 +39,14 @@ export class PacienteInformacaoComponent implements OnInit {
     return {
       adaptivePosition: true, // Escolhe uma posição favorável (cima ou baixo)
       dateInputFormat: 'DD/MM/YYYY', // formatação do input
+      showWeekNumbers: false // não mostrar os dias da semana
+    }
+  }
 
+  get bsConfigVideoChat(): any {
+    return {
+      adaptivePosition: true, // Escolhe uma posição favorável (cima ou baixo)
+      dateInputFormat: 'DD/MM/YYYY HH:mm', // formatação do input
       showWeekNumbers: false // não mostrar os dias da semana
     }
   }
@@ -84,14 +100,29 @@ export class PacienteInformacaoComponent implements OnInit {
       genero: ['', Validators.required],
       endereco: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(70)]],
       codPostal: ['', Validators.required],
+      videoChats: this.fb.array([])
     });
   }
+
+  addVideoChat(): void {
+    this.videoChats.push(this.criarVideoChamada({id: 0} as VideoChat))
+  };
+
+  criarVideoChamada(videoChat: VideoChat): FormGroup {
+    return this.fb.group({
+      id: [videoChat.id],
+      dataInicio: [videoChat.dataInicio, Validators.required],
+      estadoVideoChat: [videoChat.estadoVideoChat, Validators.required],
+      medico: [videoChat.medicoID, Validators.required],
+      paciente: [videoChat.pacienteID, Validators.required]
+    })
+  };
 
   public resetForm(): void {
     this.form.reset();
   }
 
-  public cssValidator(campoForm: FormControl): any {
+  public cssValidator(campoForm: FormControl | AbstractControl): any {
     return {'is-invalid': campoForm.errors && campoForm.touched};
   }
 

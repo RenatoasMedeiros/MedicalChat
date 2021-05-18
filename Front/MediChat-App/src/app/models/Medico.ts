@@ -1,3 +1,5 @@
+import { VideoChat } from "./VideoChat";
+
 export interface Medico {
   id: number;
   nome: string;
@@ -9,4 +11,5 @@ export interface Medico {
   especialidade: string;
   endereco: string;
   codPostal: string;
+  videoChats: VideoChat;
 }

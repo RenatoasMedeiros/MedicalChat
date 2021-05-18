@@ -1,3 +1,4 @@
+import { VideoChat } from './VideoChat';
 export interface Paciente {
   id: number;
   nome: string;
@@ -8,4 +9,5 @@ export interface Paciente {
   genero: string;
   endereco: string;
   codPostal: string;
+  videoChats: VideoChat;
 }
