@@ -21,7 +21,7 @@ namespace MedicChat.Application
             throw new System.NotImplementedException();
         }
 
-        public async void SendPlaintextGmail(string recipientEmail, string recipientName, string videochatDate)
+        public async void SendPlaintextGmail(string recipientEmail, string recipientName, DateTime videochatDate)
         {
             try {
                 using (var scope = _serviceProvider.CreateScope()) {

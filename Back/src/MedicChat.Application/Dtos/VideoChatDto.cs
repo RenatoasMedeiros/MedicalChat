@@ -12,8 +12,8 @@ namespace MedicChat.Application.Dtos
         public string Token { get; set; }
 
         [Required(ErrorMessage ="O campo {0} é obrigatorio")]
-        public string DataInicio { get; set; }
-        public string DataFim { get; set; }
+        public DateTime DataInicio { get; set; }
+        public DateTime DataFim { get; set; }
 
         [Required(ErrorMessage ="O campo {0} é obrigatorio")]
         public VideoChatStatus EstadoVideoChat { get; set; }

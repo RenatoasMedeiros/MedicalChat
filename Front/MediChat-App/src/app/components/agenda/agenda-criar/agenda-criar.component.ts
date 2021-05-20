@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { PacienteService } from './../../../services/paciente.service';
 import { MedicoService } from './../../../services/medico.service';
 import { Component, OnInit } from '@angular/core';

@@ -18,7 +18,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class PacienteInformacaoComponent implements OnInit {
 
-  paciente = {} as Paciente // inicializar paciente do tipo Paciente
+  paciente = {} as Paciente; // inicializar paciente do tipo Paciente
   pacienteId: number;
 
   form: FormGroup;

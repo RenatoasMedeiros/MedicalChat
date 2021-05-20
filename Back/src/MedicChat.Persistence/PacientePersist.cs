@@ -13,7 +13,6 @@ namespace MedicChat.Persistence
         public PacientePersist(MedicChatContext context)
         {
             _context = context;
-
         }
         public async Task<Paciente[]> GetAllPacientesAsync()
         {

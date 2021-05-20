@@ -131,34 +131,30 @@
               <div class="form-group col-md-8">
                 <label>Paciente:</label>
                 <input
-                [ngClass]="cssValidator(videoChats.get(i+'.paciente'))"
                 type="text" class="form-control" formControlName="paciente" placeholder="Paciente">
               </div>
               <div class="col-md-4">
                 <label>Data Início</label>
                 <input
-                [ngClass]="cssValidator(videoChats.get(i+'.dataInicio'))"
-                type="datetime" class="form-control" formControlName="dataInicio" placeholder="01/01/2021 14:20"
-                bsDatepicker [bsConfig]="bsConfigVideoChat">
+                type="datetime" class="form-control"
+                value = "{{videoChats.get(i+'.dataInicio').value | date:'dd/MM/yyyy HH:mm'}}">
               </div>
               <div class="form-group col-md-8">
                 <label>Médico:</label>
                 <input
-                [ngClass]="cssValidator(videoChats.get(i+'.medico'))"
                 type="text" class="form-control" formControlName="medico" placeholder="Médico">
               </div>
               <div class="col-md-4">
                 <label>Data Fim</label>
                 <input
-                [ngClass]="cssValidator(videoChats.get(i+'.dataFim'))"
-                type="datetime" class="form-control" formControlName="dataFim" placeholder="01/01/2021 14:20"
-                bsDatepicker [bsConfig]="bsConfigVideoChat">
+                type="datetime" class="form-control"
+                value = "{{videoChats.get(i+'.dataFim').value | date:'dd/MM/yyyy HH:mm'}}">
               </div>
               <div class="form-group col-md-12">
                 <label>Relatório:</label>
                 <textarea
-                [ngClass]="cssValidator(videoChats.get(i+'.relatorio'))"
-                type="text" class="form-control" formControlName="relatorio" placeholder="Relatório"> </textarea>
+                type="text" class="form-control" formControlName="relatorio" placeholder="Relatório">
+                </textarea>
               </div>
             </div>
           </fieldset>

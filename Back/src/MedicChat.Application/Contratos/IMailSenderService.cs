@@ -6,7 +6,7 @@ namespace MedicChat.Application.Contratos
 {
     public interface IMailSenderService
     {
-        void SendPlaintextGmail(string recipientEmail, string recipientName, string videochatDateInicio);
+        void SendPlaintextGmail(string recipientEmail, string recipientName, DateTime videochatDateInicio);
         void SendHtmlGmail(string recipientEmail, string recipientName);
     }
 }
