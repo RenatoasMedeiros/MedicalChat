@@ -83,7 +83,7 @@ namespace MedicChat.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(VideoChatDto model, [FromServices] IFluentEmail mailer)
+        public async Task<IActionResult> Post(VideoChatDto model)
         {
             try
             {
@@ -117,6 +117,15 @@ namespace MedicChat.API.Controllers
             {
                 var videoChat = await _videoChatService.UpdateVideoChat(id, model);
                 if (videoChat == null) return NoContent(); // Retorna StatusCode 204 - NoContent
+
+                try 
+                {
+                    _mailSenderService.SendPlaintextGmail(videoChat.Paciente.Email, videoChat.Paciente.Nome, videoChat.DataInicio);
+                }
+                catch(Exception ex) {
+                    return this.StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Erro ao tentar adicionar a Video Chamada, email não enviado ao Paciente Erro: {ex.Message}");
+                }
 
                 return Ok(videoChat);
             }
