@@ -90,7 +90,7 @@ namespace MedicChat.Application
                 if (videoChat == null) 
                     return null;
 
-                // Dado o Objeto medicoDto é mapeado os medicos
+                // Dado o Objeto medicoDto é mapeado as videoChats
                 var resultado = _mapper.Map<VideoChatDto[]>(videoChat);
 
                 return resultado;

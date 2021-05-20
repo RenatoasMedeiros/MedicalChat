@@ -1,8 +1,7 @@
 <div class="card shadow-sm">
   <form [formGroup]="form">
     <div class="p-3">
-    <!-- <p>Form value: {{form.value | json}}</p>
-    <p>Form valid: {{form.status | json}}</p> -->
+
       <div class="form-row">
         <div class="form-group col-md-8">
           <label>Nome Completo:</label>
@@ -53,8 +52,10 @@
           <label>Data de Nascimento:</label>
           <input type="datetime" class="form-control"
           [ngClass]="cssValidator(f.dataNascimento)"
+          value = "{{paciente.dataNascimento | DateFormatPipe}}"
           formControlName="dataNascimento" placeholder="01/01/1991"
-          bsDatepicker [bsConfig]="bsConfig"> <!--Configurações do datepicker-->
+          bsDatepicker [bsConfig]="bsConfig"
+          > <!--Configurações do datepicker-->
           <div *ngIf="f.dataNascimento.errors?.required && f.dataNascimento.touched" class="invalid-feedback">
             Data de Nascimento é obrigatória.
           </div>
@@ -66,46 +67,46 @@
           <select class="form-control"
           [ngClass]="cssValidator(f.genero)"
           formControlName="genero">
-          <div *ngIf="f.genero.errors?.required && f.genero.touched" class="invalid-feedback">
-            Genero é obrigatório.
-          </div>
-            <option value=""></option>
-            <option value="male">Masculino</option>
-            <option value="female">Feminino</option>
-          </select>
+          <option value=""></option>
+          <option value="male">Masculino</option>
+          <option value="female">Feminino</option>
+        </select>
+        <div *ngIf="f.genero.errors?.required && f.genero.touched" class="invalid-feedback">
+          Genero é obrigatório.
         </div>
-        <div class="form-group col-md-4">
-          <label>Contacto:</label>
-          <input type="text" class="form-control"
-          [ngClass]="cssValidator(f.telemovel)"
-          formControlName="telemovel" placeholder="912345678">
-          <div *ngIf="f.telemovel.errors?.required && f.telemovel.touched" class="invalid-feedback">
-            Telemóvel é obrigatório.
-          </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label>Contacto:</label>
+        <input type="text" class="form-control"
+        [ngClass]="cssValidator(f.telemovel)"
+        formControlName="telemovel" placeholder="912345678">
+        <div *ngIf="f.telemovel.errors?.required && f.telemovel.touched" class="invalid-feedback">
+          Telemóvel é obrigatório.
         </div>
-        <div class="form-group col-md-6">
-          <label>E-mail:</label>
-          <input type="text" class="form-control"
-          [ngClass]="cssValidator(f.email)"
-          formControlName="email" placeholder="Email">
-          <div *ngIf="f.email.errors?.required && f.email.touched" class="invalid-feedback">
-            E-mail é obrigatório.
-          </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label>E-mail:</label>
+        <input type="text" class="form-control"
+        [ngClass]="cssValidator(f.email)"
+        formControlName="email" placeholder="Email">
+        <div *ngIf="f.email.errors?.required && f.email.touched" class="invalid-feedback">
+          E-mail é obrigatório.
         </div>
       </div>
     </div>
-    <div class="card-footer">
-      <div class="d-flex">
-        <button class="btn btn-outline-info mr-auto border" (click)="resetForm()">
-          Cancelar Alteração
-        </button>
-        <button class="btn btn-success" [disabled]="!form.valid" (click)="guardarAlteracoes()">
-          <!-- <span class="spinner-border spinner-border-sm mr-1"></span> -->
-          Guardar Paciente
-        </button>
-      </div>
+  </div>
+  <div class="card-footer">
+    <div class="d-flex">
+      <button class="btn btn-outline-info mr-auto border" (click)="resetForm()">
+        Cancelar Alteração
+      </button>
+      <button class="btn btn-success" [disabled]="!form.valid" (click)="guardarPaciente()">
+        <!-- <span class="spinner-border spinner-border-sm mr-1"></span> -->
+        Guardar Paciente
+      </button>
     </div>
-  </form>
+  </div>
+</form>
 </div>
 
 
@@ -119,60 +120,57 @@
         <i class="fas fa-video"></i>
       </h2>
     </div>
-    <p>Clique em "Consulta" para agendar uma nova consulta.</p>
+    <br>
+    <h4>Todas as Consultas do Paciente.</h4>
     <div class="form-row p-1">
       <div [formGroup]="form" class="col">
         <div formArrayName="videoChats" *ngFor="let videoChat of videoChats.controls; let i=index"> <!--Indice: i-->
           <fieldset [formGroupName]="i" class="form-group"> <!--Indice: FormGroup Name (cada formGroupname vai ter um identificador)-->
-            <legend class="d-flex justify-content-between capitalize">
-              <button class="p-2 btn btn-sm btn-outline-warning mb-1 d-flex"
-                tooltip="Excluir Consulta"
-                [adaptivePosition]="false"
-                [delay]="500"
-                placement="left">
-              <i class="fa fa-window-close my-1"></i>
-              <b class="ml-1 d-none d-sm-block">Excluir</b>
-            </button>
-          </legend>
-          <div class="row">
-            <div class="form-group col-md-12">
-              <label>Paciente:</label>
-              <input
-              [ngClass]="cssValidator(videoChats.get(i+'.paciente'))"
-              type="text" class="form-control" formControlName="paciente" placeholder="Paciente">
+            <hr>
+            <div class="row">
+              <div class="form-group col-md-8">
+                <label>Paciente:</label>
+                <input
+                [ngClass]="cssValidator(videoChats.get(i+'.paciente'))"
+                type="text" class="form-control" formControlName="paciente" placeholder="Paciente">
+              </div>
+              <div class="col-md-4">
+                <label>Data Início</label>
+                <input
+                [ngClass]="cssValidator(videoChats.get(i+'.dataInicio'))"
+                type="datetime" class="form-control" formControlName="dataInicio" placeholder="01/01/2021 14:20"
+                bsDatepicker [bsConfig]="bsConfigVideoChat">
+              </div>
+              <div class="form-group col-md-8">
+                <label>Médico:</label>
+                <input
+                [ngClass]="cssValidator(videoChats.get(i+'.medico'))"
+                type="text" class="form-control" formControlName="medico" placeholder="Médico">
+              </div>
+              <div class="col-md-4">
+                <label>Data Fim</label>
+                <input
+                [ngClass]="cssValidator(videoChats.get(i+'.dataFim'))"
+                type="datetime" class="form-control" formControlName="dataFim" placeholder="01/01/2021 14:20"
+                bsDatepicker [bsConfig]="bsConfigVideoChat">
+              </div>
+              <div class="form-group col-md-12">
+                <label>Relatório:</label>
+                <textarea
+                [ngClass]="cssValidator(videoChats.get(i+'.relatorio'))"
+                type="text" class="form-control" formControlName="relatorio" placeholder="Relatório"> </textarea>
+              </div>
             </div>
-            <div class="form-group col-md-8">
-              <label>Médico:</label>
-              <input
-              [ngClass]="cssValidator(videoChats.get(i+'.medico'))"
-              type="text" class="form-control" formControlName="medico" placeholder="Médico">
-            </div>
-            <div class="col-md-4">
-              <label>Data Início</label>
-              <input
-              [ngClass]="cssValidator(videoChats.get(i+'.dataInicio'))"
-              type="text" class="form-control" formControlName="dataInicio" placeholder="01/01/2021 14:20"
-              bsDatepicker [bsConfig]="bsConfigVideoChat">
-            </div>
-          </div>
-        </fieldset>
+          </fieldset>
+        </div>
       </div>
     </div>
   </div>
-  <button (click)="addVideoChat()" class="d-flex btn btn-outline-primary">
-    <i class="fa fa-plus-circle my-1"></i>
-    <b class="ml-1">Consulta</b>
-  </button>
-</div>
-<div class="card-footer">
-  <div class="d-flex">
-    <button class="btn btn-outline-secondary mr-auto border">
-      Cancelar Alteração
-    </button>
-    <button class="btn btn-success">
-      Guardar Consulta
+  <div class="card-footer">
+    <button routerLink="/agenda/criar" class="btn btn-success">
+      <i class="fa fa-plus-circle my-1"></i>
+      Consulta
     </button>
   </div>
-</div>
 </div>
 <br>

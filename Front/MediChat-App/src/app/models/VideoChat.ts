@@ -7,7 +7,7 @@ export interface VideoChat {
   relatorio: string;
   token: string;
   dataInicio: Date;
-  dataFim: Date;
+  dataFim?: Date;
   estadoVideoChat: VideoChatStatus;
   medicoID: number;
   medico: Medico;

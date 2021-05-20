@@ -24,23 +24,23 @@
       <tr>
         <th class="d-none d-md-table-cell">
           <button type="button" class="btn btn-outline-light btn-sm"
-            (click)="alterarEstadoFoto()">
-            <i class=" {{!exibirFoto ? 'fa fa-eye' : 'fa fa-eye-slash'}}"></i>
-            {{!exibirFoto ? 'Exibir' : 'Ocultar'}}
-          </button>
-        </th>
-        <th class="d-none d-md-table-cell">#</th>
-        <th>Nome</th>
-        <th>Email</th>
-        <th class="d-none d-md-table-cell">Data de Nascimento</th>
-        <th class="d-none d-md-table-cell">Telemóvel</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody *ngIf="pacientes && pacientes.length">
-      <tr *ngFor="let paciente of pacientesFiltrados" (click)="infoPaciente(paciente.id)">
-        <td class="d-none d-md-table-cell">
-          <img [collapse]="!exibirFoto"
+          (click)="alterarEstadoFoto()">
+          <i class=" {{!exibirFoto ? 'fa fa-eye' : 'fa fa-eye-slash'}}"></i>
+          {{!exibirFoto ? 'Exibir' : 'Ocultar'}}
+        </button>
+      </th>
+      <th class="d-none d-md-table-cell">#</th>
+      <th>Nome</th>
+      <th>Email</th>
+      <th class="d-none d-md-table-cell">Data de Nascimento</th>
+      <th class="d-none d-md-table-cell">Telemóvel</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="pacientes && pacientes.length">
+    <tr *ngFor="let paciente of pacientesFiltrados" (click)="infoPaciente(paciente.id)">
+      <td class="d-none d-md-table-cell">
+        <img [collapse]="!exibirFoto"
           [isAnimated]="true"
           src="/assets/{{paciente.foto}}" class="rounded-circle"
           [style.width.px]="widthFoto"

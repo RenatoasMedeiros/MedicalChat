@@ -18,7 +18,7 @@ export class VideoChatService {
   }
 
   getVideoChatsByPacienteId(pacienteId: number): Observable<VideoChat[]> {
-    return this.http.get<VideoChat[]>(`${this.baseURL}/${pacienteId}`)
+    return this.http.get<VideoChat[]>(`${this.baseURL}/paciente/${pacienteId}`)
       .pipe(take(1)); // Só permite uma chamada - depois dá unsubscrive
   }
 
@@ -32,8 +32,8 @@ export class VideoChatService {
       .pipe(take(1)); // Só permite uma chamada - depois dá unsubscrive
   }
 
-  post(videoChat: VideoChat): Observable<VideoChat> {
-    return this.http.post<VideoChat>(this.baseURL, videoChat)
+  post(videoChat: VideoChat[]): Observable<VideoChat[]> {
+    return this.http.post<VideoChat[]>(this.baseURL, videoChat)
       .pipe(take(1)); // Só permite uma chamada
   }
 

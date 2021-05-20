@@ -23,10 +23,12 @@ namespace MedicChat.API.Controllers
     {
         private readonly IVideoChatService _videoChatService;
         private readonly IMailSenderService _mailSenderService;
-        public VideoChatController(IVideoChatService videoChatService, IMailSenderService mailSenderService)
+        private readonly IMapper _mapper;
+        public VideoChatController(IVideoChatService videoChatService, IMailSenderService mailSenderService, IMapper mapper)
         {
             _videoChatService = videoChatService;
             _mailSenderService = mailSenderService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -85,10 +87,10 @@ namespace MedicChat.API.Controllers
         {
             try
             {
+                // Dado o Objeto medicoDto é mapeado os medicos
                 var videoChat = await _videoChatService.AddVideoChat(model);
                 if (videoChat == null) return NoContent(); // Retorna StatusCode 204 - NoContent
 
-                //Serviço de enviar email
                 try 
                 {
                     _mailSenderService.SendPlaintextGmail(videoChat.Paciente.Email, videoChat.Paciente.Nome, videoChat.DataInicio);

@@ -27,8 +27,8 @@ constructor(private http: HttpClient) { }
       .pipe(take(1)); // Só permite uma chamada - depois dá unsubscrive
   }
 
-  post(paciente: Paciente): Observable<Paciente> {
-    return this.http.post<Paciente>(this.baseURL, paciente)
+  post(paciente: Paciente[]): Observable<Paciente[]> {
+    return this.http.post<Paciente[]>(this.baseURL, paciente)
       .pipe(take(1)); // Só permite uma chamada
   }
 

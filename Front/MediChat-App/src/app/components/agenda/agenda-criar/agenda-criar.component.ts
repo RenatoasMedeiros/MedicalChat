@@ -1,3 +1,5 @@
+import { PacienteService } from './../../../services/paciente.service';
+import { MedicoService } from './../../../services/medico.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -6,6 +8,8 @@ import { VideoChatService } from '@app/services/videoChat.service';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { Medico } from '@app/models/Medico';
+import { Paciente } from '@app/models/Paciente';
 
 @Component({
   selector: 'app-agenda-criar',
@@ -18,7 +22,15 @@ export class AgendaCriarComponent implements OnInit {
 
   public form: FormGroup;
 
+  public medicos: Medico[] = [];
+  public pacientes: Paciente[] = [];
+
   videoChat = {} as VideoChat;
+  estadoGuardar = 'post'; // Inicia em post para criar um novo paciente
+
+  get modoEditar(): boolean {
+    return this.estadoGuardar === 'put';
+  }
 
   get f(): any {
     return this.form.controls;
@@ -38,8 +50,10 @@ export class AgendaCriarComponent implements OnInit {
     private localeService: BsLocaleService,
     private router: ActivatedRoute,
     private videoChatService: VideoChatService,
+    private medicoService: MedicoService,
+    private pacienteService: PacienteService,
     private spinner: NgxSpinnerService,
-    private toaster: ToastrService
+    private toastr: ToastrService
   ) { this.localeService.use(this.locale); }
 
   public carregarConsultas(): void {
@@ -47,6 +61,7 @@ export class AgendaCriarComponent implements OnInit {
 
     if(videoChatIdParam !== null){ // verifico se o get é diferente de nulo
       this.spinner.show(); // ativa o spinner
+      this.estadoGuardar = 'put';
       this.videoChatService.getVideoChatById(+videoChatIdParam).subscribe( // + para converter para o tipo INT, pois o pacienteId é retornado como uma string
         { // subscrive recebe um observable com 3 propriedades
           next: (videoChat: VideoChat) => { // realiza uma copia do objeto do parametro e atribui para dentro do paciente
@@ -55,7 +70,7 @@ export class AgendaCriarComponent implements OnInit {
           },
           error: (error: any) => {
             this.spinner.hide(); // Esconde o spinner
-            this.toaster.error('Erro ao tentar carregar as Consultas.'); // Em caso de erro mostra um toaster
+            this.toastr.error('Erro ao tentar carregar as Consultas.'); // Em caso de erro mostra um toaster
             console.error(error);
           },
           complete: () => this.spinner.hide(), // Esconde o spinner
@@ -64,15 +79,56 @@ export class AgendaCriarComponent implements OnInit {
     }
   }
 
+  public getMedicos(): void{
+    this.medicoService.getMedicos().subscribe({
+      next: (_medico: Medico[]) => {
+        this.medicos = _medico;
+      },
+      error: error => {
+        this.spinner.hide(),
+        this.toastr.error('Erro ao carregar os Medicos', 'Erro!')
+      },
+      complete: () => this.spinner.hide()
+    });
+  }
+
+  public getPacientes(): void{
+    this.pacienteService.getPacientes().subscribe({
+      next: (_paciente: Paciente[]) => {
+        this.pacientes = _paciente;
+      },
+      error: error => {
+        this.spinner.hide(),
+        this.toastr.error('Erro ao carregar os Pacientes', 'Erro!')
+      },
+      complete: () => this.spinner.hide()
+    });
+  }
+
+  criarVideoChat(videoChat: VideoChat): FormGroup {
+    return this.fb.group({
+      id: [videoChat.id],
+      relatorio: [videoChat.relatorio],
+      token: [videoChat.token],
+      dataInicio: [videoChat.dataInicio, Validators.required],
+      dataFim: [""],
+      estadoVideoChat: [0, Validators.required],
+      medicoID: [videoChat.medicoID, Validators.required],
+      pacienteID: [videoChat.pacienteID, Validators.required]
+    });
+  };
+
   ngOnInit(): void {
     this.carregarConsultas();
+    this.getMedicos();
+    this.getPacientes();
     this.validation();
   }
 
   public validation(): void {
     this.form = this.fb.group({
-      medico: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
-      paciente: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
+      medicoID: ['', [Validators.required]],
+      pacienteID: ['', [Validators.required]],
       dataInicio: ['', Validators.required],
     });
   }
@@ -85,4 +141,24 @@ export class AgendaCriarComponent implements OnInit {
     return {'is-invalid': campoForm.errors && campoForm.touched};
   }
 
+  public guardarVideoChat(): void {
+    this.spinner.show();
+    if(this.form.valid) {
+      this.videoChat = (this.estadoGuardar === 'post')
+                    ? {...this.form.value} // atribui ao paciente o formulário (Se o mesmo for válido) (SPREAD OPERATOR)
+                    : { id: this.videoChat.id, ...this.form.value} // atribui ao paciente o formulário, MENOS o Id pois ele tem que se manter visto que é um PUT (Se o mesmo for válido) (SPREAD OPERATOR)
+
+      this.videoChatService[this.estadoGuardar](this.videoChat).subscribe(
+        (videoChatRetorno: VideoChat) => {                                     // NEXT
+          this.toastr.success('Consulta agendada com Sucesso!', 'Sucesso');
+        },
+        (error: any) => {
+          console.error(error);
+          this.spinner.hide();
+          this.toastr.error('Erro ao agendar a consulta', 'Erro');
+        }, // ERROR
+        () => this.spinner.hide() // COMPLETE
+      );
+    }
+  }
 }

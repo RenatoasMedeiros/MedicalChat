@@ -70,7 +70,6 @@ export class AgendaListaComponent implements OnInit {
         this.spinner.hide(),
         this.toastr.error('Erro ao carregar as Consultas', 'Erro!')
       },
-
       complete: () => this.spinner.hide()
     });
   }

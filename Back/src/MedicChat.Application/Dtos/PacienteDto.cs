@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using MedicChat.Domain.model;
 
 namespace MedicChat.Application.Dtos
 {
@@ -18,7 +21,7 @@ namespace MedicChat.Application.Dtos
         [RegularExpression(@".*\.(gif|jpe?g|bmp|png)$", ErrorMessage = "Não é uma imagem válida. Imagens válidas: (gif, jp(e)g, png ou bmp).")]
         public string Foto { get; set; }
         [Required(ErrorMessage ="O campo {0} é obrigatorio.")]
-        public string DataNascimento { get; set; }
+        public DateTime DataNascimento { get; set; }
         public string Genero { get; set; }
         [Required(ErrorMessage ="O campo {0} é obrigatorio.")]
         [MinLength(6, ErrorMessage ="O campo deve ter no minimo 6 caracteres.")]

@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using MedicChat.Domain.model;
 
 namespace MedicChat.Application.Dtos
 {
@@ -30,5 +32,8 @@ namespace MedicChat.Application.Dtos
         public string Endereco { get; set; }
         [Required(ErrorMessage ="O campo {0} é obrigatorio")]
         public string CodPostal { get; set; }
+
+        // public IEnumerable<VideoChat> VideoChats { get; set; }
+
     }
 }
