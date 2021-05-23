@@ -1,10 +1,14 @@
 using System;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using MedicChat.Application.Contratos;
 using MedicChat.Application.Dtos;
 using MedicChat.Domain.model;
 using MedicChat.Persistence.Contratos;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
 
 namespace MedicChat.Application
 {
@@ -13,12 +17,15 @@ namespace MedicChat.Application
         private readonly IGeralPersist _geralPersist;
         private readonly IMedicoPersist _medicoPersist;
         private readonly IMapper _mapper;
-        public MedicoService(IGeralPersist geralPersist, IMedicoPersist medicoPersist, IMapper mapper)
+        private readonly UserManager<Medico> _userManager;
+        private readonly IConfiguration _configuration;
+        public MedicoService(IGeralPersist geralPersist, IMedicoPersist medicoPersist, IMapper mapper, IConfiguration configuration, UserManager<Medico> userManager)
         {
+            _configuration = configuration;
+            _userManager = userManager;
             _medicoPersist = medicoPersist;
             _geralPersist = geralPersist;
             _mapper = mapper;
-
         }
 
         public async Task<MedicoDto> AddMedico(MedicoDto model)
@@ -28,13 +35,16 @@ namespace MedicChat.Application
                 // Map do medico(Dto) para medico(model)
                 var medico = _mapper.Map<Medico>(model);
 
+                var result = await _userManager.CreateAsync(medico, model.Password);
 
-                _geralPersist.Add<Medico>(medico);
-                if (await _geralPersist.SaveChangesAsync())
-                {
-                    // Map do medico(model) para medico(dto)
-                    var medicoRetorno = await _medicoPersist.GetMedicosByIdAsync(medico.Id);
-                    return _mapper.Map<MedicoDto>(medicoRetorno);
+                if (result.Succeeded) {
+                    _geralPersist.Add<Medico>(medico);
+                    if (await _geralPersist.SaveChangesAsync())
+                    {
+                        // Map do medico(model) para medico(dto)
+                        var medicoRetorno = await _medicoPersist.GetMedicosByIdAsync(medico.Id);
+                        return _mapper.Map<MedicoDto>(medicoRetorno);
+                    }
                 }
                 return null;
             }
@@ -43,6 +53,7 @@ namespace MedicChat.Application
                 throw new Exception(ex.Message);
             }
         }
+
         public async Task<MedicoDto> UpdateMedico(int medicoId, MedicoDto model)
         {
             try
@@ -110,7 +121,7 @@ namespace MedicChat.Application
                 var medicos = await _medicoPersist.GetAllMedicosByEspecialidadeAsync(especialidade);
                 if (medicos == null) return null;
 
-                 // Dado o Objeto medicoDto é mapeado os medicos
+                // Dado o Objeto medicoDto é mapeado os medicos
                 var resultado = _mapper.Map<MedicoDto[]>(medicos);
 
                 return resultado;
@@ -128,7 +139,7 @@ namespace MedicChat.Application
                 var medicos = await _medicoPersist.GetAllMedicosByNomeAsync(nome);
                 if (medicos == null) return null;
 
-                 // Dado o Objeto medicoDto é mapeado os medicos
+                // Dado o Objeto medicoDto é mapeado os medicos
                 var resultado = _mapper.Map<MedicoDto[]>(medicos);
 
                 return resultado;
@@ -156,6 +167,5 @@ namespace MedicChat.Application
                 throw new Exception(ex.Message);
             }
         }
-
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MedicChat.Application.Contratos;
 using MedicChat.Application.Dtos;
 using MedicChat.Domain.model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,6 +14,7 @@ namespace MedicChat.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class PacientesController : ControllerBase
     {
         private readonly IPacienteService _pacienteService;

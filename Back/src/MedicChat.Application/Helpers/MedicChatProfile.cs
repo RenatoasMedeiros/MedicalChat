@@ -14,6 +14,8 @@ namespace MedicChat.Application.Helpers
             CreateMap<Medico, MedicoDto>().ReverseMap();
             // VideoChat -> VideoChatDto (Criação do Map)
             CreateMap<VideoChat, VideoChatDto>().ReverseMap();
+            // Medico -> MedicoLoginDto (Criação do Map)
+            CreateMap<Medico, MedicoLoginDto>().ReverseMap();
         }
     }
 }

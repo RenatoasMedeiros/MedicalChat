@@ -20,6 +20,13 @@ using MedicChat.Persistence;
 using System.Net.Mail;
 using System.Net;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using MedicChat.Domain.Identity;
+using Microsoft.AspNetCore.Authorization;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using MedicChat.Domain.model;
 
 namespace MedicChat.API
 {
@@ -38,6 +45,33 @@ namespace MedicChat.API
             services.AddDbContext<MedicChatContext>( 
                 context => context.UseSqlServer(Configuration.GetConnectionString("DefaultPortatil"))
             );
+
+            // builder receber do service um user
+            IdentityBuilder builder = services.AddIdentityCore<Medico>(options => {
+                options.Password.RequiredLength = 8;
+            });
+
+            builder = new IdentityBuilder(builder.UserType, typeof(Role), builder.Services);
+
+            builder.AddEntityFrameworkStores<MedicChatContext>(); // Levar em consideração o contexto para trabalhar com o resto
+            builder.AddRoleValidator<RoleValidator<Role>>(); // RoleValidator -> Dominio Role
+            builder.AddRoleManager<RoleManager<Role>>(); // RoleManager -> Dominio Role
+            builder.AddSignInManager<SignInManager<Medico>>(); // // SignInManager -> Dominio Medico
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(x =>
+                    {
+                        x.RequireHttpsMetadata = false;
+                        x.SaveToken = true;
+                        x.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuerSigningKey = true, // Validação pela assinatura da chave do emissor
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)), // Key que está a ser validada
+                            ValidateIssuer = false,
+                            ValidateAudience = false
+                        };
+                    });
+
             services.AddControllers()
                     .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
@@ -89,15 +123,17 @@ namespace MedicChat.API
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseCors(x => x.AllowAnyHeader()
                               .AllowAnyMethod()
                               .AllowAnyOrigin());
 
+            
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers().RequireAuthorization();
             });
         }
     }

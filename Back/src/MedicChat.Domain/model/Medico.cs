@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
+using MedicChat.Domain.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace MedicChat.Domain.model
 {
-    public class Medico
+    public class Medico : IdentityUser<int> // O médico é um usuario para login, logo herda as propriedades de IdentityUser
     {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Email { get; set; }
         public int Telemovel { get; set; }
         public string Foto { get; set; }
         public DateTime DataNascimento { get; set; }
@@ -17,7 +16,10 @@ namespace MedicChat.Domain.model
         public string Endereco { get; set; }
         public string CodPostal { get; set; }
         
+        public List<UserRole> UserRoles { get; set; }
+
         // Propriedade de Navegação!
         public IEnumerable<VideoChat> VideoChats { get; set; }
+
     }
 }

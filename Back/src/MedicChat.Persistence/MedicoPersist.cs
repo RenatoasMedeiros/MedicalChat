@@ -39,7 +39,7 @@ namespace MedicChat.Persistence
             IQueryable<Medico> query = _context.Medicos
                 .Include(m => m.VideoChats);
 
-            query = query.AsNoTracking().OrderBy(m => m.Id).Where(m => m.Nome.ToLower().Contains(nome.ToLower()));
+            query = query.AsNoTracking().OrderBy(m => m.Id).Where(m => m.UserName.ToLower().Contains(nome.ToLower()));
 
             return await query.ToArrayAsync();
         }

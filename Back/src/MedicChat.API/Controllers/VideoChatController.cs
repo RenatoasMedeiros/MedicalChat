@@ -14,11 +14,13 @@ using FluentEmail.Core;
 using System.Globalization;
 using MedicChat.Application.Dtos;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MedicChat.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class VideoChatController : ControllerBase
     {
         private readonly IVideoChatService _videoChatService;
