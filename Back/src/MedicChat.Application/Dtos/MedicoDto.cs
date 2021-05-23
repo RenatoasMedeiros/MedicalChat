@@ -10,7 +10,7 @@ namespace MedicChat.Application.Dtos
         [Required(ErrorMessage ="O campo {0} é obrigatorio")]
         [MinLength(4)]
         [MaxLength(100)]
-        public string UserName { get; set; }
+        public string Nome { get; set; }
         [Required(ErrorMessage ="O campo {0} é obrigatorio")]
         [EmailAddress(ErrorMessage = "O campo {0} precisa ser um e-mail válido")]
         public string Email { get; set; }
@@ -19,7 +19,6 @@ namespace MedicChat.Application.Dtos
         public string Telemovel { get; set; }
         [RegularExpression(@".*\.(gif|jpe?g|bmp|png)$", ErrorMessage = "Não é uma imagem válida. Imagens válidas: (gif, jpg, png ou bmp).")]
         public string Foto { get; set; }
-        [Required(ErrorMessage ="O campo {0} é obrigatorio")]
         public string DataNascimento { get; set; }
         public string Genero { get; set; }
         [Required(ErrorMessage ="O campo {0} é obrigatorio")]
@@ -32,6 +31,7 @@ namespace MedicChat.Application.Dtos
         public string Endereco { get; set; }
         [Required(ErrorMessage ="O campo {0} é obrigatorio")]
         public string CodPostal { get; set; }
+        [Required(ErrorMessage ="O campo {0} é obrigatorio")]
         public string Password { get; set; }
 
         // public IEnumerable<VideoChat> VideoChats { get; set; }

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Paciente } from '@app/models/Paciente';
@@ -10,7 +10,7 @@ import { take } from 'rxjs/operators';
 export class PacienteService {
   baseURL = 'https://localhost:5001/api/pacientes';
 
-constructor(private http: HttpClient) { }
+constructor(private http: HttpClient) {}
 
   getPacientes(): Observable<Paciente[]> {
     return this.http.get<Paciente[]>(this.baseURL)

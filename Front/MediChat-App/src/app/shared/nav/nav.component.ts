@@ -1,3 +1,5 @@
+import { ToastrService } from 'ngx-toastr';
+import { MedicoService } from '@app/services/medico.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -8,15 +10,34 @@ import { Router } from '@angular/router';
 })
 export class NavComponent implements OnInit {
 
+
   isCollapsed = true;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private medicoService: MedicoService,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit() {
   }
 
   showMenu(): boolean {
-    return this.router.url !== '/user/login';
+    return (this.router.url !== '/user/login');
+  }
+
+  loggedIn() {
+    return this.medicoService.loggedIn();
+  }
+
+  entrar() {
+    this.router.navigate(['/user/login']);
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    this.toastr.show('Log Out');
+    this.router.navigate(['/user/login']);
   }
 
 }

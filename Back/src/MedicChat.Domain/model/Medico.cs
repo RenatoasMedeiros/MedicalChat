@@ -7,6 +7,7 @@ namespace MedicChat.Domain.model
 {
     public class Medico : IdentityUser<int> // O médico é um usuario para login, logo herda as propriedades de IdentityUser
     {
+        public string Nome { get; set; }
         public int Telemovel { get; set; }
         public string Foto { get; set; }
         public DateTime DataNascimento { get; set; }

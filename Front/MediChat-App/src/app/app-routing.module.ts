@@ -1,3 +1,4 @@
+import { AuthGuard } from './auth/auth.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -30,39 +31,38 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'user/perfil-medico', component: PerfilMedicoComponent
+    path: 'user/perfil-medico', component: PerfilMedicoComponent, canActivate: [AuthGuard]
   },
   { path: 'pacientes', redirectTo: 'pacientes/lista' },
   {
-    path: 'pacientes', component: PacientesComponent,
+    path: 'pacientes', component: PacientesComponent, canActivate: [AuthGuard],
     children: [
-      { path: 'informacao/:id', component: PacienteInformacaoComponent },
-      { path: 'informacao', component: PacienteInformacaoComponent },
-      { path: 'lista', component: PacienteListaComponent },
+      { path: 'informacao/:id', component: PacienteInformacaoComponent, canActivate: [AuthGuard] },
+      { path: 'informacao', component: PacienteInformacaoComponent, canActivate: [AuthGuard] },
+      { path: 'lista', component: PacienteListaComponent, canActivate: [AuthGuard] },
     ]
-
   },
   { path: 'medicos', redirectTo: 'medicos/lista' },
   {
-    path: 'medicos', component: MedicosComponent,
+    path: 'medicos', component: MedicosComponent, canActivate: [AuthGuard],
     children: [
-      { path: 'informacao/:id', component: MedicoInformacaoComponent },
-      { path: 'informacao', component: MedicoInformacaoComponent },
-      { path: 'lista', component: MedicoListaComponent },
+      { path: 'informacao/:id', component: MedicoInformacaoComponent, canActivate: [AuthGuard] },
+      { path: 'informacao', component: MedicoInformacaoComponent, canActivate: [AuthGuard] },
+      { path: 'lista', component: MedicoListaComponent, canActivate: [AuthGuard] },
     ]
   },
   { path: 'agenda', redirectTo: 'agenda/lista' },
   {
-    path: 'agenda', component: AgendaComponent,
+    path: 'agenda', component: AgendaComponent, canActivate: [AuthGuard],
     children: [
-      { path: 'criar/:id', component: AgendaCriarComponent },
-      { path: 'criar', component: AgendaCriarComponent },
-      { path: 'informacao/:id', component: AgendaInformacaoVisualizarComponent },
-      { path: 'informacao', component: AgendaInformacaoVisualizarComponent },
-      { path: 'lista', component: AgendaListaComponent },
+      { path: 'criar/:id', component: AgendaCriarComponent, canActivate: [AuthGuard] },
+      { path: 'criar', component: AgendaCriarComponent, canActivate: [AuthGuard] },
+      { path: 'informacao/:id', component: AgendaInformacaoVisualizarComponent, canActivate: [AuthGuard] },
+      { path: 'informacao', component: AgendaInformacaoVisualizarComponent, canActivate: [AuthGuard] },
+      { path: 'lista', component: AgendaListaComponent, canActivate: [AuthGuard] },
     ]
   },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },
 ];

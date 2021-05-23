@@ -1,6 +1,12 @@
+import { MedicoService } from '@app/services/medico.service';
+import { Medico } from './../../../models/Medico';
 import { ValidatorField } from './../../../helpers/ValidatorField';
-import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { Spinner } from 'ngx-spinner/lib/ngx-spinner.enum';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registar-medico',
@@ -10,13 +16,18 @@ import { Component, OnInit } from '@angular/core';
 export class RegistarMedicoComponent implements OnInit {
 
   public form: FormGroup;
+  medico: Medico;
 
   get f(): any {
     return this.form.controls;
   }
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private spinner: NgxSpinnerService,
+    private toaster: ToastrService,
+    private router: Router,
+    private medicoService: MedicoService
   ) { }
 
   ngOnInit(): void {
@@ -33,12 +44,42 @@ export class RegistarMedicoComponent implements OnInit {
       nome: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
       email: ['', [Validators.required, Validators.email]],
       telemovel: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
-      especializacao: ['', Validators.required],
+      especialidade: ['', Validators.required],
       endereco: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(70)]],
       codPostal: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.pattern('(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z])(?=.*[$@#$!%*?&]).{8,30}')]],
       confirmarPassword: ['',Validators.required]
     }, formOptions);
+  }
+
+  public registarMedico() {
+    this.spinner.show();
+    if(this.form.valid) { //verifica se o formulario está válido
+      this.medico = {...this.form.value};
+      this.medicoService.registar(this.medico).subscribe(
+        next => {
+          this.router.navigate(['/user/login']);
+          this.toaster.success('Registo realizado com Sucesso.')
+        }, // NEXT
+        error => {
+          const erro = error.error;
+          console.error(error);
+          this.spinner.hide();
+          erro.forEach(element => {
+            switch (element.code) {
+              case 'DuplicateUserName':
+                this.toaster.error('O Endereço de email já foi cadastrado', 'Erro');
+                break;
+              default:
+                this.toaster.error(`Erro ao registar o Médico! CODE: ${element.code}`, 'Erro');
+              break;
+            }
+          });
+
+        }, // ERROR
+        () => this.spinner.hide() // COMPLETE
+      )
+    }
   }
 
   public cssValidator(campoForm: FormControl): any {

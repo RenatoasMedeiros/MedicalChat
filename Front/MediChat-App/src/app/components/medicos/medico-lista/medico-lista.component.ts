@@ -34,7 +34,7 @@ export class MedicoListaComponent implements OnInit {
   public filtrarMedicos(filtrarPor: string): Medico[] {
     filtrarPor = filtrarPor.toLocaleLowerCase();
     return this.medicos.filter(
-      medico => medico.nome.toLocaleLowerCase().indexOf(filtrarPor) !== -1 || medico.especialidade.toLocaleLowerCase().indexOf(filtrarPor) !== -1
+      medico => medico.username.toLocaleLowerCase().indexOf(filtrarPor) !== -1 || medico.especialidade.toLocaleLowerCase().indexOf(filtrarPor) !== -1
     );
   }
 

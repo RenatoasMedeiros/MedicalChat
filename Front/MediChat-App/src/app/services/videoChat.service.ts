@@ -1,5 +1,5 @@
 import { VideoChat } from '@app/models/VideoChat';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { take } from 'rxjs/operators';
 export class VideoChatService {
   baseURL = 'https://localhost:5001/api/VideoChat';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getVideoChats(): Observable<VideoChat[]> {
     return this.http.get<VideoChat[]>(this.baseURL)

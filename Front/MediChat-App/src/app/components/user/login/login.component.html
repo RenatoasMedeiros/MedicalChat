@@ -1,13 +1,15 @@
 <div class="d-flex align-items-center vh-100">
   <div class="mx-auto text-center shadow-sm bg-white rounded p-5 my-5">
-    <form class="form-signin">
+    <form class="form-signin" #loginForm="ngForm" (ngSubmit)="login()">
       <i class="fa fa-heartbeat mb-2"></i>
       <h1 class="h3 mb-3 font-weight-normal">Entrar com</h1>
-      <label for="username" class="sr-only">Usuário</label>
-      <input type="email" id="username" class="form-control" placeholder="Usuário" name="username" required>
+      <label for="email" class="sr-only">E-mail</label>
+      <input type="email" id="email" class="form-control" placeholder="E-mail" name="email" required
+        [(ngModel)]="model.email">
       <label for="password" class="sr-only">Password</label>
-      <input type="password" id="password" class="form-control" placeholder="Senha" name="password" required>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+      <input type="password" id="password" class="form-control" placeholder="Password" name="password" required
+        [(ngModel)]="model.password">
+      <button [disabled]="!loginForm.valid" class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
       <p class="mt-4 mb-2 text-muted">Não possui uma conta? Registe-se abaixo</p>
       <a class="btn btn-lg btn-link btn-block" routerLink="/user/registar-medico">Quero me Registar</a>
     </form>

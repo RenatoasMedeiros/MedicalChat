@@ -39,7 +39,7 @@ export class AgendaListaComponent implements OnInit {
   public filtrarVideoChat(filtrarPor: string): VideoChat[] {
     filtrarPor = filtrarPor.toLocaleLowerCase();
     return this.videoChat.filter(
-      videoChat => videoChat.medico.nome.toLocaleLowerCase().indexOf(filtrarPor) !== -1 ||
+      videoChat => videoChat.medico.username.toLocaleLowerCase().indexOf(filtrarPor) !== -1 ||
       videoChat.paciente.nome.toLocaleLowerCase().indexOf(filtrarPor) !== -1
     );
   }

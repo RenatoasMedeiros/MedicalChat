@@ -35,16 +35,15 @@ namespace MedicChat.Application
                 // Map do medico(Dto) para medico(model)
                 var medico = _mapper.Map<Medico>(model);
 
+                medico.UserName = medico.Email;
+
                 var result = await _userManager.CreateAsync(medico, model.Password);
 
                 if (result.Succeeded) {
                     _geralPersist.Add<Medico>(medico);
-                    if (await _geralPersist.SaveChangesAsync())
-                    {
                         // Map do medico(model) para medico(dto)
                         var medicoRetorno = await _medicoPersist.GetMedicosByIdAsync(medico.Id);
                         return _mapper.Map<MedicoDto>(medicoRetorno);
-                    }
                 }
                 return null;
             }

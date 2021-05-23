@@ -1,6 +1,7 @@
+import { AuthInterceptor } from './auth/auth.interceptor';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClipboardModule } from '@angular/cdk/clipboard';
@@ -101,7 +102,7 @@ defineLocale('pt', ptBrLocale);
     NgxSpinnerModule,
     ClipboardModule,
   ],
-  providers: [PacienteService, MedicoService, VideoChatService],
+  providers: [PacienteService, MedicoService, VideoChatService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi:true }], //multi para tratar de multiplas requisições
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
