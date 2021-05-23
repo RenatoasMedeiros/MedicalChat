@@ -48,7 +48,7 @@ constructor(private http: HttpClient) {}
         if(user) {
           localStorage.setItem('token', user.token);
           this.TokenDescodificador = this.jwtHelper.decodeToken(user.token);
-          sessionStorage.setItem('unique_namee', this.TokenDescodificador.Email);
+          sessionStorage.setItem('username', this.TokenDescodificador.unique_name);
         }
       })
     );
