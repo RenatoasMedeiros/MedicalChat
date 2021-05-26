@@ -109,7 +109,7 @@ namespace MedicChat.API.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post(MedicoDto model)
         {
             try

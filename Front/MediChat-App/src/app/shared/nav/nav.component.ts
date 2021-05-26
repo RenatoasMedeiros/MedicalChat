@@ -43,4 +43,10 @@ export class NavComponent implements OnInit {
   userName(){
     return sessionStorage.getItem('username');
   }
+
+  public administrador(): boolean {
+    if(sessionStorage.getItem('username') == "admin@medichat.com") //Verifica se o utilizador é administrador
+      return true;
+    return false; // Se não for retorna False
+  }
 }

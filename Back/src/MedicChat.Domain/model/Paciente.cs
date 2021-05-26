@@ -15,7 +15,7 @@ namespace MedicChat.Domain.model
         public string Endereco { get; set; }
         public string CodPostal { get; set; }
 
-        // Propriedade de Navegação!
+        // Propriedade de Navegação! - Foreing key
         public IEnumerable<VideoChat> VideoChats { get; set; }
 
 

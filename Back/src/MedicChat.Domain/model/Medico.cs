@@ -17,9 +17,9 @@ namespace MedicChat.Domain.model
         public string Endereco { get; set; }
         public string CodPostal { get; set; }
         
-        public List<UserRole> UserRoles { get; set; }
+        public List<UserRole> UserRoles { get; set; } //Lista de permições
 
-        // Propriedade de Navegação!
+        // Propriedade de Navegação! - Foreing Key
         public IEnumerable<VideoChat> VideoChats { get; set; }
 
     }

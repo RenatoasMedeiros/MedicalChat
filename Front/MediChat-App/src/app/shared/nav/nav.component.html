@@ -26,8 +26,8 @@
             {{userName()}}
           </a>
           <div *dropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" routerLink="user/perfil-medico" style="cursor: pointer;">
-              Perfil
+            <a *ngIf="administrador()" class="dropdown-item" routerLink="user/registar-medico" style="cursor: pointer;">
+              Registar novo Médico
             </a>
             <div role="separator" class="divider"></div>
             <a class="dropdown-item" (click)="logout()" style="cursor: pointer;">

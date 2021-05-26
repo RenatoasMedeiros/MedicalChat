@@ -32,7 +32,7 @@
     </thead>
     <tbody *ngIf="videoChat && videoChat.length">
       <tr *ngFor="let videoChat of videoChatFiltrada" (click)="editarVideoChat(videoChat.id)" style="cursor: pointer;">
-        <td *ngIf="videoChat.estadoVideoChat == '0'" class="d-none d-md-table-cell">{{videoChat.medico.username}}</td>
+        <td *ngIf="videoChat.estadoVideoChat == '0'" class="d-none d-md-table-cell">{{videoChat.medico.nome}}</td>
         <td *ngIf="videoChat.estadoVideoChat == '0'">{{videoChat.paciente.nome}}</td>
         <td *ngIf="videoChat.estadoVideoChat == '0'">{{videoChat.dataInicio | DatePlusHourFormatPipe}}</td>
         <td *ngIf="videoChat.estadoVideoChat == '0'">
@@ -68,7 +68,7 @@
     <tbody *ngIf="videoChat && videoChat.length">
       <tr *ngFor="let videoChat of videoChatFiltrada" (click)="infoVideoChat(videoChat.id)">
         <td *ngIf="videoChat.estadoVideoChat == '1'" class="d-none d-md-table-cell">
-          {{videoChat.medico.username}}
+          {{videoChat.medico.nome}}
         </td>
         <td *ngIf="videoChat.estadoVideoChat == '1'">
           {{videoChat.paciente.nome}}
