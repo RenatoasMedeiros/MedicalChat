@@ -13,8 +13,8 @@ using Microsoft.Extensions.Logging;
 namespace MedicChat.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    [Authorize]
+    [Route("api/[controller]")] // Define a rota
+    [Authorize] // Todos os EndPoints Percição de autorização 
     public class PacientesController : ControllerBase
     {
         private readonly IPacienteService _pacienteService;

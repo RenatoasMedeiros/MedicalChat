@@ -3,3 +3,20 @@
 @import '../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css';
 @import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
 @import '../node_modules/bootswatch/dist/lumen/bootstrap.min.css';
+
+
+// Scroll bar personalizada
+*::-webkit-scrollbar {
+  width: 0.75rem;
+  transition: 0.3s all ease-in-out;
+}
+/* Track */
+*::-webkit-scrollbar-track {
+  background-color: lightgray;
+}
+/* Handle */
+*::-webkit-scrollbar-thumb {
+  background-color: lightblue;
+  border-radius: 100px;
+  margin-top: 10px;
+}

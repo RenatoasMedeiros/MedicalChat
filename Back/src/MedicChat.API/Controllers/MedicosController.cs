@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +12,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
@@ -21,8 +19,8 @@ using System.IdentityModel.Tokens.Jwt;
 namespace MedicChat.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    [Authorize]
+    [Route("api/[controller]")] // Define a rota
+    [Authorize] // Todos os EndPoints Percição de autorização 
     public class MedicosController : ControllerBase
     {
         private readonly IMedicoService _medicoService;
@@ -45,112 +43,123 @@ namespace MedicChat.API.Controllers
         {
             try
             {
+                // Atribui a medicos todos os médicos atravez do serviço _medicoService
                 var medicos = await _medicoService.GetAllMedicosAsync();
-                if (medicos == null) return NoContent(); // Retorna StatusCode 204 - NoContent
+                if (medicos == null) return NoContent(); // Retorna StatusCode 204 - NoContent Caso o medico seja null
 
-                return Ok(medicos);
+                return Ok(medicos); // retorna status code 200 (Ok) com o médico
             }
             catch (Exception ex)
             {
+                // Em caso de exception retorna status code 500 e mostra o erro
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
                     $"Erro ao tentar recuperar medicos. Erro: {ex.Message}");
             }
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(int id) // Id do Médico
         {
             try
             {
+                // Atribui a medico o médico dono do id passado, atravez do serviço _medicoService
                 var medico = await _medicoService.GetMedicosByIdAsync(id);
-                if (medico == null) return NoContent(); // Retorna StatusCode 204 - NoContent
+                if (medico == null) return NoContent(); // Retorna StatusCode 204 - NoContent Caso o medico seja null
 
-                return Ok(medico);
+                return Ok(medico); // retorna status code 200 (Ok) com o médico
             }
             catch (Exception ex)
             {
+                // Em caso de exception retorna status code 500 e mostra o erro
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
                     $"Erro ao tentar recuperar medicos. Erro: {ex.Message}");
             }
         }
 
         [HttpGet("{especialidade}/especialidade")]
-        public async Task<IActionResult> GetByEspecialidade(string especialidade)
+        public async Task<IActionResult> GetByEspecialidade(string especialidade) // Especialidade do Médico
         {
             try
             {
-                var medico = await _medicoService.GetAllMedicosByEspecialidadeAsync(especialidade);
-                if (medico == null) return NoContent(); // Retorna StatusCode 204 - NoContent
+                // Atribui a medicos todos os médicos com a especialidade passada como parametro, atravez do serviço _medicoService
+                var medicos = await _medicoService.GetAllMedicosByEspecialidadeAsync(especialidade);
+                if (medicos == null) return NoContent(); // Retorna StatusCode 204 - NoContent Caso o medico seja null
 
-                return Ok(medico);
+                return Ok(medicos); // retorna status code 200 (Ok) com o médico
             }
             catch (Exception ex)
             {
+                // Em caso de exception retorna status code 500 e mostra o erro
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
                     $"Erro ao tentar recuperar medicos. Erro: {ex.Message}");
             }
         }
 
         [HttpGet("{nome}/nome")]
-        public async Task<IActionResult> GetByNome(string nome)
+        public async Task<IActionResult> GetByNome(string nome) // Nome do Médico
         {
             try
             {
+                // Atribui a medicos todos os médicos com o nome passada como parametro, atravez do serviço _medicoService
                 var medico = await _medicoService.GetAllMedicosByNomeAsync(nome);
-                if (medico == null) return NoContent(); // Retorna StatusCode 204 - NoContent
+                if (medico == null) return NoContent(); // Retorna StatusCode 204 - NoContent Caso o medico seja null
 
-                return Ok(medico);
+                return Ok(medico); // retorna status code 200 (Ok) com o médico
             }
             catch (Exception ex)
             {
+                // Em caso de exception retorna status code 500 e mostra o erro
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
                     $"Erro ao tentar recuperar medicos. Erro: {ex.Message}");
             }
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Post(MedicoDto model)
+        [Authorize(Roles = "Admin")] //Sómente utilizadores com permição de Admin podem realizar este endpoint
+        public async Task<IActionResult> Post(MedicoDto model) // Recebe como parametro um MedicoDto
         {
             try
             {
+                // Atribui a medico todo o model do MedicoDto passado como parametro
                 var medico = await _medicoService.AddMedico(model);
-                if (medico == null) return NoContent(); // Retorna StatusCode 204 - NoContent
+                if (medico == null) return NoContent(); // Retorna StatusCode 204 - NoContent Caso o medico seja null
 
-                return Ok(medico);
+                return Ok(medico); // retorna status code 200 (Ok) com o médico
             }
             catch (Exception ex)
             {
+                // Em caso de exception retorna status code 500 e mostra o erro
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
                     $"Erro ao tentar adicionar medicos. Erro: {ex.Message}");
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, MedicoDto model)
+        [HttpPut("{id}")] // Editar o médico
+        public async Task<IActionResult> Put(int id, MedicoDto model) // Recebe o id do médico e um model do Tipo MedicoDto
         {
             try
             {
                 var medico = await _medicoService.UpdateMedico(id, model);
-                if (medico == null) return NoContent(); // Retorna StatusCode 204 - NoContent
+                if (medico == null) return NoContent(); // Retorna StatusCode 204 - NoContent Caso o medico seja null
 
-                return Ok(medico);
+                return Ok(medico); // retorna status code 200 (Ok) com o médico
             }
             catch (Exception ex)
             {
+                // Em caso de exception retorna status code 500 e mostra o erro
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
                     $"Erro ao tentar atualizar medicos. Erro: {ex.Message}");
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}")] // Eliminar o médico
         public async Task<IActionResult> Delete(int id)
         {
             try
             {
                 // Verifica se o Medico existe
                 var medico = await _medicoService.GetMedicosByIdAsync(id);
-                if (medico == null) return NoContent(); // Retorna StatusCode 204 - NoContent
+                if (medico == null) return NoContent(); // Retorna StatusCode 204 - NoContent Caso o medico seja null
 
                 return await _medicoService.DeleteMedico(id)
                         ? Ok(new { mensagem = "Apagado" }) // retorna um objeto para o front end (boa prática)
@@ -158,13 +167,14 @@ namespace MedicChat.API.Controllers
             }
             catch (Exception ex)
             {
+                // Em caso de exception retorna status code 500 e mostra o erro
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
                     $"Erro ao tentar deletar medicos. Erro: {ex.Message}");
             }
         }
 
         [HttpPost("Login")]
-        [AllowAnonymous]
+        [AllowAnonymous] // Permite o acesso a quem não está com sessão iniciada no MediChat
         public async Task<IActionResult> Login(MedicoLoginDto model)
         {
             try
@@ -174,19 +184,20 @@ namespace MedicChat.API.Controllers
 
                 if (result.Succeeded) // caso o resultado dê sucesso
                 {
-                    var appMedico = await _userManager.Users.FirstOrDefaultAsync(m => m.NormalizedEmail == model.Email.ToUpper());
+                    var appMedico = await _userManager.Users.FirstOrDefaultAsync(m => m.NormalizedEmail == model.Email.ToUpper()); //Verificamos na base de dados o email que coincida com o email indiciado
                     var medicoRetorno = _mapper.Map<MedicoLoginDto>(appMedico);
 
                     return Ok(new
                     {
-                        token = GenerateJWToken(appMedico).Result, // gera o token - .Result é IMPORTANTE
-                        medico = medicoRetorno
+                        token = GenerateJWToken(appMedico).Result, // gera o token - .Result é IMPORTANTE (resultado da Task)
+                        medico = medicoRetorno // Atribuimos a medico todasas propriedades do medicoRetorno
                     });
                 }
                 return Unauthorized(); // caso os dados estejam incorretos
             }
             catch (Exception ex)
             {
+                // Em caso de exception retorna status code 500 e mostra o erro
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
                     $"Erro ao tentar efetuar o login. Erro: {ex.Message}");
             }
@@ -206,30 +217,32 @@ namespace MedicChat.API.Controllers
 
                 var roles = await _userManager.GetRolesAsync(medico); // atribui a variavel roles todas a roles do medico
 
-                foreach (var role in roles){
+                // Percorre todas as roles 
+                foreach (var role in roles) {
                     claims.Add(new Claim(ClaimTypes.Role, role));
                 }
 
+                // Chave (appsettings.json) com Enconding numa sequência de Bytes 
                 var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration.GetSection("AppSettings:Token").Value));
 
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature); // CRIPTOGRAFIA HmacSha512Signature
+                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature); // Gera uma Hash Message Authentication Code (Hmac) Sha512(hash de 512 bits) com a chave
 
                 // informações do token
-                var tokenDescriptor = new SecurityTokenDescriptor{
-                    Subject = new ClaimsIdentity(claims),
-                    Expires = DateTime.Now.AddDays(1),
-                    SigningCredentials = creds
+                var tokenDescriptor = new SecurityTokenDescriptor {
+                    Subject = new ClaimsIdentity(claims), // Passa as claims ("informações" do medico na token)
+                    Expires = DateTime.Now.AddHours(12), // 12 horas para a token expirar
+                    SigningCredentials = creds // as credenciais (a chave)
                 };
 
-                var tokenHandler = new JwtSecurityTokenHandler();
+                var tokenHandler = new JwtSecurityTokenHandler(); // Para poder criar e escrever a token
 
-                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var token = tokenHandler.CreateToken(tokenDescriptor); // Cria a token com a sua descrição
 
-                return tokenHandler.WriteToken(token);
+                return tokenHandler.WriteToken(token); // retorna a token
             }
             catch (System.Exception)
             {
-                throw;
+                throw; // Lança a exception
             }
         }
     }
