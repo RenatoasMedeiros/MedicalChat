@@ -113,7 +113,7 @@ namespace MedicChat.API.Controllers
 
                 try 
                 {
-                    _mailSenderService.SendPlaintextGmail(videoChat.Paciente.Email, videoChat.Paciente.Nome, videoChat.DataInicio);
+                    _mailSenderService.EnviarGmailConsultaAgendada(videoChat.Paciente.Email, videoChat.Paciente.Nome, videoChat.DataInicio);
                 }
                 catch(Exception ex) {
                     return this.StatusCode(StatusCodes.Status500InternalServerError,
@@ -139,7 +139,32 @@ namespace MedicChat.API.Controllers
                 if (videoChat == null) return NoContent(); // Retorna StatusCode 204 - NoContent
                 try 
                 {
-                    _mailSenderService.SendPlaintextGmail(videoChat.Paciente.Email, videoChat.Paciente.Nome, videoChat.DataInicio);
+                    _mailSenderService.EnviarGmailConsultaAgendada(videoChat.Paciente.Email, videoChat.Paciente.Nome, videoChat.DataInicio);
+                }
+                catch(Exception ex) {
+                    return this.StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Erro ao tentar adicionar a Video Chamada, email não enviado ao Paciente Erro: {ex.Message}");
+                }
+
+                return Ok(videoChat);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Erro ao tentar atualizar a Video Chamada. Erro: {ex.Message}");
+            }
+        }
+
+        [HttpPut("enviarEmail/{id}")]
+        public async Task<IActionResult> PutEnviaEmail(int id, VideoChatDto model)
+        {
+            try
+            {
+                var videoChat = await _videoChatService.UpdateVideoChat(id, model);
+                if (videoChat == null) return NoContent(); // Retorna StatusCode 204 - NoContent
+                try 
+                {
+                    _mailSenderService.EnviarGmailConsultaIniciada(videoChat.Paciente.Email, videoChat.Paciente.Nome, videoChat.Token, videoChat.Id);
                 }
                 catch(Exception ex) {
                     return this.StatusCode(StatusCodes.Status500InternalServerError,

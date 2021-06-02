@@ -147,14 +147,13 @@ export class VideoChatComponent implements OnInit {
   }
 
   public guardarVideoChat(): void {
-    console.log(this.dataFim);
     this.spinner.show();
     if(this.form.valid) {
       this.videoChat = { id: +this.videoChatIdParam, estadoVideoChat: 1, token: this.roomName, dataFim: this.dataFim, ...this.form.value} // atribui ao paciente o formulário, MENOS o Id pois ele tem que se manter visto que é um PUT (Se o mesmo for válido) (SPREAD OPERATOR)
       console.log(this.videoChat);
       this.videoChatService.put(this.videoChat).subscribe(
         (videoChatRetorno: VideoChat) => {                                     // NEXT
-          this.toastr.success('Consulta agendada com Sucesso!', 'Sucesso');
+          this.toastr.success('Consulta Finalizada com Sucesso!', 'Sucesso');
         },
         (error: any) => {
           console.error(error);
@@ -164,6 +163,22 @@ export class VideoChatComponent implements OnInit {
         () => this.spinner.hide() // COMPLETE
       );
     }
+  }
+
+  public enviarEmail(): void {
+    this.videoChat = { id: +this.videoChatIdParam, token: this.roomName, ...this.form.value} // atribui ao paciente o formulário, MENOS o Id pois ele tem que se manter visto que é um PUT (Se o mesmo for válido) (SPREAD OPERATOR)
+      console.log(this.videoChat);
+      this.videoChatService.putEnviaEmail(this.videoChat).subscribe(
+        (videoChatRetorno: VideoChat) => {                                     // NEXT
+          this.toastr.success('E-mail enviado com Sucesso!', 'Sucesso');
+        },
+        (error: any) => {
+          console.error(error);
+          this.spinner.hide();
+          this.toastr.error('Erro ao enviar E-mail', 'Erro');
+        }, // ERROR
+        () => this.spinner.hide() // COMPLETE
+      );
   }
 
   showForm(): boolean {

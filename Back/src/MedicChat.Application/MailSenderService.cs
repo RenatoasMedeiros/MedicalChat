@@ -21,7 +21,7 @@ namespace MedicChat.Application
             throw new System.NotImplementedException();
         }
 
-        public async void SendPlaintextGmail(string recipientEmail, string recipientName, DateTime videochatDate)
+        public async void EnviarGmailConsultaAgendada(string recipientEmail, string recipientName, DateTime videochatDate)
         {
             try {
                 using (var scope = _serviceProvider.CreateScope()) {
@@ -35,6 +35,23 @@ namespace MedicChat.Application
                                                                     + videochatDate.Hour + ":" 
                                                                     + videochatDate.Minute + "."
                         );
+                        await email.SendAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public async void EnviarGmailConsultaIniciada(string recipientEmail, string recipientName, string token, int idConsulta)
+        {
+            try {
+                using (var scope = _serviceProvider.CreateScope()) {
+                    var mailer = scope.ServiceProvider.GetRequiredService<IFluentEmail>();
+                    var email = mailer
+                        .To(recipientEmail, recipientName)
+                        .Subject("MediChat " + recipientName + " - Consulta Agendada")
+                        .Body("Olá "+ recipientName +", a sua consulta já se encontra ativa! Por favor entre em: http://localhost:4200/consulta/"+idConsulta+"/"+token);
                         await email.SendAsync();
                 }
             }

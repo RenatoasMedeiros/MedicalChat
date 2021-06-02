@@ -5,10 +5,7 @@ import { VideoChatService } from '@app/services/videoChat.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
-import { isObservable } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
-
-
 
 @Component({
   selector: 'app-agenda-lista',
@@ -20,6 +17,7 @@ export class AgendaListaComponent implements OnInit {
   modalRef: BsModalRef;
 
   public videoChat: VideoChat[] = [];
+
   public videoChatFiltrada: VideoChat[] = [];
   public videoChatId = 0;
   medicoId = sessionStorage.getItem('id');

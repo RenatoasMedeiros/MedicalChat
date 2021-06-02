@@ -46,6 +46,11 @@ export class VideoChatService {
       .pipe(take(1)); // Só permite uma chamada - depois dá unsubscrive
   }
 
+  putEnviaEmail(videoChat: VideoChat): Observable<VideoChat> {
+    return this.http.put<VideoChat>(`${this.baseURL}/enviarEmail/${videoChat.id}`, videoChat)
+      .pipe(take(1)); // Só permite uma chamada - depois dá unsubscrive
+  }
+
   deleteVideoChat(id: number): Observable<any> { // vai receber um objeto
     return this.http.delete<any>(`${this.baseURL}/${id}`)
       .pipe(take(1)); // Só permite uma chamada - depois dá unsubscrive

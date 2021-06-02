@@ -24,5 +24,8 @@
     <button class="btn btn-success mt-2" [disabled]="!form.valid" (click)="guardarVideoChat()">
       Finalizar Consulta
     </button>
+    <button class="btn btn-warning mt-2 ml-4" tooltip="Enviar E-mail ao Paciente" [disabled]="!form.valid" (click)="enviarEmail()">
+      Enviar Email
+    </button>
   </div>
 </div>

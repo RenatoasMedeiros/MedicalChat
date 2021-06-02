@@ -131,7 +131,7 @@ export class PacienteInformacaoComponent implements OnInit {
       dataInicio: [videoChat.dataInicio, Validators.required],
       dataFim: [videoChat.dataFim],
       estadoVideoChat: [videoChat.estadoVideoChat, Validators.required],
-      medico: [videoChat.medico.username, Validators.required],
+      medico: [videoChat.medico.nome, Validators.required],
       paciente: [videoChat.paciente.nome, Validators.required]
     });
   };
