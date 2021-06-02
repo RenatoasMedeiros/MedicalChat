@@ -6,12 +6,12 @@
       </div>
     </div>
   </div>
-  <div class="card-footer">
+  <div class="card-footer" *ngIf="showForm()">
     <form [formGroup]="form">
       <div class="form-row">
         <form-group class="col-12">
           <label>Relatório:</label>
-          <textarea class="form-control" rows="12" [ngClass]="cssValidator(f.relatorio)" formControlName="relatorio"> </textarea>
+          <textarea class="form-control" rows="6" [ngClass]="cssValidator(f.relatorio)" formControlName="relatorio"> </textarea>
           <div *ngIf="f.relatorio.errors?.required && f.relatorio.touched" class="invalid-feedback">
             O Relatorio é obrigatório.
           </div>

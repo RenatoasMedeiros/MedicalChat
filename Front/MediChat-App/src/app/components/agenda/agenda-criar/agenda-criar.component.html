@@ -2,8 +2,6 @@
 <div class="card shadow-sm">
   <form [formGroup]="form">
     <div class="p-3">
-    <!-- <p>Form value: {{form.value | json}}</p>
-    <p>Form valid: {{form.status | json}}</p> -->
       <div class="form-row">
         <div class="form-group col-md-6">
           <label>Médico:</label>
@@ -25,6 +23,16 @@
         </div>
       </div>
       <div class="form-row">
+        <div class="form-group" class="col-md-8" *ngIf="consultaConcluida()">
+          <label>Relatório:</label>
+          <textarea class="form-control" rows="3" [ngClass]="cssValidator(f.relatorio)" formControlName="relatorio"> </textarea>
+          <div *ngIf="f.relatorio.errors?.required && f.relatorio.touched" class="invalid-feedback">
+            O Relatorio é obrigatório.
+          </div>
+          <div *ngIf="f.relatorio.errors?.maxlength && f.relatorio.touched"  class="invalid-feedback">
+            Endereço deve ter no máximo 3000 caracteres.
+          </div>
+        </div>
         <div class="form-group col-md-4">
           <label>Data da Consulta:</label>
           <input type="datetime" class="form-control"
@@ -40,13 +48,10 @@
     </div>
     <div class="card-footer">
       <div class="d-flex">
-        <button class="btn btn-outline-info mr-auto border" (click)="resetForm()">
+        <button class="btn btn-outline-info mr-auto border" [disabled]="consultaConcluida()" (click)="resetForm()">
           Cancelar Alteração
         </button>
-        <button type="button" class="btn btn-primary btn-md ml-2 m-auto" tooltip="Iniciar Consulta" (click)="openModal($event, templateIniciarConsulta, videoChat.id)">
-          Iniciar Conculta
-        </button>
-        <button class="btn btn-success" [disabled]="!form.valid" (click)="guardarVideoChat()">
+        <button class="btn btn-success" [disabled]="!form.valid || consultaConcluida()" (click)="guardarVideoChat()">
           <!-- <span class="spinner-border spinner-border-sm mr-1"></span> -->
           Agendar Consulta
         </button>
@@ -55,10 +60,4 @@
   </form>
 </div>
 
-<ng-template #templateIniciarConsulta>
-  <div class="modal-body text-center">
-    <p>Tem certeza que deseja iniciar a Consulta?</p>
-    <button type="button" class="btn btn-default"  target="_blank" (click)="confirmIniciarConsulta(this.videoChatId)" >Sim</button>
-    <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
-  </div>
-</ng-template>
+

@@ -23,6 +23,7 @@
   <table class="table table-striped table-hover">
     <thead class="agendado">
       <tr>
+        <th>ID</th>
         <th class="d-none d-md-table-cell">Médico</th>
         <th>Paciente</th>
         <th>Data da Consulta</th>
@@ -32,6 +33,9 @@
     </thead>
     <tbody *ngIf="videoChat && videoChat.length">
       <tr *ngFor="let videoChat of videoChatFiltrada" (click)="editarVideoChat(videoChat.id)" style="cursor: pointer;">
+        <td *ngIf="videoChat.estadoVideoChat == '0'" class="d-none d-md-table-cell">
+          {{videoChat.id}}
+        </td>
         <td *ngIf="videoChat.estadoVideoChat == '0'" class="d-none d-md-table-cell">{{videoChat.medico.nome}}</td>
         <td *ngIf="videoChat.estadoVideoChat == '0'">{{videoChat.paciente.nome}}</td>
         <td *ngIf="videoChat.estadoVideoChat == '0'">{{videoChat.dataInicio | DatePlusHourFormatPipe}}</td>
@@ -41,6 +45,9 @@
         <td *ngIf="videoChat.estadoVideoChat == '0' && mobile">
           <button type="button" class="btn btn-danger btn-md" tooltip="Excluir" (click)="openModal($event, template, videoChat.id)">
             <i class="fa fa-trash"></i>
+          </button>
+          <button type="button" class="btn btn-primary btn-md ml-2" tooltip="Iniciar Consulta" (click)="openModal($event, templateIniciarConsulta, videoChat.id)">
+            <i class="fas fa-video"></i>
           </button>
         </td>
       </tr>
@@ -58,6 +65,7 @@
   <table class="table table-striped table-hover">
     <thead class="concluido">
       <tr>
+        <th>ID</th>
         <th class="d-none d-md-table-cell">Médico</th>
         <th>Paciente</th>
         <th>Data da Consulta</th>
@@ -66,7 +74,10 @@
       </tr>
     </thead>
     <tbody *ngIf="videoChat && videoChat.length">
-      <tr *ngFor="let videoChat of videoChatFiltrada" (click)="infoVideoChat(videoChat.id)">
+      <tr *ngFor="let videoChat of videoChatFiltrada" (click)="editarVideoChat(videoChat.id)">
+        <td *ngIf="videoChat.estadoVideoChat == '1'" class="d-none d-md-table-cell">
+          {{videoChat.id}}
+        </td>
         <td *ngIf="videoChat.estadoVideoChat == '1'" class="d-none d-md-table-cell">
           {{videoChat.medico.nome}}
         </td>
@@ -100,6 +111,14 @@
   <div class="modal-body text-center">
     <p>Tem certeza que deseja apagar a Consulta de código {{this.videoChatId}}?</p>
     <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+  </div>
+</ng-template>
+
+<ng-template #templateIniciarConsulta>
+  <div class="modal-body text-center">
+    <p>Tem certeza que deseja iniciar a Consulta de código {{this.videoChatId}}?</p>
+    <button type="button" class="btn btn-default"  target="_blank" (click)="confirmIniciarConsulta(this.videoChatId)" >Sim</button>
     <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
   </div>
 </ng-template>

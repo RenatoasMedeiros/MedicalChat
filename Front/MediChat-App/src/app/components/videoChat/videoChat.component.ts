@@ -44,7 +44,7 @@ export class VideoChatComponent implements OnInit {
     this.checkMediaDevices();
     this.initPeer();
     this.initSocket();
-    this.carregarConsulta();
+    if(localStorage.getItem('token') != null) this.carregarConsulta(); // se nao existir token nao chama carregarConsulta
     this.validation();
   }
 
@@ -164,5 +164,11 @@ export class VideoChatComponent implements OnInit {
         () => this.spinner.hide() // COMPLETE
       );
     }
+  }
+
+  showForm(): boolean {
+    if(localStorage.getItem('token') == null) //Verifica se é um utilizador
+      return false;
+    return true;
   }
 }

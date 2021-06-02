@@ -102,6 +102,11 @@ export class AgendaListaComponent implements OnInit {
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 
+  confirmIniciarConsulta(id: number): void {
+    this.modalRef.hide();
+    this.router.navigate([`consulta/${id}/${uuidv4()}`]);
+  }
+
   confirm(): void {
     this.modalRef.hide();
     this.spinner.show();

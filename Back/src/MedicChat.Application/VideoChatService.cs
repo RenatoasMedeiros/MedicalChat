@@ -45,10 +45,13 @@ namespace MedicChat.Application
         {
             try
             {
-                model.DataInicio = model.DataInicio.AddHours(1);
-
+                if(model.Relatorio == string.Empty){ // se o relatorio estiver vazio é porque a consulta só foi agendada
+                    model.DataInicio = model.DataInicio.AddHours(1);
+                }
+                if(model.Relatorio != string.Empty){ // se o relatorio não estiver vazio é porque a consulta foi finalizada
+                    model.DataFim = model.DataFim.AddHours(1);
+                }
                 var videoChat = await _videoChatPersist.GetVideoChatByIdAsync(videoChatId);
-                videoChat.DataInicio = videoChat.DataInicio.AddHours(1);
 
                 if (videoChat == null) return null;
 

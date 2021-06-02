@@ -154,10 +154,6 @@ export class AgendaCriarComponent implements OnInit {
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 
-  confirmIniciarConsulta(id: number): void {
-    this.modalRef.hide();
-    this.route.navigate([`consulta/${id}/${uuidv4()}`]);
-  }
 
   public cssValidator(campoForm: FormControl): any {
     return {'is-invalid': campoForm.errors && campoForm.touched};
@@ -182,5 +178,10 @@ export class AgendaCriarComponent implements OnInit {
         () => this.spinner.hide() // COMPLETE
       );
     }
+  }
+
+  consultaConcluida(): boolean {
+    var estado = this.videoChat.estadoVideoChat == 1;
+    return estado;
   }
 }
