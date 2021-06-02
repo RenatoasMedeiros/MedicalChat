@@ -29,7 +29,12 @@ namespace MedicChat.Application
                     var email = mailer
                         .To(recipientEmail, recipientName)
                         .Subject("MediChat " + recipientName + " - Consulta Agendada")
-                        .Body("A sua consulta foi agendada no dia " + videochatDate);
+                        .Body("Olá "+ recipientName +", a sua consulta foi agendada no dia " + videochatDate.Day + "/" 
+                                                                    + videochatDate.Month + "/" 
+                                                                    + videochatDate.Year + " às " 
+                                                                    + videochatDate.Hour + ":" 
+                                                                    + videochatDate.Minute + "."
+                        );
                         await email.SendAsync();
                 }
             }
@@ -38,28 +43,5 @@ namespace MedicChat.Application
                 throw new Exception(ex.Message);
             }
         }
-
-        // public async void SendPlaintextGmail(string recipientEmail, string recipientName, DateTime videochatDate)
-        // {
-        //     try {
-        //         using (var scope = _serviceProvider.CreateScope()) {
-        //             var mailer = scope.ServiceProvider.GetRequiredService<IFluentEmail>();
-        //             var email = mailer
-        //                 .To(recipientEmail, recipientName)
-        //                 .Subject("MediChat " + recipientName + " - Consulta Agendada")
-        //                 .Body("A sua consulta foi agendada no dia " + videochatDate.Day + "/" 
-        //                                                             + videochatDate.Month + "/" 
-        //                                                             + videochatDate.Year + " às " 
-        //                                                             + videochatDate.Hour + ":" 
-        //                                                             + videochatDate.Minute + "."
-        //                 );
-        //                 await email.SendAsync();
-        //         }
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         throw new Exception(ex.Message);
-        //     }
-        // }
    }
 }

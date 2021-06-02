@@ -12,6 +12,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 // CONFIGURAÇÕES DO DATEPICKER
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
@@ -33,11 +34,11 @@ import { DatePlusHourFormatPipe } from './helpers/DatePlusHourFormat.pipe';
 
 // COMPONENTS
 import { AgendaCriarComponent } from './components/agenda/agenda-criar/agenda-criar.component';
-import { AgendaInformacaoVisualizarComponent } from './components/agenda/agenda-informacao-visualizar/agenda-informacao-visualizar.component';
 import { AgendaListaComponent } from './components/agenda/agenda-lista/agenda-lista.component';
 import { AgendaComponent } from './components/agenda/agenda.component';
+import { VideoChatPlayerComponent } from './components/videoChat/videoChat-player/videoChat-player.component';
+import { VideoChatComponent } from './components/videoChat/videoChat.component';
 
-import { MedicoInformacaoComponent } from './components/medicos/medico-informacao/medico-informacao.component';
 import { MedicoListaComponent } from './components/medicos/medico-lista/medico-lista.component';
 import { MedicosComponent } from './components/medicos/medicos.component';
 
@@ -45,7 +46,6 @@ import { PacientesComponent } from './components/pacientes/pacientes.component';
 import { PacienteListaComponent } from './components/pacientes/paciente-lista/paciente-lista.component';
 import { PacienteInformacaoComponent } from './components/pacientes/paciente-informacao/paciente-informacao.component';
 
-import { PerfilMedicoComponent } from './components/user/perfil-medico/perfil-medico.component';
 import { UserComponent } from './components/user/user.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegistarMedicoComponent } from './components/user/registar-medico/registar-medico.component';
@@ -55,6 +55,12 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 // COMPONENTES PARTILHADOS
 import { NavComponent } from './shared/nav/nav.component';
 import { TituloComponent } from './shared/titulo/titulo.component';
+import { WebSocketService } from './services/web-socket.service';
+import { PeerService } from './services/peer.service';
+
+// socket io na porta 3000
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {withCredentials: '*'}}; // Sem credenciais
+
 
 defineLocale('pt', ptBrLocale);
 
@@ -66,20 +72,19 @@ defineLocale('pt', ptBrLocale);
     PacienteInformacaoComponent,
     AgendaComponent,
     DashboardComponent,
-    PerfilMedicoComponent,
     NavComponent,
     TituloComponent,
     DateTimeFormatPipe,
     DatePlusHourFormatPipe,
     PacienteListaComponent,
     MedicoListaComponent,
-    MedicoInformacaoComponent,
     UserComponent,
     LoginComponent,
     RegistarMedicoComponent,
     AgendaListaComponent,
-    AgendaInformacaoVisualizarComponent,
-    AgendaCriarComponent
+    AgendaCriarComponent,
+    VideoChatComponent,
+    VideoChatPlayerComponent,
    ],
   imports: [
     BrowserModule,
@@ -101,8 +106,9 @@ defineLocale('pt', ptBrLocale);
     }),
     NgxSpinnerModule,
     ClipboardModule,
+    SocketIoModule.forRoot(config)
   ],
-  providers: [PacienteService, MedicoService, VideoChatService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi:true }], //multi para tratar de multiplas requisições
+  providers: [PacienteService, MedicoService, VideoChatService, WebSocketService, PeerService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi:true }], //multi para tratar de multiplas requisições
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

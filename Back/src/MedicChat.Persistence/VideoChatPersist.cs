@@ -37,6 +37,17 @@ namespace MedicChat.Persistence
 
             return await query.ToArrayAsync();
         }
+        public async Task<VideoChat[]> GetAllVideoChatsByMedicoIdAsync(int medicoId)
+        {
+            IQueryable<VideoChat> query = _context.VideoChats
+                .Include(m => m.Medico)
+                .Include(p => p.Paciente);
+
+            query = query.AsNoTracking()
+                         .Where(videoChat => videoChat.MedicoID == medicoId);
+
+            return await query.ToArrayAsync();
+        }
 
         public async Task<VideoChat> GetVideoChatByIdAsync(int videoChatId)
         {

@@ -12,4 +12,9 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
   }
 
+  userName(){
+    var nome = sessionStorage.getItem('username');
+    return (nome.split(" ")[0] + " " + nome.split(" ")[nome.split(" ").length - 1]); // retorna o primeiro e o ultimo nome do utilizador
+}
+
 }

@@ -12,6 +12,7 @@ namespace MedicChat.Application.Contratos
 
         Task<VideoChatDto[]> GetAllVideoChatAsync();
         Task<VideoChatDto[]> GetAllVideoChatsByPacienteIdAsync(int pacienteId);
+        Task<VideoChatDto[]> GetAllVideoChatsByMedicoIdAsync(int medicoId);
         Task<VideoChatDto> GetVideoChatByIdAsync(int videoChatId);
     }
 }

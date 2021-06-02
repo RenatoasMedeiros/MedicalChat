@@ -1,0 +1,28 @@
+<div class="card shadow-sm">
+  <div class="host">
+    <div class="card shadow-sm">
+      <div class="wrapper-room">
+        <app-videoChat-player [stream]="user" *ngFor="let user of listUser"></app-videoChat-player>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <form [formGroup]="form">
+      <div class="form-row">
+        <form-group class="col-12">
+          <label>Relatório:</label>
+          <textarea class="form-control" rows="12" [ngClass]="cssValidator(f.relatorio)" formControlName="relatorio"> </textarea>
+          <div *ngIf="f.relatorio.errors?.required && f.relatorio.touched" class="invalid-feedback">
+            O Relatorio é obrigatório.
+          </div>
+          <div *ngIf="f.relatorio.errors?.maxlength && f.relatorio.touched"  class="invalid-feedback">
+            Endereço deve ter no máximo 3000 caracteres.
+          </div>
+        </form-group>
+      </div>
+    </form>
+    <button class="btn btn-success mt-2" [disabled]="!form.valid" (click)="guardarVideoChat()">
+      Finalizar Consulta
+    </button>
+  </div>
+</div>

@@ -84,6 +84,23 @@ namespace MedicChat.API.Controllers
             }
         }
 
+        [HttpGet("medico/{medicoId}")]
+        public async Task<IActionResult> GetAllVideoChatsByMedicoIdAsync(int medicoId)
+        {
+            try
+            {
+                var videoChat = await _videoChatService.GetAllVideoChatsByMedicoIdAsync(medicoId);
+                if (videoChat == null) return NoContent(); // Retorna StatusCode 204 - NoContent
+
+                return Ok(videoChat);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Erro ao tentar recuperar a Video Chamada. Erro: {ex.Message}");
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post(VideoChatDto model)
         {
@@ -91,6 +108,7 @@ namespace MedicChat.API.Controllers
             {
                 // Dado o Objeto medicoDto é mapeado os medicos
                 var videoChat = await _videoChatService.AddVideoChat(model);
+                videoChat.DataInicio.AddHours(1); // Adiciona 1 hora
                 if (videoChat == null) return NoContent(); // Retorna StatusCode 204 - NoContent
 
                 try 
@@ -119,7 +137,6 @@ namespace MedicChat.API.Controllers
             {
                 var videoChat = await _videoChatService.UpdateVideoChat(id, model);
                 if (videoChat == null) return NoContent(); // Retorna StatusCode 204 - NoContent
-
                 try 
                 {
                     _mailSenderService.SendPlaintextGmail(videoChat.Paciente.Email, videoChat.Paciente.Nome, videoChat.DataInicio);

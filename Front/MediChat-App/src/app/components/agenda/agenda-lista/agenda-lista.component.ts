@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import { isObservable } from 'rxjs';
+import { v4 as uuidv4 } from 'uuid';
 
 
 
@@ -21,6 +22,7 @@ export class AgendaListaComponent implements OnInit {
   public videoChat: VideoChat[] = [];
   public videoChatFiltrada: VideoChat[] = [];
   public videoChatId = 0;
+  medicoId = sessionStorage.getItem('id');
 
   public mobile: boolean = false;
 
@@ -54,13 +56,17 @@ export class AgendaListaComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show();
-    this.getVideoChats();
+    if(this.medicoId != "3"){ // Id do ADMINISTRADOR
+      this.GetVideoChatsByMedicoId();
+    } else {
+      this.getVideoChats();
+    }
     if (window.screen.width >= 375) {
       this.mobile = true;
     }
   }
 
-  public getVideoChats(): void{
+  public getVideoChats(): void {
     this.videoChatService.getVideoChats().subscribe({
       next: (_videoChat: VideoChat[]) => {
         this.videoChat = _videoChat;
@@ -74,6 +80,22 @@ export class AgendaListaComponent implements OnInit {
     });
   }
 
+  // Carrega todas as Consultas do medico logado
+  public GetVideoChatsByMedicoId(): void {
+    this.videoChatService.getVideoChatsByMedicoId(+this.medicoId).subscribe( // + para converter para int
+      (videoChatsRetorno: VideoChat[]) => {
+        videoChatsRetorno.forEach(videoChat => {
+          this.videoChat = videoChatsRetorno;
+          this.videoChatFiltrada = this.videoChat;
+        });
+      },
+      (error) => {
+        this.toastr.error('Erro ao tentar carregar as Consultas', 'Erro')
+        console.error(error);
+      },
+    ).add(() => this.spinner.hide());
+  };
+
   openModal(event: any, template: TemplateRef<any>, videoChatId: number): void {
     event.stopPropagation(); // nao propaga o evento do click
     this.videoChatId = videoChatId;
@@ -82,8 +104,24 @@ export class AgendaListaComponent implements OnInit {
 
   confirm(): void {
     this.modalRef.hide();
-    this.toastr.success('A Consulta foi apagada com sucesso!', 'Apagado!');
+    this.spinner.show();
+
+    this.videoChatService.deleteVideoChat(this.videoChatId).subscribe(
+      (resultado: any) => { // NEXT
+        if(resultado.mensagem == 'Apagado'){
+          this.toastr.success('A Consulta foi apagada com sucesso!', 'Apagado!');
+          this.GetVideoChatsByMedicoId(); // volta a buscar todas as consultas do medico
+        }
+      },
+      (error: any) => { // ERROR
+        console.error(error);
+        this.toastr.error(`Erro ao tentar Apagar a Consultas ${this.videoChatId}`, 'Erro');
+      }
+    ).add(() => this.spinner.hide());
   }
+
+
+
 
   decline(): void {
     this.modalRef.hide();

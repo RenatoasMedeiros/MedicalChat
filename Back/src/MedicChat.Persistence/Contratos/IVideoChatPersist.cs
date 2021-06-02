@@ -7,6 +7,7 @@ namespace MedicChat.Persistence.Contratos
     {
         Task<VideoChat[]> GetAllVideoChatAsync();
         Task<VideoChat[]> GetAllVideoChatsByPacienteIdAsync(int pacienteId);
+        Task<VideoChat[]> GetAllVideoChatsByMedicoIdAsync(int medicoId);
         Task<VideoChat> GetVideoChatByIdAsync(int videoChatId);
     }
 }

@@ -1,3 +1,4 @@
+
 <div class="card shadow-sm">
   <form [formGroup]="form">
     <div class="p-3">
@@ -42,11 +43,22 @@
         <button class="btn btn-outline-info mr-auto border" (click)="resetForm()">
           Cancelar Alteração
         </button>
+        <button type="button" class="btn btn-primary btn-md ml-2 m-auto" tooltip="Iniciar Consulta" (click)="openModal($event, templateIniciarConsulta, videoChat.id)">
+          Iniciar Conculta
+        </button>
         <button class="btn btn-success" [disabled]="!form.valid" (click)="guardarVideoChat()">
           <!-- <span class="spinner-border spinner-border-sm mr-1"></span> -->
-          Guardar Paciente
+          Agendar Consulta
         </button>
       </div>
     </div>
   </form>
 </div>
+
+<ng-template #templateIniciarConsulta>
+  <div class="modal-body text-center">
+    <p>Tem certeza que deseja iniciar a Consulta?</p>
+    <button type="button" class="btn btn-default"  target="_blank" (click)="confirmIniciarConsulta(this.videoChatId)" >Sim</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+  </div>
+</ng-template>

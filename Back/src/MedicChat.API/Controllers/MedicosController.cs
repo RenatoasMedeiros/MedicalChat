@@ -198,8 +198,10 @@ namespace MedicChat.API.Controllers
             {
                 var claims = new List<Claim> //Lista de claims
                 {
-                    new Claim(ClaimTypes.NameIdentifier, medico.Id.ToString()),
-                    new Claim(ClaimTypes.Name, medico.Email)
+                    //Passam no token o ID do médico, o nome e o email
+                    new Claim(ClaimTypes.NameIdentifier, medico.Id.ToString()), 
+                    new Claim(ClaimTypes.Name, medico.Nome),
+                    new Claim(ClaimTypes.Email, medico.Email)
                 };
 
                 var roles = await _userManager.GetRolesAsync(medico); // atribui a variavel roles todas a roles do medico
@@ -227,7 +229,6 @@ namespace MedicChat.API.Controllers
             }
             catch (System.Exception)
             {
-
                 throw;
             }
         }

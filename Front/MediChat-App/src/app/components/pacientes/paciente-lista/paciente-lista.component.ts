@@ -65,7 +65,7 @@ export class PacienteListaComponent implements OnInit {
     this.exibirFoto = !this.exibirFoto;
   }
 
-  public carregarPacientes(): void{
+  public carregarPacientes(): void {
     this.pacienteService.getPacientes().subscribe({
       next: (_pacientes: Paciente[]) => {
         this.pacientes = _pacientes;
@@ -75,7 +75,6 @@ export class PacienteListaComponent implements OnInit {
         this.spinner.hide(),
         this.toastr.error('Erro ao carregar os Pacientes', 'Erro!')
       },
-
       complete: () => this.spinner.hide()
     });
   }

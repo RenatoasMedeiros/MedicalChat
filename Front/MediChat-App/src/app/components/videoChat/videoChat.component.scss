@@ -1,0 +1,19 @@
+.host{
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.wrapper-room{
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  app-videoChat-player{
+    padding: .25rem;
+  }
+}
+
+

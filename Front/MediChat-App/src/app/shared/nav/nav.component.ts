@@ -2,6 +2,8 @@ import { ToastrService } from 'ngx-toastr';
 import { MedicoService } from '@app/services/medico.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { v4 as uuidv4 } from 'uuid';
+
 
 @Component({
   selector: 'app-nav',
@@ -23,7 +25,10 @@ export class NavComponent implements OnInit {
   }
 
   showMenu(): boolean {
-    return (this.router.url !== '/user/login');
+    if(localStorage.getItem('token') == null) //Verifica se o utilizador é administrador
+      return false;
+    var menu = this.router.url !== '/user/login';
+    return menu;
   }
 
   loggedIn() {
@@ -35,17 +40,17 @@ export class NavComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    this.toastr.show('Log Out');
-    this.router.navigate(['/user/login']);
+    localStorage.removeItem('token'); // Remove o token da localStorage
+    this.toastr.show('Log Out efetuado com sucesso.'); // Toastr de Logout
+    this.router.navigate(['/user/login']); // Redireciona para a pagina de login
   }
 
-  userName(){
-    return sessionStorage.getItem('username');
+  email(){
+    return sessionStorage.getItem('email');
   }
 
   public administrador(): boolean {
-    if(sessionStorage.getItem('username') == "admin@medichat.com") //Verifica se o utilizador é administrador
+    if(sessionStorage.getItem('username') == "admin") //Verifica se o utilizador é administrador
       return true;
     return false; // Se não for retorna False
   }
