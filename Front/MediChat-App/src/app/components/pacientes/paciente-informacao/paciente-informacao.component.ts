@@ -1,3 +1,4 @@
+import { tap } from 'rxjs/internal/operators/tap';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -25,6 +26,8 @@ export class PacienteInformacaoComponent implements OnInit {
   estadoGuardar = 'post'; // Inicia em post para criar um novo paciente
 
   locale = 'pt'; // idioma português
+
+  file: File;
 
   get modoEditar(): boolean {
     return this.estadoGuardar === 'put';
@@ -54,114 +57,130 @@ export class PacienteInformacaoComponent implements OnInit {
     };
   }
 
-  constructor(private fb: FormBuilder,
-              private localeService: BsLocaleService,
-              private activatedRouter: ActivatedRoute,
-              private pacienteService: PacienteService,
-              private spinner: NgxSpinnerService,
-              private toaster: ToastrService,
-              private router: Router,
-              private videoChatService :VideoChatService
-  ) { this.localeService.use(this.locale); }
+  constructor (private fb: FormBuilder,
+               private localeService: BsLocaleService,
+               private activatedRouter: ActivatedRoute,
+               private pacienteService: PacienteService,
+               private spinner: NgxSpinnerService,
+               private toaster: ToastrService,
+               private router: Router,
+               private videoChatService :VideoChatService
+    ) { this.localeService.use(this.locale); }
 
-  public carregarPaciente(): void {
-    this.pacienteId = +this.activatedRouter.snapshot.paramMap.get('id');
+    public carregarPaciente(): void {
+      this.pacienteId = +this.activatedRouter.snapshot.paramMap.get('id');
 
-    if(this.pacienteId !== null && this.pacienteId !== 0){ // verifico se o get é diferente de nulo
-      this.spinner.show(); // ativa o spinner
+      if(this.pacienteId !== null && this.pacienteId !== 0){ // verifico se o get é diferente de nulo
+        this.spinner.show(); // ativa o spinner
 
-      this.estadoGuardar = 'put'; // PUT pois vai editar
+        this.estadoGuardar = 'put'; // PUT pois vai editar
 
-      this.pacienteService.getPacienteById(this.pacienteId).subscribe( // + para converter para o tipo INT, pois o pacienteId é retornado como uma string
-        { // subscrive recebe um observable com 3 propriedades
-          next: (paciente: Paciente) => { // realiza uma copia do objeto do parametro e atribui para dentro do paciente
-            this.paciente = {...paciente}; // SPREAD (cada paciente é atribuido aos pacientes)
-            this.form.patchValue(this.paciente); // definir os valores recebidos no formulário
-            this.carregarVideoChats();
+        this.pacienteService.getPacienteById(this.pacienteId).subscribe( // + para converter para o tipo INT, pois o pacienteId é retornado como uma string
+          { // subscrive recebe um observable com 3 propriedades
+            next: (paciente: Paciente) => { // realiza uma copia do objeto do parametro e atribui para dentro do paciente
+              this.paciente = {...paciente}; // SPREAD (cada paciente é atribuido aos pacientes)
+              this.paciente.foto = '';
+              this.form.patchValue(this.paciente); // definir os valores recebidos no formulário
+              this.carregarVideoChats();
+            },
+            error: (error: any) => {
+              this.spinner.hide(); // Esconde o spinner
+              this.toaster.error('Erro ao tentar carregar os Pacientes.'); // Em caso de erro mostra um toaster
+              console.error(error);
+            },
+            complete: () => this.spinner.hide(), // Esconde o spinner
+          }
+          )
+        }
+      }
+
+      public carregarVideoChats(): void {
+        this.videoChatService.getVideoChatsByPacienteId(this.pacienteId).subscribe(
+          (videoChatsRetorno: VideoChat[]) => {
+            videoChatsRetorno.forEach(videoChat => {
+              this.videoChats.push(this.criarVideoChat(videoChat));
+            });
           },
-          error: (error: any) => {
-            this.spinner.hide(); // Esconde o spinner
-            this.toaster.error('Erro ao tentar carregar os Pacientes.'); // Em caso de erro mostra um toaster
+          (error) => {
+            this.toaster.error('Erro ao tentar carregar as Consultas', 'Erro')
             console.error(error);
           },
-          complete: () => this.spinner.hide(), // Esconde o spinner
+          ).add(() => this.spinner.hide());
         }
-      )
-    }
-  }
 
-  public carregarVideoChats(): void {
-    this.videoChatService.getVideoChatsByPacienteId(this.pacienteId).subscribe(
-      (videoChatsRetorno: VideoChat[]) => {
-        videoChatsRetorno.forEach(videoChat => {
-          this.videoChats.push(this.criarVideoChat(videoChat));
-        });
-      },
-      (error) => {
-        this.toaster.error('Erro ao tentar carregar as Consultas', 'Erro')
-        console.error(error);
-      },
-    ).add(() => this.spinner.hide());
-  }
+        ngOnInit(): void {
+          this.carregarPaciente();
+          this.validation();
+        }
 
-  ngOnInit(): void {
-    this.carregarPaciente();
-    this.validation();
-  }
+        public validation(): void {
+          this.form = this.fb.group({
+            nome: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
+            email: ['', [Validators.required, Validators.email]],
+            telemovel: ['', [Validators.required]],
+            foto: [''],
+            dataNascimento: ['', Validators.required],
+            genero: ['', Validators.required],
+            endereco: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(70)]],
+            codPostal: ['', Validators.required],
+            videoChats: this.fb.array([])
+          });
+        }
 
-  public validation(): void {
-    this.form = this.fb.group({
-      nome: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
-      email: ['', [Validators.required, Validators.email]],
-      telemovel: ['', [Validators.required]],
-      foto: [''],
-      dataNascimento: ['', Validators.required],
-      genero: ['', Validators.required],
-      endereco: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(70)]],
-      codPostal: ['', Validators.required],
-      videoChats: this.fb.array([])
-    });
-  }
+        criarVideoChat(videoChat: VideoChat): FormGroup {
+          return this.fb.group({
+            id: [videoChat.id],
+            relatorio: [videoChat.relatorio],
+            token: [videoChat.token],
+            dataInicio: [videoChat.dataInicio, Validators.required],
+            dataFim: [videoChat.dataFim],
+            estadoVideoChat: [videoChat.estadoVideoChat, Validators.required],
+            medico: [videoChat.medico.nome, Validators.required],
+            paciente: [videoChat.paciente.nome, Validators.required]
+          });
+        };
 
-  criarVideoChat(videoChat: VideoChat): FormGroup {
-    return this.fb.group({
-      id: [videoChat.id],
-      relatorio: [videoChat.relatorio],
-      token: [videoChat.token],
-      dataInicio: [videoChat.dataInicio, Validators.required],
-      dataFim: [videoChat.dataFim],
-      estadoVideoChat: [videoChat.estadoVideoChat, Validators.required],
-      medico: [videoChat.medico.nome, Validators.required],
-      paciente: [videoChat.paciente.nome, Validators.required]
-    });
-  };
+        public resetForm(): void {
+          this.form.reset();
+        }
 
-  public resetForm(): void {
-    this.form.reset();
-  }
+        public cssValidator(campoForm: FormControl | AbstractControl): any {
+          return {'is-invalid': campoForm.errors && campoForm.touched};
+        }
 
-  public cssValidator(campoForm: FormControl | AbstractControl): any {
-    return {'is-invalid': campoForm.errors && campoForm.touched};
-  }
+        onFileChange(event){
+          const reader = new FileReader();
 
-  public guardarPaciente(): void {
-    this.spinner.show();
-    if(this.form.valid) {
-      this.paciente = (this.estadoGuardar === 'post')
-                    ? {...this.form.value} // atribui ao paciente o formulário (Se o mesmo for válido) (SPREAD OPERATOR)
-                    : { id: this.paciente.id, ...this.form.value} // atribui ao paciente o formulário, MENOS o Id pois ele tem que se manter visto que é um PUT (Se o mesmo for válido) (SPREAD OPERATOR)
+          // Verifica se é um arquivo e se ela possui tamanho
+          if (event.target.files && event.target.files.length) {
+            this.file = event.target.files; // atribuimos o arquivo a variavel file
+          }
+        }
 
-      this.pacienteService[this.estadoGuardar](this.paciente).subscribe(
-        (pacienteRetorno: Paciente) => {                                     // NEXT
-          this.toaster.success('Paciente guardado com Sucesso!', 'Sucesso');
-        },
-        (error: any) => {
-          console.error(error);
-          this.spinner.hide();
-          this.toaster.error('Erro ao guardar o Paciente', 'Erro');
-        }, // ERROR
-        () => this.spinner.hide() // COMPLETE
-      );
-    }
-  }
-}
+        uploadImagem(): void {
+          const nomeArquivo = this.paciente.foto.split('\\', 3); //Split na barra EX: [C:, imagens, foto.png]
+          this.paciente.foto = nomeArquivo[2];
+          this.pacienteService.postUpload(this.file, nomeArquivo[2]).subscribe();
+        }
+
+        public guardarPaciente(): void {
+          this.spinner.show();
+          if(this.form.valid) {
+            this.paciente = (this.estadoGuardar === 'post')
+            ? {...this.form.value} // atribui ao paciente o formulário (Se o mesmo for válido) (SPREAD OPERATOR)
+            : { id: this.paciente.id, ...this.form.value} // atribui ao paciente o formulário, MENOS o Id pois ele tem que se manter visto que é um PUT (Se o mesmo for válido) (SPREAD OPERATOR)
+            this.uploadImagem();
+            this.pacienteService[this.estadoGuardar](this.paciente).subscribe(
+              (pacienteRetorno: Paciente) => {                                     // NEXT
+                this.toaster.success('Paciente guardado com Sucesso!', 'Sucesso');
+              },
+              (error: any) => {
+                console.error(error);
+                this.spinner.hide();
+                this.toaster.error('Erro ao guardar o Paciente', 'Erro');
+              }, // ERROR
+              () => this.spinner.hide() // COMPLETE
+              );
+            }
+          }
+        }

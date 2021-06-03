@@ -41,4 +41,14 @@ constructor(private http: HttpClient) {}
     return this.http.delete<any>(`${this.baseURL}/${id}`)
       .pipe(take(1)); // Só permite uma chamada - depois dá unsubscrive
   }
+
+  postUpload(file: File, nome: string): Observable<any>{
+    const fileToUpload = <File>file[0]; //1º posição do file que é um array
+    const formData = new FormData();
+    formData.append('file', fileToUpload, nome);
+
+    return this.http.post(`${this.baseURL}/uploadImagem`, formData)
+      .pipe(take(1)); // Só permite uma chamada - depois dá unsubscrive
+  }
+
 }

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using MedicChat.Application.Contratos;
 using MedicChat.Application.Dtos;
@@ -108,6 +110,39 @@ namespace MedicChat.API.Controllers
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
                     $"Erro ao tentar adicionar Paciente. Erro: {ex.Message}");
+            }
+        }
+
+        [HttpPost("uploadImagem")]
+        public async Task<IActionResult> Upload()
+        {
+            try
+            {
+                var arquivo = Request.Form.Files[0]; // Todo o arquivo vem como um array, logo o a variavem arquivo começa no [0]
+                var nomePasta = Path.Combine("Resources", "Imagens");
+
+                //Caminho onde vai ser salvo
+                var pathParaSalvar =  Path.Combine(Directory.GetCurrentDirectory(), nomePasta);
+
+                if(arquivo.Length > 0) // Se o arquivo existir
+                {
+                    // Nome do arquivo vem do header
+                    var nomeArquivo = ContentDispositionHeaderValue.Parse(arquivo.ContentDisposition).FileName;
+                    var fullPath = Path.Combine(pathParaSalvar, nomeArquivo.Replace("\"", " ").Trim()); //Substitui as aspas duplas por " ", e Trim para remover o espaço
+
+                    //Guardamos o arquivo no stream
+                    using(var stream = new FileStream(fullPath, FileMode.Create)) {
+                       arquivo.CopyTo(stream);
+                    }
+                }
+
+                return Ok(); // retorna status code 200 (Ok) com o médico
+            }
+            catch (Exception ex)
+            {
+                // Em caso de exception retorna status code 500 e mostra o erro
+                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Erro ao tentar inserir imagem. Erro: {ex.Message}");
             }
         }
 

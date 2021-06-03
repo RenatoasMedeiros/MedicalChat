@@ -9,6 +9,7 @@ using MedicChat.Persistence.Contratos;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace MedicChat.Application
 {
