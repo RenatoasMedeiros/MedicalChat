@@ -13,7 +13,7 @@ export class DashboardComponent implements OnInit {
   }
 
   userName(){
-    var nome = sessionStorage.getItem('username');
+    var nome = localStorage.getItem('username');
     return (nome.split(" ")[0] + " " + nome.split(" ")[nome.split(" ").length - 1]); // retorna o primeiro e o ultimo nome do utilizador
 }
 

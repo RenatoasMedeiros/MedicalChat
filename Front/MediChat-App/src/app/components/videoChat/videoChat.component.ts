@@ -66,10 +66,11 @@ export class VideoChatComponent implements OnInit {
         this.addVideoUser(streamRemote); // adiciona o novo usuario
       });
     }, err => {
-      console.log('*** ERROR *** Peer call ', err);
+      console.log('*** ERRO *** Peer call ', err);
     });
   }
 
+  // Iniciamos o socket
   initSocket = () => {
     this.webSocketService.callbackEvent.subscribe(res => {
       if (res.name === 'new-user') {
@@ -81,18 +82,18 @@ export class VideoChatComponent implements OnInit {
 
   checkMediaDevices = () => { //Verifica se exite camera
     if (navigator && navigator.mediaDevices) {
-      navigator.mediaDevices.getUserMedia({
-        audio: false,
-        video: true
+      navigator.mediaDevices.getUserMedia({ // Dados do usuario
+        audio: false, // Audio desativado (APRESENTAÇÃO)
+        video: true // Video Ativado
       }).then(stream => {
         this.currentStream = stream;
-        this.addVideoUser(stream);
+        this.addVideoUser(stream); // Adicionamos um usuarios com Esses Dispositivos Media
 
       }).catch(() => {
-        console.log('*** ERROR *** Not permissions');
+        console.log('*** ERROR *** Sem Permição');
       });
     } else {
-      console.log('*** ERROR *** Not media devices');
+      console.log('*** ERROR *** Sem Dispositivos Media');
     }
   }
 
@@ -106,7 +107,7 @@ export class VideoChatComponent implements OnInit {
     const newUserCall = this.peerService.peer.call(idPeer, stream);
     if (!!newUserCall) { //verifica se existe o evento
       newUserCall.on('stream', (userStream) => {
-        this.addVideoUser(userStream);
+        this.addVideoUser(userStream); // Adiicona o novo usuario
       })
     }
   }

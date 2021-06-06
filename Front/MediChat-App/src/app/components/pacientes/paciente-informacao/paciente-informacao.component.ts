@@ -28,6 +28,7 @@ export class PacienteInformacaoComponent implements OnInit {
   locale = 'pt'; // idioma português
 
   file: File;
+  fileNameParaUpdate: string;
 
   get modoEditar(): boolean {
     return this.estadoGuardar === 'put';
@@ -79,7 +80,8 @@ export class PacienteInformacaoComponent implements OnInit {
           { // subscrive recebe um observable com 3 propriedades
             next: (paciente: Paciente) => { // realiza uma copia do objeto do parametro e atribui para dentro do paciente
               this.paciente = {...paciente}; // SPREAD (cada paciente é atribuido aos pacientes)
-              this.paciente.foto = '';
+              this.fileNameParaUpdate = paciente.foto.toString(); // fileNameParaUpdate recebe o string da imagem
+              this.paciente.foto = ''; // inicia a foto do paciente em branco
               this.form.patchValue(this.paciente); // definir os valores recebidos no formulário
               this.carregarVideoChats();
             },
@@ -158,9 +160,9 @@ export class PacienteInformacaoComponent implements OnInit {
         }
 
         uploadImagem(): void {
-          const nomeArquivo = this.paciente.foto.split('\\', 3); //Split na barra EX: [C:, imagens, foto.png]
-          this.paciente.foto = nomeArquivo[2];
-          this.pacienteService.postUpload(this.file, nomeArquivo[2]).subscribe();
+            const nomeArquivo = this.paciente.foto.split('\\', 3); //Split na barra EX: [C:, imagens, foto.png]
+            this.paciente.foto = nomeArquivo[2];
+            this.pacienteService.postUpload(this.file, nomeArquivo[2]).subscribe();
         }
 
         public guardarPaciente(): void {

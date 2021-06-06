@@ -1,12 +1,12 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Socket } from 'ngx-socket-io';
+import { Socket } from 'ngx-socket-io'; // Importamos o socket io
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebSocketService {
 
-  events = ['new-user','bye-user'];
+  events = ['new-user','bye-user']; // Todos os eventos possiveis
   callbackEvent: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private socket: Socket) {
@@ -25,6 +25,6 @@ export class WebSocketService {
 
   //Envia a informação do usuario
   joinRoom = (data) => {
-    this.socket.emit('join', data);
+    this.socket.emit('join', data); // emite um join e as informações (data)
   }
 }

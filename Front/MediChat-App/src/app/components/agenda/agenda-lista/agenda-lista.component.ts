@@ -20,7 +20,7 @@ export class AgendaListaComponent implements OnInit {
 
   public videoChatFiltrada: VideoChat[] = [];
   public videoChatId = 0;
-  medicoId = sessionStorage.getItem('id');
+  medicoId = localStorage.getItem('id');
 
   public mobile: boolean = false;
 

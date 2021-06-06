@@ -32,7 +32,7 @@ export class AgendaCriarComponent implements OnInit {
 
   public medicos: Medico[] = [];
   public pacientes: Paciente[] = [];
-  medicoId = sessionStorage.getItem('id');
+  medicoId = localStorage.getItem('id');
 
   videoChat = {} as VideoChat;
   estadoGuardar = 'post'; // Inicia em post para criar um novo paciente
@@ -165,7 +165,6 @@ export class AgendaCriarComponent implements OnInit {
       this.videoChat = (this.estadoGuardar === 'post')
                     ? {...this.form.value} // atribui ao paciente o formulário (Se o mesmo for válido) (SPREAD OPERATOR)
                     : { id: this.videoChat.id, ...this.form.value} // atribui ao paciente o formulário, MENOS o Id pois ele tem que se manter visto que é um PUT (Se o mesmo for válido) (SPREAD OPERATOR)
-      console.log(this.videoChat);
       this.videoChatService[this.estadoGuardar](this.videoChat).subscribe(
         (videoChatRetorno: VideoChat) => {                                     // NEXT
           this.toastr.success('Consulta agendada com Sucesso!', 'Sucesso');

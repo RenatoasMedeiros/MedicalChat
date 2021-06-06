@@ -113,13 +113,13 @@ namespace MedicChat.API.Controllers
             }
         }
 
-        [HttpPost("uploadImagem")]
+        [HttpPost("uploadImagemPaciente")]
         public async Task<IActionResult> Upload()
         {
             try
             {
                 var arquivo = Request.Form.Files[0]; // Todo o arquivo vem como um array, logo o a variavem arquivo começa no [0]
-                var nomePasta = Path.Combine("Resources", "Imagens");
+                var nomePasta = Path.Combine("Resources", "ImagensPaciente");
 
                 //Caminho onde vai ser salvo
                 var pathParaSalvar =  Path.Combine(Directory.GetCurrentDirectory(), nomePasta);

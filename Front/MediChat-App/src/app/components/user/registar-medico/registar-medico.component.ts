@@ -18,6 +18,8 @@ export class RegistarMedicoComponent implements OnInit {
   public form: FormGroup;
   medico: Medico;
 
+  file: File;
+
   get f(): any {
     return this.form.controls;
   }
@@ -45,6 +47,7 @@ export class RegistarMedicoComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       telemovel: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
       especialidade: ['', Validators.required],
+      foto: [''],
       endereco: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(70)]],
       codPostal: ['', Validators.required],
       password: ['', [Validators.required, Validators.pattern('(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z])(?=.*[$@#$!%*?&]).{8,30}')]],
@@ -52,10 +55,26 @@ export class RegistarMedicoComponent implements OnInit {
     }, formOptions);
   }
 
+  onFileChange(event){
+    const reader = new FileReader();
+
+    // Verifica se é um arquivo e se ela possui tamanho
+    if (event.target.files && event.target.files.length) {
+      this.file = event.target.files; // atribuimos o arquivo a variavel file
+    }
+  }
+
+  uploadImagem(): void {
+      const nomeArquivo = this.medico.foto.split('\\', 3); //Split na barra EX: [C:, imagens, foto.png]
+      this.medico.foto = nomeArquivo[2];
+      this.medicoService.postUpload(this.file, nomeArquivo[2]).subscribe();
+  }
+
   public registarMedico() {
     this.spinner.show();
     if(this.form.valid) { //verifica se o formulario está válido
       this.medico = {...this.form.value};
+      this.uploadImagem();
       this.medicoService.registar(this.medico).subscribe(
         next => {
           this.router.navigate(['/user/login']);

@@ -1,15 +1,15 @@
 <div class="row mt-4">
 
-	<div class="col-md-6 d-none d-md-block" style="height: 450px;">
-		<div class="text-center col-md-12 my-auto side-heder">
-			<h1>Registo de Médico</h1>
-			<img src="../../../../assets/registerImage.png" class="my-4" alt="" width="400px">
-		</div>
-	</div>
+  <div class="col-md-6 d-none d-md-block" style="height: 450px;">
+    <div class="text-center col-md-12 my-auto side-heder">
+      <h1>Registo de Médico</h1>
+      <img src="../../../../assets/registerImage.png" class="my-4" alt="" width="400px">
+    </div>
+  </div>
 
-	<div class="col-md-6">
+  <div class="col-md-6">
 
-		<!--FORM -->
+    <!--FORM -->
     <form [formGroup]="form" class="p-1">
       <div class="pb-2 d-block d-md-none">
         <h3 class="border-bottom">Cadastro de Usuário</h3>
@@ -58,14 +58,29 @@
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <label for="">Especialização:</label>
-        <input class="form-control" type="text" placeholder="Insira a sua Especialização "
-        [ngClass]="cssValidator(f.especialidade)"
+      <div class="form-row">
+        <div class="form-group col-md-8">
+          <label for="">Especialização:</label>
+          <input class="form-control" type="text" placeholder="Insira a sua Especialização "
+          [ngClass]="cssValidator(f.especialidade)"
           formControlName="especialidade" >
           <div *ngIf="f.especialidade.errors?.required" class="invalid-feedback">
             Especialização é obrigatório.
           </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Foto</label>
+          <table>
+            <tr>
+              <td>
+                <button class="btn btn-success" (click)="file.click()">
+                  Selecionar Foto
+                </button>
+                <input type="file" #file class="form-control" (change)="onFileChange($event)" [ngClass]="cssValidator(f.telemovel)" formControlName="foto" placeholder="Fotografia" style="display: none;">
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
       <div class="form-row">
         <div class="form-group col-sm-9">
@@ -128,5 +143,5 @@
       </div>
     </form>
 
-	</div>
+  </div>
 </div>

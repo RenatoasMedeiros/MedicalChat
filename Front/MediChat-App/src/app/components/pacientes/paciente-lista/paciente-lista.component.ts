@@ -20,12 +20,12 @@ export class PacienteListaComponent implements OnInit {
   public pacienteId = 0;
 
   public widthFoto: number = 50;
+  public heightFoto: number = 50;
   public marginFoto: number = 2;
   public exibirFoto: boolean = true;
   public mobile: boolean = false;
 
   private _filtroLista: string = '';
-
 
   public get filtroLista() {
     return this._filtroLista;

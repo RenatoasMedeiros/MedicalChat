@@ -46,11 +46,11 @@ export class NavComponent implements OnInit {
   }
 
   email(){
-    return sessionStorage.getItem('email');
+    return localStorage.getItem('email');
   }
 
   public administrador(): boolean {
-    if(sessionStorage.getItem('username') == "admin") //Verifica se o utilizador é administrador
+    if(localStorage.getItem('username') == "admin") //Verifica se o utilizador é administrador
       return true;
     return false; // Se não for retorna False
   }

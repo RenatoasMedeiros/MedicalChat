@@ -47,7 +47,7 @@ constructor(private http: HttpClient) {}
     const formData = new FormData();
     formData.append('file', fileToUpload, nome);
 
-    return this.http.post(`${this.baseURL}/uploadImagem`, formData)
+    return this.http.post(`${this.baseURL}/uploadImagemPaciente`, formData)
       .pipe(take(1)); // Só permite uma chamada - depois dá unsubscrive
   }
 

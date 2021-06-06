@@ -42,8 +42,9 @@
       <td class="d-none d-md-table-cell">
         <img [collapse]="!exibirFoto"
           [isAnimated]="true"
-          src="http://localhost:5000/resources/imagens/{{paciente.foto}}" class="rounded-circle"
+          src="http://localhost:5000/resources/imagensPaciente/{{paciente.foto}}" class="rounded-circle"
           [style.width.px]="widthFoto"
+          [style.height.px]="heightFoto"
           [style.margin.px]="marginFoto" >
         </td>
         <td class="d-none d-md-table-cell">{{paciente.id}}</td>
