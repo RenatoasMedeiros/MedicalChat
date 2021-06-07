@@ -41,6 +41,9 @@ export class NavComponent implements OnInit {
 
   logout() {
     localStorage.removeItem('token'); // Remove o token da localStorage
+    localStorage.removeItem('username'); // Remove o username da localStorage
+    localStorage.removeItem('email'); // Remove o email da localStorage
+    localStorage.removeItem('id'); // Remove o id da localStorage
     this.toastr.show('Log Out efetuado com sucesso.'); // Toastr de Logout
     this.router.navigate(['/user/login']); // Redireciona para a pagina de login
   }
