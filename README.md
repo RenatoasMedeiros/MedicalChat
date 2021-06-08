@@ -1,5 +1,16 @@
 # MedicalChat
 
+# Back End
+
+This project was created with .NET 5
+
+# Build - API 
+
+Go to MedicalChat.API and run "dotnet run"
+
+# Build - VideoChat
+
+Got do VideoChat/Back and run "nodemon app.js"
 
 
 # Front End
